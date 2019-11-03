@@ -1,11 +1,13 @@
 package com.learning.Gym.Star;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+
 import java.io.*;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Queue;
-import java.util.Scanner;
+import java.util.*;
 
 abstract class SportsMan implements Gender {
     private final String name;
@@ -13,6 +15,7 @@ abstract class SportsMan implements Gender {
     private final GenderChoose gender;
     private Trainer myTrainer;
     private Queue <TrainingType> trainings;
+    private final String PATH = "data\\Training Days.txt";
 
     protected SportsMan ( String name, String surname, GenderChoose gender ) {
         this.name = name;
@@ -47,8 +50,8 @@ abstract class SportsMan implements Gender {
         System.out.println("Enter trainer name");
         Scanner enterTrainerName = new Scanner(System.in);
         String chosenName = enterTrainerName.nextLine();
-        System.out.println("Enter trainer surname");
-        String chosenSurname = enterTrainerName.nextLine();
+      //  System.out.println("Enter trainer surname");
+       // String chosenSurname = enterTrainerName.nextLine();
         for (Trainer trainer : listOfTrainers) {
             //    && trainer.getSurname().equals(chosenSurname)
             if (trainer.getName().equals(chosenName)) {
@@ -60,26 +63,34 @@ abstract class SportsMan implements Gender {
         }
     }
 
-    //Helper method to simulate SQL response
+    /**
+     *  Helper method to simulate SQL response
+     */
+
     private List <Trainer> getTrainers () {
         ListOfTrainers trainers = new ListOfTrainers();
         return trainers.getListOfTrainers();
     }
 
     void chooseOtherTrainer () {
-        List <Trainer> listOfTrainers = getTrainers();
         myTrainer = null;
         chooseTrainer();
     }
 
     void train () {
-
+        if(trainings==null){
+            System.out.println("Jest źle");
+        }
         if(!trainings.isEmpty()&&trainings.remove().isCardioTraining()){
+            //TODO
             //Kod dla statystyk cardio
             saveTrainingDateAndTimeStatistics();
+            System.out.println("Doing cardio training");
         }else if(!trainings.isEmpty()){
+            //TODO
             //kod dla statystyk power
             saveTrainingDateAndTimeStatistics();
+            System.out.println("Doing power training");
         }else{
             System.out.println("There is no trainings available. Ask your Trainer for training plan.");
         }
@@ -89,7 +100,7 @@ abstract class SportsMan implements Gender {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         String[] dateAndHourOfTraining = dateFormat.format(date).split(" ");
-        File f = new File("data\\Training Days.txt");
+        File f = new File(PATH);
         if (!f.exists()) {
             try {
                 f.createNewFile();
@@ -115,15 +126,57 @@ abstract class SportsMan implements Gender {
         }
     }
 
-    abstract void printAllStatistics ();
+    void printAllStatistics (){
+        for (Statistics statistic:Statistics.values()){
+        printStatistic(statistic);
+        }
+    }
 
-    abstract void printStatistic ( Statistics stats );
+    void printStatistic ( Statistics stats ){
+        switch (stats){
+            case POWER_TRAINING:{
+                //TODO
+                //Print power statistics
+                break;
+            }
+            case CARDIO_TRAINING:{
+                //TODO
+                //Print cardop statistics
+                break;
+            }
+            case TRAININGS:{
+                readDateAndTimeStatistics();
+                break;
+            }
+        }
+    }
 
-    abstract void showClosestGym ( int randomSeed );
+    private void readDateAndTimeStatistics () {
+        File csvData = new File(PATH);
+        CSVParser parser = null;
+        try {
+            parser = CSVParser.parse(csvData, Charset.defaultCharset() , CSVFormat.EXCEL); //by adding CSVFormat.EXCEL.withHeader() listing without header
+        } catch (IOException e) {
+            System.out.println("Cannot read " + PATH + " as a data file.");
+            e.printStackTrace();
+        }
+        for (CSVRecord record : parser) {
+            System.out.println(record.get(0)+" "+record.get(1));
+        }
+    }
+
+    void showClosestGym ( int randomSeed ){
+        //TODO
+        Gym gym = new Gym();
+        List <String> gymData = gym.getGymData();
+        Random random = new Random(randomSeed);
+        System.out.println(gymData.get(random.nextInt(gymData.size())).trim());
+    }
 
 
-    void getTrainingPlan () {
-        trainings = myTrainer.preparePlan(this);
+    void getTrainingPlan (int trainingDays) {
+
+        trainings = myTrainer.preparePlan(this, trainingDays);
     }
 
 }

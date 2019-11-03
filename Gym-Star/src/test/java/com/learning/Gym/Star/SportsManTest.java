@@ -4,7 +4,10 @@ package com.learning.Gym.Star;
 import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
 import org.junit.jupiter.api.Test;
 import org.junit.*;
+
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 
 import static org.junit.contrib.java.lang.system.TextFromStandardInputStream.emptyStandardInputStream;
@@ -32,7 +35,6 @@ public class SportsManTest {
     }
 
 
-
     @Test
     void shouldSelectTrainerMariuszFromList () {
         //Given
@@ -48,7 +50,7 @@ public class SportsManTest {
     }
 
     @Test
-    void shouldSelectTrainerMariuszFromList2 (){
+    void shouldSelectTrainerMariuszFromList2 () {
         //Given
 
         ByteArrayInputStream testInName;
@@ -69,7 +71,7 @@ public class SportsManTest {
     }
 
     @Test
-    void shouldSelectTrainerMariuszFromList3 (){
+    void shouldSelectTrainerMariuszFromList3 () {
         //Given
         final TextFromStandardInputStream systemInMock
                 = emptyStandardInputStream();
@@ -81,7 +83,7 @@ public class SportsManTest {
     }
 
     @Test
-    void shouldReturnStringWithCurrentDate(){
+    void shouldReturnStringWithCurrentDate () {
         //Given
         ConcreteSportsMan sportsMan = new ConcreteSportsMan("Test", "SportsMan", GenderChoose.M);
         //When
@@ -89,4 +91,51 @@ public class SportsManTest {
 
     }
 
+    @Test
+    void shouldReturn82WhenSeed40showClosestGym () {
+        //Given
+        final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        ConcreteSportsMan sportsMan = new ConcreteSportsMan("Test", "SportsMan", GenderChoose.M);
+        int seed = 40;
+        //When
+        sportsMan.showClosestGym(seed);
+        //Then
+        assertEquals("82", outContent.toString().trim());
+    }
+
+    @Test
+    void shouldPrintTrainingMessages(){
+        //Given
+        ConcreteSportsMan sportsMan = new ConcreteSportsMan("Test", "SportsMan", GenderChoose.M);
+        ByteArrayInputStream testIn;
+        String data = "Mariusz";
+        testIn = new ByteArrayInputStream(data.getBytes());
+        System.setIn(testIn);
+        sportsMan.chooseTrainer();
+        //When
+        sportsMan.getTrainingPlan();
+        //Then
+        sportsMan.train();
+        sportsMan.train();
+        sportsMan.train();
+    }
+
+    @Test
+    void shouldPrintDateStatistics(){
+        //Given
+        ConcreteSportsMan sportsMan = new ConcreteSportsMan("Test", "SportsMan", GenderChoose.M);
+        ByteArrayInputStream testIn;
+        String data = "Mariusz";
+        testIn = new ByteArrayInputStream(data.getBytes());
+        System.setIn(testIn);
+        sportsMan.chooseTrainer();
+        sportsMan.getTrainingPlan();
+        //When
+        sportsMan.train();
+        sportsMan.train();
+        sportsMan.train();
+        //Then
+        sportsMan.printStatistic(Statistics.TRAININGS);
+    }
 }

@@ -30,8 +30,8 @@ public class Trainer {
         return costPerHour;
     }
 
-    Queue <TrainingType> preparePlan( Gender gender){
-        Queue<TrainingType> trainings = new LinkedList <>();
-        return trainings;
+    Queue <TrainingType> preparePlan( Gender gender, int trainingDays){
+        Plan plan = new Plan();
+        return plan.generateTrainingPlan(gender, trainingDays);
     }
 }
