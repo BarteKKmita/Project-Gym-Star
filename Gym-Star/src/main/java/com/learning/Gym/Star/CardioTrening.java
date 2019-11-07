@@ -1,6 +1,7 @@
 package com.learning.Gym.Star;
 
-public class CardioTrening extends TrainingType {
+public class CardioTrening extends Training {
+
     @Override
     public boolean isPowerTraining () {
         return false;

@@ -7,17 +7,15 @@ plugins {
 
 group = 'com.learning'
 version = '0.0.1-SNAPSHOT'
+
 sourceCompatibility = '13'
+targetCompatibility = '13'
+
 
 repositories {
 	mavenCentral()
 }
 
-task myRun(type: JavaExec) {
-	classpath sourceSets.main.runtimeClasspath
-	main = "com.learning.Gym.Star.GymStarApplication"
-	//args "arg1", "arg2"
-}
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -35,7 +33,6 @@ dependencies {
 	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
 	testCompile "com.github.stefanbirkner:system-rules:1.16.0"
 }
-
 
 
 test {

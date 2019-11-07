@@ -1,4 +1,6 @@
 package com.learning.Gym.Star;
 
-public abstract class TrainingType implements Training {
+public interface TrainingType {
+     boolean isPowerTraining();
+     boolean isCardioTraining();
 }

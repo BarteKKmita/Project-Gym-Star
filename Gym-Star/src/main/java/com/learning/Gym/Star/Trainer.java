@@ -2,11 +2,13 @@ package com.learning.Gym.Star;
 
 import java.util.*;
 
-public class Trainer {
+class Trainer {
     private final String name;
     private final String surname;
     private int costPerHour;
-    public Trainer ( String name, String surname, int costPerHour ) {
+    private List <SportsMan> sportsMenList = new ArrayList <>();
+
+    Trainer ( String name, String surname, int costPerHour ) {
         this.name = name;
         this.surname = surname;
         this.costPerHour = costPerHour;
@@ -16,22 +18,36 @@ public class Trainer {
         this.costPerHour = costPerHour;
     }
 
-
-
-    public String getName () {
+    String getName () {
         return name;
     }
 
-    public String getSurname () {
+    String getSurname () {
         return surname;
     }
 
-    public int getCostPerHour () {
+    int getCostPerHour () {
         return costPerHour;
     }
 
-    Queue <TrainingType> preparePlan( Gender gender, int trainingDays){
+    Queue <Training> preparePlan ( Gender gender, int trainingDays ) {
         Plan plan = new Plan();
         return plan.generateTrainingPlan(gender, trainingDays);
+    }
+
+    void addSportsMan ( SportsMan sportsMan ) {
+        sportsMenList.add(sportsMan);
+    }
+
+    void removeSprotsMan ( int index ) {
+        if (index < sportsMenList.size()) {
+            sportsMenList.remove(index);
+        } else {
+            System.out.println("There is no sports man at specified index.");
+        }
+    }
+
+    List <SportsMan> getSportsMenList () {
+        return sportsMenList;
     }
 }
