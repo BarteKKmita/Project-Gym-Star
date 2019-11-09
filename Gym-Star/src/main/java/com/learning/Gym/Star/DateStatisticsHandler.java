@@ -11,9 +11,9 @@ import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-class DateStatisticsHandler {
+public class DateStatisticsHandler {
 
-    void saveTrainingDateAndTimeStatistics ( String path ) {
+    public void saveTrainingDateAndTimeStatistics ( String path ) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         String[] dateAndHourOfTraining = dateFormat.format(date).split(" ");
@@ -43,7 +43,7 @@ class DateStatisticsHandler {
         }
     }
 
-    String readDateAndTimeStatistics ( String path ) throws IOException {
+    public String readDateAndTimeStatistics ( String path ) throws IOException {
         File csvData = new File(path);
         CSVParser parser = null;
         StringBuilder statistics = new StringBuilder();

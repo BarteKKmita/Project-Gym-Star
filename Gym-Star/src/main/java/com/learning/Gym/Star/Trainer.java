@@ -2,7 +2,7 @@ package com.learning.Gym.Star;
 
 import java.util.*;
 
-class Trainer {
+public class Trainer {
     private final String name;
     private final String surname;
     private int costPerHour;
@@ -18,11 +18,11 @@ class Trainer {
         this.costPerHour = costPerHour;
     }
 
-    String getName () {
+    public String getName () {
         return name;
     }
 
-    String getSurname () {
+    public String getSurname () {
         return surname;
     }
 
@@ -30,7 +30,7 @@ class Trainer {
         return costPerHour;
     }
 
-    Queue <Training> preparePlan ( Gender gender, int trainingDays ) {
+    public Queue <Training> preparePlan ( Gender gender, int trainingDays ) {
         Plan plan = new Plan();
         return plan.generateTrainingPlan(gender, trainingDays);
     }

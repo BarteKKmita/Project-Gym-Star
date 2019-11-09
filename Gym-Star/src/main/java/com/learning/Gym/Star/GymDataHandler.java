@@ -6,10 +6,10 @@ import java.util.List;
  * This class was created to simulate getting gym data from SQL dadabase.
  */
 
-class GymDataHandler implements GymRepository <GymDataHandler> {
+public class GymDataHandler implements GymRepository <GymDataHandler> {
     private List <String> gymData;
 
-    GymDataHandler () {
+    public GymDataHandler () {
         gymData = new ArrayList <>();
         generateGymData();
     }
@@ -20,7 +20,7 @@ class GymDataHandler implements GymRepository <GymDataHandler> {
         }
     }
 
-    List <String> getGymData () {
+    public List <String> getGymData () {
         return gymData;
     }
 
