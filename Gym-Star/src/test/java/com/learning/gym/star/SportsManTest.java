@@ -1,8 +1,5 @@
 package com.learning.gym.star;
 
-import com.learning.gym.star.ConcreteSportsMan;
-import com.learning.gym.star.GenderChoose;
-import com.learning.gym.star.Statistics;
 import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,13 +48,13 @@ public class SportsManTest {
     void shouldReturnInputString () {
         //Given
         ByteArrayInputStream testIn;
-        String data = "Mariusz";
-        testIn = new ByteArrayInputStream(data.getBytes());
+        String expectedName = "Mariusz";
+        testIn = new ByteArrayInputStream(expectedName.getBytes());
         System.setIn(testIn);
         //When
         sportsMan.chooseTrainer();
         //Then
-        assertEquals(data, sportsMan.getMyTrainer().getName());
+        assertEquals(expectedName, sportsMan.getMyTrainer().getName());
     }
 
     // Trzy niedziałające testy
@@ -111,20 +108,19 @@ public class SportsManTest {
     @Test
     void shouldPrintTrainingMessages () {
         //Given
+        int trainingDays=3;
         ByteArrayInputStream testIn;
         String data = "Mariusz";
         testIn = new ByteArrayInputStream(data.getBytes());
         System.setIn(testIn);
         sportsMan.chooseTrainer();
-        //When
-        sportsMan.getTrainingPlan(3);
+        sportsMan.getTrainingPlan(trainingDays);
         PrintStream out = mock(PrintStream.class);
         System.setOut(out);
+        //When
+        sportsMan.train();
         //Then
-        sportsMan.train();
-        sportsMan.train();
-        sportsMan.train();
-        verify(out).println(startsWith("Doing power training"));
+        verify(out).println(matches("Doing power training"));
     }
 
     @Test
@@ -135,14 +131,14 @@ public class SportsManTest {
         testIn = new ByteArrayInputStream(data.getBytes());
         System.setIn(testIn);
         sportsMan.chooseTrainer();
-        //When
         sportsMan.getTrainingPlan(2);
         PrintStream out = mock(PrintStream.class);
         System.setOut(out);
+        //When
+        sportsMan.train();
+        sportsMan.train();
+        sportsMan.train();
         //Then
-        sportsMan.train();
-        sportsMan.train();
-        sportsMan.train();
         verify(out).println(endsWith("plan."));
     }
 
@@ -154,34 +150,36 @@ public class SportsManTest {
         testIn = new ByteArrayInputStream(data.getBytes());
         System.setIn(testIn);
         sportsMan.chooseTrainer();
-        //When
         PrintStream out = mock(PrintStream.class);
         System.setOut(out);
-        //Then
+        //When
         sportsMan.train();
+        //Then
         verify(out).println(contains("It's bad."));
     }
 
     @Test
     void shouldPrintDateStatistics () {
         //Given
+        int trainingDays = 3;
         ConcreteSportsMan sportsMan = new ConcreteSportsMan("Test", "SportsMan", GenderChoose.M);
         ByteArrayInputStream testIn;
         String data = "Mariusz";
         testIn = new ByteArrayInputStream(data.getBytes());
         System.setIn(testIn);
         sportsMan.chooseTrainer();
-        sportsMan.getTrainingPlan(3);
+        sportsMan.getTrainingPlan(trainingDays);
         //When
         sportsMan.train();
         sportsMan.train();
         sportsMan.train();
         //Then
         sportsMan.printStatistic(new CardioTraning());
+        sportsMan.printAllStatistics();
     }
 
     @Test
-    void shouldReturn82WhenSeed40showClosestGym () {
+    void shouldReturnExpectedGymWhenAskingForClosestGym () {
         //Given
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));

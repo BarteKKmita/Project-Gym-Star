@@ -6,7 +6,7 @@ public class Trainer {
     private final String name;
     private final String surname;
     private int costPerHour;
-    private List <SportsMan> sportsMenList = new ArrayList <>();
+    private Set <SportsMan> sportsMenList = new HashSet <>();
 
     Trainer ( String name, String surname, int costPerHour ) {
         this.name = name;
@@ -39,15 +39,15 @@ public class Trainer {
         sportsMenList.add(sportsMan);
     }
 
-    void removeSprotsMan ( int index ) {
-        if (index < sportsMenList.size()) {
-            sportsMenList.remove(index);
+    void removeSportsMan ( SportsMan sportsMan) {
+        if (sportsMenList.contains(sportsMan)) {
+            sportsMenList.remove(sportsMan);
         } else {
             System.out.println("There is no sports man at specified index.");
         }
     }
 
-    List <SportsMan> getSportsMenList () {
+    Set <SportsMan> getSportsMenList () {
         return sportsMenList;
     }
 }

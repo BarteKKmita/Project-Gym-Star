@@ -10,6 +10,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,13 +31,13 @@ public class DataStatisticsHandlerTest {
     void shouldThrowIOExceptionWhenCallingNotExistingFile () {
         //Given
         DateStatisticsHandler dateStatisticsHandler = new DateStatisticsHandler();
-        String PATH = "data\\FileNotExisting";
+        String path = "data\\FileNotExisting";
         //Then
-        assertThrows(FileNotFoundException.class, () -> dateStatisticsHandler.readDateAndTimeStatistics(PATH));
+        assertThrows(FileNotFoundException.class, () -> dateStatisticsHandler.readDateAndTimeStatistics(path));
     }
 
     @Test
-    void shouldReturnStringWihtDataTypeWhenCallingExistingFile () {
+    void shouldReturnStringWithDataTypeWhenCallingExistingFile () {
         //Given
         DateStatisticsHandler dateStatisticsHandler = new DateStatisticsHandler();
         String PATH = "data\\StatisticsReaderTest.txt";
@@ -56,47 +59,50 @@ public class DataStatisticsHandlerTest {
             e.printStackTrace();
             fail();
         }
-
-
     }
 
     @Test
     void shouldBeAddedLineInFileWhenCallingExistingFile () {
         //Given
         DateStatisticsHandler dateStatisticsHandler = new DateStatisticsHandler();
-        String PATH = "data\\StatisticsReaderTest.txt";
-        int numberOfLinesBefore = 0;
-        //When
-        numberOfLinesBefore = linesInFile(PATH);
-        dateStatisticsHandler.saveTrainingDateAndTimeStatistics(PATH);
-        //Then
-        int numberOfLinesAfter = linesInFile(PATH);
-        assertEquals(numberOfLinesBefore + 1, numberOfLinesAfter);
-    }
-
-    private int linesInFile ( String PATH ) {
-        int numberOfLinesBefore = 0;
-        File csvData = new File(PATH);
-        CSVParser parser = null;
+        String path = "data\\StatisticsReaderTest.txt";
+        long numberOfLinesBefore = 0;
+        long numberOfLinesAfter= 0;
+        Path file = Paths.get(path);
         try {
-            parser = CSVParser.parse(csvData, Charset.defaultCharset(), CSVFormat.EXCEL);//by adding CSVFormat.EXCEL.withHeader() - listing without header
+            numberOfLinesBefore = Files.lines(file).count();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for (CSVRecord record : parser) {
-            numberOfLinesBefore += 1;
+        //When
+        dateStatisticsHandler.saveTrainingDateAndTimeStatistics(path);
+        try {
+            numberOfLinesAfter = Files.lines(file).count();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return numberOfLinesBefore;
+        //Then
+        assertEquals(numberOfLinesBefore + 1, numberOfLinesAfter);
     }
 
     @Test
     void shouldBeAdded2LinesWhenCallingNotExistingFile () {
         //Given
         DateStatisticsHandler dateStatisticsHandler = new DateStatisticsHandler();
-        String PATH = "data\\NotExistingFileYet.txt";
+        String path = "data\\NotExistingFileYet.txt";
+        long numberOfLinesAfter=0;
+        Path file = Paths.get(path);
+        File checkFilePresents = file.toFile();
+        if(checkFilePresents.exists()){
+            checkFilePresents.delete();
+        }
         //When
-        dateStatisticsHandler.saveTrainingDateAndTimeStatistics(PATH);
-        int numberOfLinesAfter = linesInFile(PATH);
+        dateStatisticsHandler.saveTrainingDateAndTimeStatistics(path);
+        try {
+            numberOfLinesAfter = Files.lines(file).count();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         //Then
         assertEquals(2, numberOfLinesAfter);
     }

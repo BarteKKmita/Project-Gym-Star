@@ -88,12 +88,11 @@ class SportsMan implements Gender {
 
     void printAllStatistics () {
         for(TrainingType training: statistics.getAllTrainingsStatistics().keySet()){
-            training.printStatistics(statistics);
+            System.out.println(training.printStatistics(statistics));
         }
         printTrainingsDateAndTimeStats();
     }
 
-    //I think it is not elegant solution!
     void printStatistic ( TrainingType training) {
         System.out.println(training.printStatistics(statistics));
     }
@@ -118,4 +117,18 @@ class SportsMan implements Gender {
         trainings = myTrainer.preparePlan(this, trainingDays);
     }
 
+    @Override
+    public boolean equals ( Object o ) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SportsMan sportsMan = (SportsMan) o;
+        return name.equals(sportsMan.name) &&
+                surname.equals(sportsMan.surname) &&
+                gender == sportsMan.gender;
+    }
+
+    @Override
+    public int hashCode () {
+        return Objects.hash(name, surname, gender);
+    }
 }
