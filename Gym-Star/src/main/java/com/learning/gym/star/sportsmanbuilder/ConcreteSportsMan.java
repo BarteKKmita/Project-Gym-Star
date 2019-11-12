@@ -107,4 +107,8 @@ public class ConcreteSportsMan implements Gender {
         maleSportsMan.chooseTrainer();
         myTrainer=maleSportsMan.getSportsMan().getMyTrainer();
     }
+
+    void chooseOtherTrainingPlan(int trainingDays){
+        trainings=myTrainer.preparePlan(this, trainingDays);
+    }
 }
