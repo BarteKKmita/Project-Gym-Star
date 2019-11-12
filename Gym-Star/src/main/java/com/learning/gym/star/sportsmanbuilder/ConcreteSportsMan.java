@@ -13,14 +13,13 @@ public class ConcreteSportsMan implements Gender {
     private GenderChoose gender;
     private Trainer myTrainer;
     private Queue <TrainingType> trainings;
-    private final String PATH;
-    private int cardioStatistics = 0;
-    private int powerStatistics = 0;
+    private final String path;
+    private TrainingStatistics statistics = new TrainingStatistics();
 
     public ConcreteSportsMan ( String name, String surname ) {
         this.name = name;
         this.surname = surname;
-        PATH = "data\\" + name + surname;
+        path = "data\\" + name + surname;
     }
 
     public void setGender ( GenderChoose gender ) {
@@ -68,18 +67,18 @@ public class ConcreteSportsMan implements Gender {
     void printStatistic ( Statistics stats ) {
         switch (stats) {
             case POWER_TRAINING: {
-                System.out.println(powerStatistics);
+                System.out.println(statistics.getSpecificTrainingTypeStatistics(new PowerTraining()));
                 break;
             }
             case CARDIO_TRAINING: {
-                System.out.println(cardioStatistics);
+                System.out.println(statistics.getSpecificTrainingTypeStatistics(new CardioTraning()));
                 break;
             }
             case TRAININGS: {
                 try {
-                    System.out.println(new DateStatisticsHandler().readDateAndTimeStatistics(PATH));
+                    System.out.println(new DateStatisticsHandler().readDateAndTimeStatistics(path));
                 } catch (IOException e) {
-                    System.out.println("Cannot read " + PATH + " as a data file.");
+                    System.out.println("Cannot read " + path + " as a data file.");
                     e.printStackTrace();
                 }
                 break;
@@ -90,16 +89,12 @@ public class ConcreteSportsMan implements Gender {
     void train () {
         if (trainings == null) {
             System.out.println("It's bad.");
-        } else if (!trainings.isEmpty() && trainings.remove().isCardioTraining()) {
-            cardioStatistics += 1;
-            DateStatisticsHandler dateStatisticsHandler = new DateStatisticsHandler();
-            dateStatisticsHandler.saveTrainingDateAndTimeStatistics(PATH);
-            System.out.println("Doing cardio training");
         } else if (!trainings.isEmpty()) {
-            powerStatistics += 1;
+            TrainingType training = trainings.remove();
             DateStatisticsHandler dateStatisticsHandler = new DateStatisticsHandler();
-            dateStatisticsHandler.saveTrainingDateAndTimeStatistics(PATH);
-            System.out.println("Doing power training");
+            dateStatisticsHandler.saveTrainingDateAndTimeStatistics(path);
+            statistics.addStatistic(training);
+            training.printTraining();
         } else {
             System.out.println("There is no trainings available. Ask your Trainer for training plan.");
         }

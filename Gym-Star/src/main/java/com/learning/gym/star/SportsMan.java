@@ -37,17 +37,17 @@ class SportsMan implements Gender {
     }
 
     void chooseTrainer () {
+        UserInput userInput = new UserInput();
         List <Trainer> listOfTrainers = getTrainers();
         System.out.println("Available trainers list: ");
         for (Trainer trainer : listOfTrainers) {
             System.out.println(trainer.getName() + " " + trainer.getSurname());
         }
-        System.out.println("Choose trainer you want to train with");
-        String chosenName = getTrainerData("name");
-        //String chosenSurname= getTrainerData("surname");
+        String chosenName = userInput.getUserInput("name");
+        //String chosenSurname = userInput.getUserInput("surname");
         for (Trainer trainer : listOfTrainers) {
-            //    && trainer.getSurname().equals(chosenSurname)
-            if (trainer.getName().equals(chosenName)) {
+            //&& trainer.getSurname().equals(chosenSurname)
+            if (trainer.getName().equals(chosenName) ) {
                 myTrainer = trainer;
             }
         }
@@ -56,12 +56,6 @@ class SportsMan implements Gender {
                     " You were given trainer by default");
             myTrainer = listOfTrainers.get(0);
         }
-    }
-
-    private String getTrainerData ( String name ) {
-        System.out.println("Enter trainer " + name);
-        Scanner enterTrainerName = new Scanner(System.in);
-        return enterTrainerName.nextLine();
     }
 
     /**
@@ -93,31 +87,23 @@ class SportsMan implements Gender {
     }
 
     void printAllStatistics () {
-        for (Statistics statistic : Statistics.values()) {
-            printStatistic(statistic);
+        for(TrainingType training: statistics.getAllTrainingsStatistics().keySet()){
+            training.printStatistics(statistics);
         }
+        printTrainingsDateAndTimeStats();
     }
 
     //I think it is not elegant solution!
-    void printStatistic ( Statistics stats ) {
-        switch (stats) {
-            case POWER_TRAINING: {
-                System.out.println(statistics.getSpecificTrainingTypeStatistics(new PowerTraining()));
-                break;
-            }
-            case CARDIO_TRAINING: {
-                System.out.println(statistics.getSpecificTrainingTypeStatistics(new CardioTraning()));
-                break;
-            }
-            case TRAININGS: {
-                try {
-                    System.out.println(new DateStatisticsHandler().readDateAndTimeStatistics(path));
-                } catch (IOException e) {
-                    System.out.println("Cannot read " + path + " as a data file.");
-                    e.printStackTrace();
-                }
-                break;
-            }
+    void printStatistic ( TrainingType training) {
+        System.out.println(training.printStatistics(statistics));
+    }
+
+    void printTrainingsDateAndTimeStats () {
+        try {
+            System.out.println(new DateStatisticsHandler().readDateAndTimeStatistics(path));
+        } catch (IOException e) {
+            System.out.println("Cannot read " + path + " as a data file.");
+            e.printStackTrace();
         }
     }
 

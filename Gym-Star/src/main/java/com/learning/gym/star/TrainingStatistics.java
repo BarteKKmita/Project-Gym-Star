@@ -4,6 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TrainingStatistics {
+
+    public Map <TrainingType, Integer> getAllTrainingsStatistics () {
+        return trainingsStatistics;
+    }
+
     private Map <TrainingType, Integer> trainingsStatistics;
 
     public TrainingStatistics () {

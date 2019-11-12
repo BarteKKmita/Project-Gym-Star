@@ -47,8 +47,8 @@ public class ConcreteSportsManTest {
         //Then
         sportsMan.train();
         sportsMan.train();
-        sportsMan.train();
         verify(out).println(startsWith("Doing power training"));
+        verify(out).println(endsWith("Doing cardio training"));
     }
 
     @Test
@@ -57,6 +57,7 @@ public class ConcreteSportsManTest {
         PrintStream out = mock(PrintStream.class);
         System.setOut(out);
         //Then
+        sportsMan.train();
         sportsMan.train();
         sportsMan.train();
         sportsMan.train();

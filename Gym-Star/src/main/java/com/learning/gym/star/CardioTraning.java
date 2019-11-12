@@ -3,7 +3,7 @@ package com.learning.gym.star;
 import java.util.Objects;
 
 public class CardioTraning implements TrainingType {
-   private final boolean isCardioTraining = true;
+    private final boolean isCardioTraining = true;
 
     @Override
     public boolean equals ( Object o ) {
@@ -21,5 +21,11 @@ public class CardioTraning implements TrainingType {
     @Override
     public void printTraining () {
         System.out.println("Doing cardio training");
+    }
+
+    @Override
+    public String printStatistics ( TrainingStatistics statistics ) {
+        int cardioTrainingCount = statistics.getSpecificTrainingTypeStatistics(this);
+        return "Cardio training count: " +cardioTrainingCount;
     }
 }

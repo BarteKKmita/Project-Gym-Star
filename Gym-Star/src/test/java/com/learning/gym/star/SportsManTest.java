@@ -177,7 +177,7 @@ public class SportsManTest {
         sportsMan.train();
         sportsMan.train();
         //Then
-        sportsMan.printStatistic(Statistics.TRAININGS);
+        sportsMan.printStatistic(new CardioTraning());
     }
 
     @Test

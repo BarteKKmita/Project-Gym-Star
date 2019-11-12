@@ -22,4 +22,11 @@ public class PowerTraining implements TrainingType {
     public void printTraining () {
         System.out.println("Doing power training");
     }
+
+    @Override
+    public String printStatistics ( TrainingStatistics statistics ) {
+        int powerTrainingCount = statistics.getSpecificTrainingTypeStatistics(this);
+        return "Power training count: " +powerTrainingCount;
+    }
+
 }
