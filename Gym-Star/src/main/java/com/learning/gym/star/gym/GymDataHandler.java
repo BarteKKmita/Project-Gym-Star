@@ -1,4 +1,4 @@
-package com.learning.gym.star;
+package com.learning.gym.star.gym;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
  * This class was created to simulate getting gym data from SQL dadabase.
  */
 
-public class GymDataHandler implements GymRepository <GymDataHandler> {
+public class GymDataHandler implements GymRepository {
     private final List <String> gymData;
 
     public GymDataHandler () {

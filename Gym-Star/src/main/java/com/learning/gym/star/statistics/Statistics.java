@@ -1,4 +1,4 @@
-package com.learning.gym.star;
+package com.learning.gym.star.statistics;
 
 public enum Statistics {
     TRAININGS,

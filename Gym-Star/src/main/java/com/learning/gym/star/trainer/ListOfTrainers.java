@@ -1,4 +1,4 @@
-package com.learning.gym.star;
+package com.learning.gym.star.trainer;
 
 import java.util.ArrayList;
 import java.util.List;

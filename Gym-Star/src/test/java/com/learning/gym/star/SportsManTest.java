@@ -1,5 +1,8 @@
 package com.learning.gym.star;
 
+import com.learning.gym.star.sportsman.ConcreteSportsMan;
+import com.learning.gym.star.sportsman.GenderChoose;
+import com.learning.gym.star.training.CardioTraining;
 import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,7 +57,7 @@ public class SportsManTest {
         //When
         sportsMan.chooseTrainer();
         //Then
-        assertEquals(expectedName, sportsMan.getMyTrainer().getName());
+        assertEquals(expectedName, sportsMan.getChosenTrainer().getName());
     }
 
     // Trzy niedziałające testy
@@ -62,14 +65,17 @@ public class SportsManTest {
     void shouldSelectTrainerMariuszFromList () {
         //Given
         ByteArrayInputStream testIn;
-        String data = "Mariusz";
+        String data = "Mariusz\n";
         testIn = new ByteArrayInputStream(data.getBytes());
         System.setIn(testIn);
+        String surname = "Gawryś\n";
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(surname.getBytes());
+        System.setIn(byteArrayInputStream);
         //ConcreteSportsMan sportsMan = new ConcreteSportsMan("Test", "SportsMan", GenderChoose.M);
         //When
         sportsMan.chooseTrainer();
         //Then
-        assertEquals(data, sportsMan.getMyTrainer().getName());
+        assertEquals(data, sportsMan.getChosenTrainer().getName());
     }
 
     @Test
@@ -89,7 +95,7 @@ public class SportsManTest {
         sportsMan.chooseTrainer();
         //Then
 
-        assertEquals(name, sportsMan.getMyTrainer().getName());
+        assertEquals(name, sportsMan.getChosenTrainer().getName());
         //assertEquals(surname, sportsMan.getMyTrainer().getSurname());
     }
 
@@ -174,7 +180,7 @@ public class SportsManTest {
         sportsMan.train();
         sportsMan.train();
         //Then
-        sportsMan.printStatistic(new CardioTraning());
+        sportsMan.printStatistic(new CardioTraining());
         sportsMan.printAllStatistics();
     }
 

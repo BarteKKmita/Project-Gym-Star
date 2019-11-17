@@ -1,4 +1,4 @@
-package com.learning.gym.star;
+package com.learning.gym.star.statistics;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -13,23 +13,22 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateStatisticsHandler {
+    private static final int DATE_INDEX = 0;
+    private static final int TIME_INDEX = 1;
 
     public void saveTrainingDateAndTimeStatistics ( String pathToStatisticsFile ) {
         File statisticsFile = new File(pathToStatisticsFile);
         if (!statisticsFile.exists()) {
-            FileWriter fileWriter = null;
-            try {
+            try(FileWriter fileWriter = new FileWriter(statisticsFile, true)) {
                 statisticsFile.createNewFile();
-                fileWriter = new FileWriter(statisticsFile, true);
-                writeTimeAndTimeToFile(fileWriter, true);
+                writeStatisticsToFile(fileWriter, true);
             } catch (IOException e) {
                 System.out.println("File " + pathToStatisticsFile + "could not be created or cannot close opened file.");
                 e.printStackTrace();
             }
         } else {
-            try {
-                FileWriter fileWriter = new FileWriter(statisticsFile, true);
-                writeTimeAndTimeToFile(fileWriter, false);
+            try( FileWriter fileWriter = new FileWriter(statisticsFile, true)) {
+                writeStatisticsToFile(fileWriter, false);
             } catch (IOException e) {
                 System.out.println("Path to folder or file do not exist or can not be reached. Path: " + pathToStatisticsFile);
                 e.printStackTrace();
@@ -46,17 +45,15 @@ public class DateStatisticsHandler {
         StringBuilder statistics = new StringBuilder();
         parser = CSVParser.parse(csvData, Charset.defaultCharset(), CSVFormat.EXCEL);//by adding CSVFormat.EXCEL.withHeader() - listing without header
         for (CSVRecord record : parser) {
-            statistics.append(record.get(0))
+            statistics.append(record.get(DATE_INDEX))
                     .append(" ")
-                    .append(record.get(1))
+                    .append(record.get(TIME_INDEX))
                     .append(" \n");
         }
         return statistics.toString().trim();
     }
 
-    private void writeTimeAndTimeToFile ( FileWriter fileWriter, boolean withHeader ) throws IOException {
-        final int dateConstant = 0;
-        final int timeConstant = 1;
+    private void writeStatisticsToFile ( FileWriter fileWriter, boolean withHeader ) throws IOException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         String[] dateAndHourOfTraining = dateFormat.format(date).split(" ");
@@ -64,10 +61,9 @@ public class DateStatisticsHandler {
             fileWriter.append("Date, Time");
         }
         fileWriter.append("\n")
-                .append(dateAndHourOfTraining[dateConstant])
+                .append(dateAndHourOfTraining[DATE_INDEX])
                 .append(",")
-                .append(dateAndHourOfTraining[timeConstant]);
+                .append(dateAndHourOfTraining[TIME_INDEX]);
         fileWriter.flush();
-        fileWriter.close();
     }
 }

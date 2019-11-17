@@ -1,8 +1,8 @@
 package com.learning.gym.star.sportsmanbuilder;
 
-import com.learning.gym.star.ListOfTrainers;
-import com.learning.gym.star.Trainer;
-import com.learning.gym.star.TrainingType;
+import com.learning.gym.star.trainer.ListOfTrainers;
+import com.learning.gym.star.trainer.Trainer;
+import com.learning.gym.star.training.TrainingType;
 
 import java.util.List;
 import java.util.Queue;

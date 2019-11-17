@@ -1,6 +1,6 @@
-package com.learning.gym.star;
+package com.learning.gym.star.gym;
 
-public interface GymRepository<GymDataHandler> {
+public interface GymRepository {
 
     void add ( String gym );
 

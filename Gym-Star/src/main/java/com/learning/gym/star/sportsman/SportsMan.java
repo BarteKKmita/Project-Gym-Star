@@ -1,13 +1,21 @@
-package com.learning.gym.star;
+package com.learning.gym.star.sportsman;
+
+import com.learning.gym.star.sportsman.userinput.UserInput;
+import com.learning.gym.star.statistics.DateStatisticsHandler;
+import com.learning.gym.star.gym.GymDataHandler;
+import com.learning.gym.star.trainer.ListOfTrainers;
+import com.learning.gym.star.trainer.Trainer;
+import com.learning.gym.star.statistics.TrainingStatistics;
+import com.learning.gym.star.training.TrainingType;
 
 import java.io.IOException;
 import java.util.*;
 
-class SportsMan implements Gender {
+public class SportsMan implements Gender {
     private final String name;
     private final String surname;
     private final GenderChoose gender;
-    private Trainer myTrainer;
+    private Trainer chosenTrainer;
     private Queue <TrainingType> trainings;
     private final String path;
     private TrainingStatistics statistics = new TrainingStatistics();
@@ -19,24 +27,16 @@ class SportsMan implements Gender {
         path = "data\\" + name + surname;
     }
 
-    public String getName () {
-        return name;
-    }
-
-    public String getSurname () {
-        return surname;
-    }
-
     @Override
     public String getGender () {
         return gender.getGender();
     }
 
-    public Trainer getMyTrainer () {
-        return myTrainer;
+    public Trainer getChosenTrainer () {
+        return chosenTrainer;
     }
 
-    void chooseTrainer () {
+    public void chooseTrainer () {
         UserInput userInput = new UserInput();
         List <Trainer> listOfTrainers = getTrainers();
         System.out.println("Available trainers list: ");
@@ -44,17 +44,17 @@ class SportsMan implements Gender {
             System.out.println(trainer.getName() + " " + trainer.getSurname());
         }
         String chosenName = userInput.getUserInput("name");
-        //String chosenSurname = userInput.getUserInput("surname");
+        String chosenSurname = userInput.getUserInput("surname");
         for (Trainer trainer : listOfTrainers) {
             //&& trainer.getSurname().equals(chosenSurname)
             if (trainer.getName().equals(chosenName) ) {
-                myTrainer = trainer;
+                chosenTrainer = trainer;
             }
         }
-        if (myTrainer == null) {
+        if (chosenTrainer == null) {
             System.out.println("There is no trainer with such name and surname.\n " +
                     " You were given trainer by default");
-            myTrainer = listOfTrainers.get(0);
+            chosenTrainer = listOfTrainers.get(0);
         }
     }
 
@@ -68,11 +68,11 @@ class SportsMan implements Gender {
     }
 
     void chooseOtherTrainer () {
-        myTrainer = null;
+        chosenTrainer = null;
         chooseTrainer();
     }
 
-    void train () {
+    public void train () {
         if (trainings == null) {
             System.out.println("It's bad.");
         } else if (!trainings.isEmpty()) {
@@ -86,14 +86,14 @@ class SportsMan implements Gender {
         }
     }
 
-    void printAllStatistics () {
+    public void printAllStatistics () {
         for(TrainingType training: statistics.getAllTrainingsStatistics().keySet()){
             System.out.println(training.printStatistics(statistics));
         }
         printTrainingsDateAndTimeStats();
     }
 
-    void printStatistic ( TrainingType training) {
+    public void printStatistic ( TrainingType training ) {
         System.out.println(training.printStatistics(statistics));
     }
 
@@ -106,15 +106,15 @@ class SportsMan implements Gender {
         }
     }
 
-    void showClosestGym ( int randomSeed ) {
+    public void showClosestGym ( int randomSeed ) {
         GymDataHandler gymDataHandler = new GymDataHandler();
         List <String> gymData = gymDataHandler.getGymData();
         Random random = new Random(randomSeed);
         System.out.println(gymData.get(random.nextInt(gymData.size())).trim());
     }
 
-    void getTrainingPlan ( int trainingDays ) {
-        trainings = myTrainer.preparePlan(this, trainingDays);
+    public void getTrainingPlan ( int trainingDays ) {
+        trainings = chosenTrainer.preparePlan(this, trainingDays);
     }
 
     @Override

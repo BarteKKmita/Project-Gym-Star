@@ -1,4 +1,8 @@
-package com.learning.gym.star;
+package com.learning.gym.star.trainer;
+
+import com.learning.gym.star.sportsman.Gender;
+import com.learning.gym.star.sportsman.SportsMan;
+import com.learning.gym.star.training.TrainingType;
 
 import java.util.*;
 
@@ -43,7 +47,7 @@ public class Trainer {
         if (sportsMenList.contains(sportsMan)) {
             sportsMenList.remove(sportsMan);
         } else {
-            System.out.println("There is no sports man at specified index.");
+            System.out.println("There is no such sportsman.");
         }
     }
 

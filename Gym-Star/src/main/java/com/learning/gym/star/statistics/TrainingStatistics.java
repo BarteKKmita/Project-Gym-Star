@@ -1,4 +1,6 @@
-package com.learning.gym.star;
+package com.learning.gym.star.statistics;
+
+import com.learning.gym.star.training.TrainingType;
 
 import java.util.HashMap;
 import java.util.Map;

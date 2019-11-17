@@ -1,6 +1,12 @@
 package com.learning.gym.star.sportsmanbuilder;
 
-import com.learning.gym.star.*;
+import com.learning.gym.star.gym.GymDataHandler;
+import com.learning.gym.star.sportsman.Gender;
+import com.learning.gym.star.sportsman.GenderChoose;
+import com.learning.gym.star.statistics.DateStatisticsHandler;
+import com.learning.gym.star.trainer.Trainer;
+import com.learning.gym.star.statistics.TrainingStatistics;
+import com.learning.gym.star.training.TrainingType;
 
 import java.io.IOException;
 import java.util.List;
@@ -59,30 +65,22 @@ public class ConcreteSportsMan implements Gender {
     }
 
     void printAllStatistics () {
-        for (Statistics statistic : Statistics.values()) {
-            printStatistic(statistic);
+        for(TrainingType training: statistics.getAllTrainingsStatistics().keySet()){
+            System.out.println(training.printStatistics(statistics));
         }
+        printTrainingsDateAndTimeStats();
     }
 
-    void printStatistic ( Statistics stats ) {
-        switch (stats) {
-            case POWER_TRAINING: {
-                System.out.println(statistics.getSpecificTrainingTypeStatistics(new PowerTraining()));
-                break;
-            }
-            case CARDIO_TRAINING: {
-                System.out.println(statistics.getSpecificTrainingTypeStatistics(new CardioTraning()));
-                break;
-            }
-            case TRAININGS: {
-                try {
-                    System.out.println(new DateStatisticsHandler().readDateAndTimeStatistics(path));
-                } catch (IOException e) {
-                    System.out.println("Cannot read " + path + " as a data file.");
-                    e.printStackTrace();
-                }
-                break;
-            }
+    void printStatistic ( TrainingType training) {
+        System.out.println(training.printStatistics(statistics));
+    }
+
+    void printTrainingsDateAndTimeStats () {
+        try {
+            System.out.println(new DateStatisticsHandler().readDateAndTimeStatistics(path));
+        } catch (IOException e) {
+            System.out.println("Cannot read " + path + " as a data file.");
+            e.printStackTrace();
         }
     }
 

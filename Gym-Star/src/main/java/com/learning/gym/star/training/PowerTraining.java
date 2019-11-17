@@ -1,21 +1,19 @@
-package com.learning.gym.star;
+package com.learning.gym.star.training;
+
+import com.learning.gym.star.statistics.TrainingStatistics;
 
 import java.util.Objects;
 
 public class PowerTraining implements TrainingType {
-    private final boolean isPowerTraining = true;
-
-    @Override
-    public boolean equals ( Object o ) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PowerTraining that = (PowerTraining) o;
-        return isPowerTraining == that.isPowerTraining;
-    }
 
     @Override
     public int hashCode () {
-        return Objects.hash(isPowerTraining);
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals ( Object obj ) {
+        return super.equals(obj);
     }
 
     @Override

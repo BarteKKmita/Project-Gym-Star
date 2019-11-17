@@ -1,7 +1,7 @@
 package com.learning.gym.star.sportsmanbuilder;
 
 
-import com.learning.gym.star.GenderChoose;
+import com.learning.gym.star.sportsman.GenderChoose;
 
 public class MaleSportsMan implements SportsManBuilder {
     private ConcreteSportsMan sportsMan;
