@@ -7,11 +7,11 @@ import java.util.Map;
 
 public class TrainingStatistics {
 
+    private Map <TrainingType, Integer> trainingsStatistics;
+
     public Map <TrainingType, Integer> getAllTrainingsStatistics () {
         return trainingsStatistics;
     }
-
-    private Map <TrainingType, Integer> trainingsStatistics;
 
     public TrainingStatistics () {
         this.trainingsStatistics = new HashMap <>();
@@ -39,5 +39,4 @@ public class TrainingStatistics {
         }
         return countTrainings;
     }
-
 }

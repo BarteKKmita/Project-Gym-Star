@@ -1,6 +1,6 @@
 package com.learning.gym.star.sportsman;
 
-import com.learning.gym.star.sportsman.userinput.UserInput;
+import com.learning.gym.star.sportsman.userinput.UserText;
 import com.learning.gym.star.statistics.DateStatisticsHandler;
 import com.learning.gym.star.gym.GymDataHandler;
 import com.learning.gym.star.trainer.ListOfTrainers;
@@ -36,18 +36,12 @@ public class SportsMan implements Gender {
         return chosenTrainer;
     }
 
-    public void chooseTrainer () {
-        UserInput userInput = new UserInput();
+    public void chooseTrainer ( UserText userInput ) {
         List <Trainer> listOfTrainers = getTrainers();
-        System.out.println("Available trainers list: ");
-        for (Trainer trainer : listOfTrainers) {
-            System.out.println(trainer.getName() + " " + trainer.getSurname());
-        }
         String chosenName = userInput.getUserInput("name");
         String chosenSurname = userInput.getUserInput("surname");
         for (Trainer trainer : listOfTrainers) {
-            //&& trainer.getSurname().equals(chosenSurname)
-            if (trainer.getName().equals(chosenName) ) {
+            if (trainer.getName().equals(chosenName) && trainer.getSurname().equals(chosenSurname)) {
                 chosenTrainer = trainer;
             }
         }
@@ -58,18 +52,27 @@ public class SportsMan implements Gender {
         }
     }
 
+    private void printAvailableTrainers ( List <Trainer> listOfTrainers ) {
+        System.out.println("Available trainers list: ");
+        for (Trainer trainer : listOfTrainers) {
+            System.out.println(trainer.getName() + " " + trainer.getSurname());
+        }
+    }
+
     /**
      * Helper method to simulate SQL response
      */
 
     private List <Trainer> getTrainers () {
-        ListOfTrainers trainers = new ListOfTrainers();
-        return trainers.getListOfTrainers();
+        ListOfTrainers trainersList = new ListOfTrainers();
+        List <Trainer> trainers = trainersList.getListOfTrainers();
+        printAvailableTrainers(trainers);
+        return trainers;
     }
 
-    void chooseOtherTrainer () {
+    void chooseOtherTrainer ( UserText userInput ) {
         chosenTrainer = null;
-        chooseTrainer();
+        chooseTrainer(userInput);
     }
 
     public void train () {
@@ -87,7 +90,7 @@ public class SportsMan implements Gender {
     }
 
     public void printAllStatistics () {
-        for(TrainingType training: statistics.getAllTrainingsStatistics().keySet()){
+        for (TrainingType training : statistics.getAllTrainingsStatistics().keySet()) {
             System.out.println(training.printStatistics(statistics));
         }
         printTrainingsDateAndTimeStats();

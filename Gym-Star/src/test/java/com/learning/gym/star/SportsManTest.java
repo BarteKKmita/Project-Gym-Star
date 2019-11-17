@@ -2,14 +2,13 @@ package com.learning.gym.star;
 
 import com.learning.gym.star.sportsman.ConcreteSportsMan;
 import com.learning.gym.star.sportsman.GenderChoose;
+import com.learning.gym.star.sportsman.userinput.UserInputForTests;
 import com.learning.gym.star.training.CardioTraining;
-import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
 
-import static org.junit.contrib.java.lang.system.TextFromStandardInputStream.emptyStandardInputStream;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
@@ -48,78 +47,24 @@ public class SportsManTest {
     }
 
     @Test
-    void shouldReturnInputString () {
-        //Given
-        ByteArrayInputStream testIn;
-        String expectedName = "Mariusz";
-        testIn = new ByteArrayInputStream(expectedName.getBytes());
-        System.setIn(testIn);
-        //When
-        sportsMan.chooseTrainer();
-        //Then
-        assertEquals(expectedName, sportsMan.getChosenTrainer().getName());
-    }
-
-    // Trzy niedziałające testy
-    @Test
     void shouldSelectTrainerMariuszFromList () {
         //Given
-        ByteArrayInputStream testIn;
-        String data = "Mariusz\n";
-        testIn = new ByteArrayInputStream(data.getBytes());
-        System.setIn(testIn);
-        String surname = "Gawryś\n";
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(surname.getBytes());
-        System.setIn(byteArrayInputStream);
-        //ConcreteSportsMan sportsMan = new ConcreteSportsMan("Test", "SportsMan", GenderChoose.M);
+        String expectedName = "Mariusz";
+        String expectedSurname = "Gawryś";
         //When
-        sportsMan.chooseTrainer();
+        sportsMan.chooseTrainer(new UserInputForTests(expectedName, expectedSurname));
         //Then
-        assertEquals(data, sportsMan.getChosenTrainer().getName());
-    }
-
-    @Test
-    void shouldSelectTrainerMariuszFromList2 () {
-        //Given
-
-        ByteArrayInputStream testInName;
-        String name = "Mariusz";
-        testInName = new ByteArrayInputStream(name.getBytes());
-        System.setIn(testInName);
-        ByteArrayInputStream testInSurname;
-        ConcreteSportsMan sportsMan = new ConcreteSportsMan("Test", "SportsMan", GenderChoose.M);
-        //When
-        String surname = "Gawryś";
-        testInSurname = new ByteArrayInputStream(surname.getBytes());
-        System.setIn(testInSurname);
-        sportsMan.chooseTrainer();
-        //Then
-
-        assertEquals(name, sportsMan.getChosenTrainer().getName());
-        //assertEquals(surname, sportsMan.getMyTrainer().getSurname());
-    }
-
-    @Test
-    void shouldSelectTrainerMariuszFromList3 () {
-        //Given
-        final TextFromStandardInputStream systemInMock
-                = emptyStandardInputStream();
-        String name = "Mariusz";
-        ConcreteSportsMan sportsMan = new ConcreteSportsMan("Test", "SportsMan", GenderChoose.M);
-        systemInMock.provideLines("Mariusz", "Gawryś");
-        sportsMan.chooseTrainer();
-        //assertEquals(name,sportsMan.getMyTrainer().getName());
+        assertEquals(expectedName, sportsMan.getChosenTrainer().getName());
+        assertEquals(expectedSurname, sportsMan.getChosenTrainer().getSurname());
     }
 
     @Test
     void shouldPrintTrainingMessages () {
         //Given
         int trainingDays=3;
-        ByteArrayInputStream testIn;
-        String data = "Mariusz";
-        testIn = new ByteArrayInputStream(data.getBytes());
-        System.setIn(testIn);
-        sportsMan.chooseTrainer();
+        String trainerName = "Mariusz";
+        String trainerSurname = "Gawryś";
+        sportsMan.chooseTrainer(new UserInputForTests(trainerName, trainerSurname));
         sportsMan.getTrainingPlan(trainingDays);
         PrintStream out = mock(PrintStream.class);
         System.setOut(out);
@@ -132,12 +77,11 @@ public class SportsManTest {
     @Test
     void shouldPrintNoTrainingsAvailableWhenEmptyList () {
         //Given
-        ByteArrayInputStream testIn;
-        String data = "Mariusz";
-        testIn = new ByteArrayInputStream(data.getBytes());
-        System.setIn(testIn);
-        sportsMan.chooseTrainer();
-        sportsMan.getTrainingPlan(2);
+        int trainingDays = 2;
+        String trainerName = "Mariusz";
+        String trainerSurname = "Gawryś";
+        sportsMan.chooseTrainer(new UserInputForTests(trainerName, trainerSurname));
+        sportsMan.getTrainingPlan(trainingDays);
         PrintStream out = mock(PrintStream.class);
         System.setOut(out);
         //When
@@ -151,11 +95,9 @@ public class SportsManTest {
     @Test
     void shouldPrintItsBadWhenCallingNullTrainingPlan () {
         //Given
-        ByteArrayInputStream testIn;
-        String data = "Mariusz";
-        testIn = new ByteArrayInputStream(data.getBytes());
-        System.setIn(testIn);
-        sportsMan.chooseTrainer();
+        String trainerName = "Mariusz";
+        String trainerSurname = "Gawryś";
+        sportsMan.chooseTrainer(new UserInputForTests(trainerName, trainerSurname));
         PrintStream out = mock(PrintStream.class);
         System.setOut(out);
         //When
@@ -169,11 +111,9 @@ public class SportsManTest {
         //Given
         int trainingDays = 3;
         ConcreteSportsMan sportsMan = new ConcreteSportsMan("Test", "SportsMan", GenderChoose.M);
-        ByteArrayInputStream testIn;
-        String data = "Mariusz";
-        testIn = new ByteArrayInputStream(data.getBytes());
-        System.setIn(testIn);
-        sportsMan.chooseTrainer();
+        String trainerName = "Mariusz";
+        String trainerSurname = "Gawryś";
+        sportsMan.chooseTrainer(new UserInputForTests(trainerName, trainerSurname));
         sportsMan.getTrainingPlan(trainingDays);
         //When
         sportsMan.train();

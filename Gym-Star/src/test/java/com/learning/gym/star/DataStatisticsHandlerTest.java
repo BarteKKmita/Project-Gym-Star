@@ -2,6 +2,7 @@ package com.learning.gym.star;
 import com.learning.gym.star.sportsman.ConcreteSportsMan;
 import com.learning.gym.star.sportsman.GenderChoose;
 import com.learning.gym.star.sportsman.SportsMan;
+import com.learning.gym.star.sportsman.userinput.UserInputForTests;
 import com.learning.gym.star.statistics.DateStatisticsHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,13 +42,12 @@ public class DataStatisticsHandlerTest {
         //Given
         DateStatisticsHandler dateStatisticsHandler = new DateStatisticsHandler();
         String PATH = "data\\StatisticsReaderTest.txt";
+        String trainerName = "Mariusz";
+        String trainerSurname = "Gawryś";
+        int trainingDays =3;
         //When
-        ByteArrayInputStream testIn;
-        String data = "Mariusz";
-        testIn = new ByteArrayInputStream(data.getBytes());
-        System.setIn(testIn);
-        sportsMan.chooseTrainer();
-        sportsMan.getTrainingPlan(3);
+        sportsMan.chooseTrainer(new UserInputForTests(trainerName, trainerSurname));
+        sportsMan.getTrainingPlan(trainingDays);
         sportsMan.train();
         try {
             String[] methodOutput = dateStatisticsHandler.readDateAndTimeStatistics(PATH).split(" ");
