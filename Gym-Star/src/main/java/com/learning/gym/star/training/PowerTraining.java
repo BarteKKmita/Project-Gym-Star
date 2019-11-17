@@ -1,20 +1,10 @@
 package com.learning.gym.star.training;
 
 import com.learning.gym.star.statistics.TrainingStatistics;
+import lombok.EqualsAndHashCode;
 
-import java.util.Objects;
-
+@EqualsAndHashCode
 public class PowerTraining implements TrainingType {
-
-    @Override
-    public int hashCode () {
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals ( Object obj ) {
-        return super.equals(obj);
-    }
 
     @Override
     public void printTraining () {
