@@ -2,7 +2,9 @@ package com.learning.gym.star;
 
 import com.learning.gym.star.sportsman.ConcreteSportsMan;
 import com.learning.gym.star.sportsman.GenderChoose;
+import com.learning.gym.star.sportsman.SportsMan;
 import com.learning.gym.star.sportsman.userinput.UserInputForTests;
+import com.learning.gym.star.trainer.Trainer;
 import com.learning.gym.star.training.CardioTraining;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -136,4 +138,6 @@ public class SportsManTest {
         //Then
         assertEquals("82", outContent.toString().trim());
     }
+
+
 }

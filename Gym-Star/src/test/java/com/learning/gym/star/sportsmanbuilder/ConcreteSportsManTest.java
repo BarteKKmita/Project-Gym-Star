@@ -1,34 +1,34 @@
 package com.learning.gym.star.sportsmanbuilder;
 
+import com.learning.gym.star.sportsman.GenderChoose;
+import com.learning.gym.star.statistics.TrainingStatistics;
+import com.learning.gym.star.trainer.Trainer;
+import com.learning.gym.star.training.TrainingType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class ConcreteSportsManTest {
     private ConcreteSportsMan sportsMan;
 
     @BeforeEach
-    void prepareSportsMan () {
-        SportsManBuilder sportsManBuilder = new MaleSportsMan("Bartek", "Kmita");
-        SportsManDirector director = new SportsManDirector(sportsManBuilder);
-        ByteArrayInputStream testIn;
-        String data = "Mariusz";
-        testIn = new ByteArrayInputStream(data.getBytes());
-        System.setIn(testIn);
-        director.setConcreteSportsMan();
-        sportsMan = director.getConcreteSportsMan();
+    void setUp () {
+        Queue<TrainingType> mock = mock(LinkedList.class);
+        sportsMan = new ConcreteSportsMan("Bartek", "Surname", GenderChoose.M,spy(Trainer.class), mock,"data\\Bartek",mock(TrainingStatistics.class));
     }
 
     @Test
     void shouldSelectTrainerMariuszFromList () {
+        //Given
         ByteArrayInputStream testIn;
         String data = "Weronika";
         testIn = new ByteArrayInputStream(data.getBytes());
@@ -70,7 +70,7 @@ public class ConcreteSportsManTest {
         PrintStream out = mock(PrintStream.class);
         System.setOut(out);
         //Then
-        sportsMan.setTrainingPlan(null);
+        sportsMan.withTrainings(null);
         sportsMan.train();
         verify(out).println(contains("It's bad."));
     }

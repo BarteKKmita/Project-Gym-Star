@@ -2,12 +2,12 @@ package com.learning.gym.star.sportsmanbuilder;
 
 import com.learning.gym.star.sportsman.GenderChoose;
 
-public class FemaleSportsMan implements SportsManBuilder{
+public class FemaleSportsMan extends SportsMan implements SportsManBuilder{
     private ConcreteSportsMan sportsMan;
 
     public FemaleSportsMan ( String name, String surname){
         sportsMan=new ConcreteSportsMan(name, surname);
-        sportsMan.setGender(GenderChoose.M);
+        sportsMan.withGender(GenderChoose.M);
     }
 
     public FemaleSportsMan ( ConcreteSportsMan sportsMan){
@@ -16,12 +16,12 @@ public class FemaleSportsMan implements SportsManBuilder{
 
     @Override
     public void chooseTrainer () {
-        sportsMan.setTrainer(trainerBuilder());
+        sportsMan.withMyTrainer(trainerBuilder());
     }
 
     @Override
     public void chooseTrainingPlan(){
-        sportsMan.setTrainingPlan(trainingPlanBuilder(sportsMan.getMyTrainer(),sportsMan, 3));
+        sportsMan.withTrainings(trainingPlanBuilder(sportsMan.getMyTrainer(),sportsMan, 3));
     }
 
     @Override

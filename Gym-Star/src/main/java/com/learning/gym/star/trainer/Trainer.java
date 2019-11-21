@@ -7,12 +7,15 @@ import com.learning.gym.star.training.TrainingType;
 import java.util.*;
 
 public class Trainer {
-    private final String name;
-    private final String surname;
+    private String name;
+    private String surname;
     private int costPerHour;
     private Set <SportsMan> sportsMenList = new HashSet <>();
 
-    Trainer ( String name, String surname, int costPerHour ) {
+    public Trainer () {
+    }
+
+    public Trainer ( String name, String surname, int costPerHour ) {
         this.name = name;
         this.surname = surname;
         this.costPerHour = costPerHour;

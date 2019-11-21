@@ -1,18 +1,18 @@
 package com.learning.gym.star.sportsmanbuilder;
 
 public class SportsManDirector {
-    private SportsManBuilder maleSportsManBuilder;
+    private SportsManBuilder sportsManBuilder;
 
-    public SportsManDirector ( SportsManBuilder maleSportsManBuilder ) {
-        this.maleSportsManBuilder = maleSportsManBuilder;
+    public SportsManDirector ( SportsManBuilder sportsManBuilder ) {
+        this.sportsManBuilder = sportsManBuilder;
     }
 
     public void setConcreteSportsMan(){
-        maleSportsManBuilder.chooseTrainer();
-        maleSportsManBuilder.chooseTrainingPlan();
+        sportsManBuilder.chooseTrainer();
+        sportsManBuilder.chooseTrainingPlan();
     }
 
     public ConcreteSportsMan getConcreteSportsMan(){
-    return maleSportsManBuilder.getSportsMan();
+    return sportsManBuilder.getSportsMan();
     }
 }

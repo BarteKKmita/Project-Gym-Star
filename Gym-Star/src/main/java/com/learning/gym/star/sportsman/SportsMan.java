@@ -11,8 +11,9 @@ import com.learning.gym.star.training.TrainingType;
 import java.io.IOException;
 import java.util.*;
 
+
 public class SportsMan implements Gender {
-    private final String name;
+    private String name;
     private final String surname;
     private final GenderChoose gender;
     private Trainer chosenTrainer;
@@ -73,6 +74,10 @@ public class SportsMan implements Gender {
     void chooseOtherTrainer ( UserText userInput ) {
         chosenTrainer = null;
         chooseTrainer(userInput);
+    }
+
+    void setName(String name){
+        this.name=name;
     }
 
     public void train () {

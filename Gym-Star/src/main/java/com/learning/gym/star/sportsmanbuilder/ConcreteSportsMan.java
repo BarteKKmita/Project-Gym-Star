@@ -7,12 +7,16 @@ import com.learning.gym.star.statistics.DateStatisticsHandler;
 import com.learning.gym.star.trainer.Trainer;
 import com.learning.gym.star.statistics.TrainingStatistics;
 import com.learning.gym.star.training.TrainingType;
+import lombok.*;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 
+@Getter
+@AllArgsConstructor
+@With
 public class ConcreteSportsMan implements Gender {
     private final String name;
     private final String surname;
@@ -28,33 +32,9 @@ public class ConcreteSportsMan implements Gender {
         path = "data\\" + name + surname;
     }
 
-    public void setGender ( GenderChoose gender ) {
-        this.gender = gender;
-    }
-
-    public String getName () {
-        return name;
-    }
-
-    public String getSurname () {
-        return surname;
-    }
-
     @Override
     public String getGender(){
         return gender.getGender();
-    }
-
-    public void setTrainer(Trainer trainer){
-        this.myTrainer=trainer;
-    }
-
-    public void setTrainingPlan(Queue<TrainingType> trainings){
-        this.trainings=trainings;
-    }
-
-    public Trainer getMyTrainer () {
-        return myTrainer;
     }
 
     void showClosestGym ( int randomSeed ) {
@@ -101,7 +81,7 @@ public class ConcreteSportsMan implements Gender {
     //Ta metoda nie zależy od płci. Żeby pisać obiektowo przydałoby się to jednak zmienić.
     // Np podobne wywyołanie metody dla chooseOtherTrainingPlan zakończyłoby się klęską :)
     void chooseOtherTrainer () {
-        MaleSportsMan maleSportsMan = new MaleSportsMan(this);
+        SportsManBuilder maleSportsMan = new MaleSportsMan(this);
         maleSportsMan.chooseTrainer();
         myTrainer=maleSportsMan.getSportsMan().getMyTrainer();
     }
