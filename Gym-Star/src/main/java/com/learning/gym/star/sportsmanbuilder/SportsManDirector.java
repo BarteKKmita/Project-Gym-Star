@@ -1,5 +1,7 @@
 package com.learning.gym.star.sportsmanbuilder;
 
+import com.learning.gym.star.sportsman.userinput.UserText;
+
 public class SportsManDirector {
     private SportsManBuilder sportsManBuilder;
 
@@ -7,8 +9,8 @@ public class SportsManDirector {
         this.sportsManBuilder = sportsManBuilder;
     }
 
-    public void setConcreteSportsMan(){
-        sportsManBuilder.chooseTrainer();
+    public void setConcreteSportsMan( UserText userInput ){
+        sportsManBuilder.chooseTrainer(userInput);
         sportsManBuilder.chooseTrainingPlan();
     }
 

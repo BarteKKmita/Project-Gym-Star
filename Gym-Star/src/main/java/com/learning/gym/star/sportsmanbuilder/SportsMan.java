@@ -7,16 +7,23 @@ import com.learning.gym.star.training.TrainingType;
 
 import java.util.List;
 import java.util.Queue;
-import java.util.Scanner;
 
-public abstract class SportsMan {
+public abstract class SportsMan implements SportsManBuilder {
 
     Trainer trainerBuilder( UserText userInput ){
-        Trainer chosenTrainer=null;
         ListOfTrainers listOfTrainers = new ListOfTrainers();
         List <Trainer> trainers = listOfTrainers.getListOfTrainers();
         String chosenName = userInput.getUserInput("name");
         String chosenSurname = userInput.getUserInput("surname");
+        return selectTrainer(trainers, chosenName, chosenSurname);
+    }
+
+    Queue <TrainingType> trainingPlanBuilder( Trainer myTrainer, ConcreteSportsMan sportsMan, int trainingDays){
+        return myTrainer.preparePlan(sportsMan, trainingDays);
+    }
+
+    private Trainer selectTrainer ( List <Trainer> trainers, String chosenName, String chosenSurname ) {
+        Trainer chosenTrainer=null;
         for (Trainer trainer : trainers) {
             if (trainer.getName().equals(chosenName) && trainer.getSurname().equals(chosenSurname)) {
                 chosenTrainer = trainer;
@@ -28,9 +35,5 @@ public abstract class SportsMan {
             chosenTrainer = trainers.get(0);
         }
         return chosenTrainer;
-    }
-
-     Queue <TrainingType> trainingPlanBuilder( Trainer myTrainer, ConcreteSportsMan sportsMan, int trainingDays){
-        return myTrainer.preparePlan(sportsMan, trainingDays);
     }
 }

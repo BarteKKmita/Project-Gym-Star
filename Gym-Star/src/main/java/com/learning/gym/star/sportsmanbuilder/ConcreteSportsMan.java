@@ -3,6 +3,7 @@ package com.learning.gym.star.sportsmanbuilder;
 import com.learning.gym.star.gym.GymDataHandler;
 import com.learning.gym.star.sportsman.Gender;
 import com.learning.gym.star.sportsman.GenderChoose;
+import com.learning.gym.star.sportsman.userinput.UserText;
 import com.learning.gym.star.statistics.DateStatisticsHandler;
 import com.learning.gym.star.trainer.Trainer;
 import com.learning.gym.star.statistics.TrainingStatistics;
@@ -17,14 +18,15 @@ import java.util.Random;
 @Getter
 @AllArgsConstructor
 @With
+@EqualsAndHashCode
 public class ConcreteSportsMan implements Gender {
     private final String name;
     private final String surname;
     private GenderChoose gender;
-    private Trainer myTrainer;
-    private Queue <TrainingType> trainings;
-    private final String path;
-    private TrainingStatistics statistics = new TrainingStatistics();
+    @EqualsAndHashCode.Exclude private Trainer myTrainer;
+    @EqualsAndHashCode.Exclude private Queue <TrainingType> trainings;
+    @EqualsAndHashCode.Exclude private final String path;
+    @EqualsAndHashCode.Exclude private TrainingStatistics statistics = new TrainingStatistics();
 
     public ConcreteSportsMan ( String name, String surname ) {
         this.name = name;
@@ -33,7 +35,7 @@ public class ConcreteSportsMan implements Gender {
     }
 
     @Override
-    public String getGender(){
+    public String getGender () {
         return gender.getGender();
     }
 
@@ -45,13 +47,13 @@ public class ConcreteSportsMan implements Gender {
     }
 
     void printAllStatistics () {
-        for(TrainingType training: statistics.getAllTrainingsStatistics().keySet()){
+        for (TrainingType training : statistics.getAllTrainingsStatistics().keySet()) {
             System.out.println(training.printStatistics(statistics));
         }
         printTrainingsDateAndTimeStats();
     }
 
-    void printStatistic ( TrainingType training) {
+    void printStatistic ( TrainingType training ) {
         System.out.println(training.printStatistics(statistics));
     }
 
@@ -80,13 +82,13 @@ public class ConcreteSportsMan implements Gender {
 
     //Ta metoda nie zależy od płci. Żeby pisać obiektowo przydałoby się to jednak zmienić.
     // Np podobne wywyołanie metody dla chooseOtherTrainingPlan zakończyłoby się klęską :)
-    void chooseOtherTrainer () {
-        SportsManBuilder maleSportsMan = new MaleSportsMan(this);
-        maleSportsMan.chooseTrainer();
-        myTrainer=maleSportsMan.getSportsMan().getMyTrainer();
+    void chooseOtherTrainer ( UserText userInput ) {
+        SportsMan sportsMan = new MaleSportsMan(this);
+        sportsMan.trainerBuilder(userInput);
+        this.myTrainer= sportsMan.getSportsMan().getMyTrainer();
     }
 
-    void chooseOtherTrainingPlan(int trainingDays){
-        trainings=myTrainer.preparePlan(this, trainingDays);
+    void chooseOtherTrainingPlan ( int trainingDays ) {
+        trainings = myTrainer.preparePlan(this, trainingDays);
     }
 }

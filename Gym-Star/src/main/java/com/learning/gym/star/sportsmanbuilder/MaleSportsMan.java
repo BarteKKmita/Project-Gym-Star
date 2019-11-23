@@ -2,12 +2,13 @@ package com.learning.gym.star.sportsmanbuilder;
 
 
 import com.learning.gym.star.sportsman.GenderChoose;
+import com.learning.gym.star.sportsman.userinput.UserText;
 
 public class MaleSportsMan extends SportsMan implements SportsManBuilder {
     private ConcreteSportsMan sportsMan;
 
-    public MaleSportsMan(String name, String surname){
-        sportsMan=new ConcreteSportsMan(name, surname);
+    public MaleSportsMan ( String name, String surname ) {
+        sportsMan = new ConcreteSportsMan(name, surname);
         sportsMan.withGender(GenderChoose.M);
     }
 
@@ -16,13 +17,13 @@ public class MaleSportsMan extends SportsMan implements SportsManBuilder {
     }
 
     @Override
-    public void chooseTrainer () {
-        sportsMan.withMyTrainer(trainerBuilder());
+    public void chooseTrainer (UserText userInput) {
+        sportsMan.withMyTrainer(trainerBuilder(userInput));
     }
 
     @Override
-    public void chooseTrainingPlan(){
-        sportsMan.withTrainings(trainingPlanBuilder(sportsMan.getMyTrainer(),sportsMan, 3));
+    public void chooseTrainingPlan () {
+        sportsMan.withTrainings(trainingPlanBuilder(sportsMan.getMyTrainer(), sportsMan, 3));
     }
 
     @Override

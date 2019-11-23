@@ -1,6 +1,7 @@
 package com.learning.gym.star.sportsmanbuilder;
 
 import com.learning.gym.star.sportsman.GenderChoose;
+import com.learning.gym.star.sportsman.userinput.UserText;
 
 public class FemaleSportsMan extends SportsMan implements SportsManBuilder{
     private ConcreteSportsMan sportsMan;
@@ -10,13 +11,13 @@ public class FemaleSportsMan extends SportsMan implements SportsManBuilder{
         sportsMan.withGender(GenderChoose.M);
     }
 
-    public FemaleSportsMan ( ConcreteSportsMan sportsMan){
+    public FemaleSportsMan(ConcreteSportsMan sportsMan){
         this.sportsMan=sportsMan;
     }
 
     @Override
-    public void chooseTrainer () {
-        sportsMan.withMyTrainer(trainerBuilder());
+    public void chooseTrainer (UserText userInput) {
+        sportsMan.withMyTrainer(trainerBuilder(userInput));
     }
 
     @Override

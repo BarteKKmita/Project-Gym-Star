@@ -26,64 +26,64 @@ public class ConcreteSportsManTest {
         sportsMan = new ConcreteSportsMan("Bartek", "Surname", GenderChoose.M,spy(Trainer.class), mock,"data\\Bartek",mock(TrainingStatistics.class));
     }
 
-    @Test
-    void shouldSelectTrainerMariuszFromList () {
-        //Given
-        ByteArrayInputStream testIn;
-        String data = "Weronika";
-        testIn = new ByteArrayInputStream(data.getBytes());
-        System.setIn(testIn);
-        //When
-        sportsMan.chooseOtherTrainer();
-        //Then
-        assertEquals(data, sportsMan.getMyTrainer().getName());
+//    @Test
+//    void shouldSelectTrainerMariuszFromList () {
+//        //Given
+//        ByteArrayInputStream testIn;
+//        String data = "Weronika";
+//        testIn = new ByteArrayInputStream(data.getBytes());
+//        System.setIn(testIn);
+//        //When
+//        sportsMan.chooseOtherTrainer();
+//        //Then
+//        assertEquals(data, sportsMan.getMyTrainer().getName());
+//    }
+//
+//    @Test
+//    void shouldPrintTrainingMessages () {
+//        //Given
+//        PrintStream out = mock(PrintStream.class);
+//        System.setOut(out);
+//        //Then
+//        sportsMan.train();
+//        sportsMan.train();
+//        verify(out).println(startsWith("Doing power training"));
+//        verify(out).println(endsWith("Doing cardio training"));
+//    }
+//
+//    @Test
+//    void shouldPrintNoTrainingsAvailableWhenEmptyList () {
+//        //Given
+//        PrintStream out = mock(PrintStream.class);
+//        System.setOut(out);
+//        //Then
+//        sportsMan.train();
+//        sportsMan.train();
+//        sportsMan.train();
+//        sportsMan.train();
+//        verify(out).println(endsWith("plan."));
+//    }
+//
+//    @Test
+//    void shouldReturn82WhenSeed40showClosestGym () {
+//        //Given
+//        int seed = 40;
+//        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+//        System.setOut(new PrintStream(outContent));
+//        //When
+//        sportsMan.showClosestGym(seed);
+//        //Then
+//        assertEquals("82", outContent.toString().trim());
+//    }
+//
+//    @Test
+//    void shouldPrintItsBadWhenCallingNullTrainingPlan () {
+//        //When
+//        PrintStream out = mock(PrintStream.class);
+//        System.setOut(out);
+//        //Then
+//        sportsMan.withTrainings(null);
+//        sportsMan.train();
+//        verify(out).println(contains("It's bad."));
     }
 
-    @Test
-    void shouldPrintTrainingMessages () {
-        //Given
-        PrintStream out = mock(PrintStream.class);
-        System.setOut(out);
-        //Then
-        sportsMan.train();
-        sportsMan.train();
-        verify(out).println(startsWith("Doing power training"));
-        verify(out).println(endsWith("Doing cardio training"));
-    }
-
-    @Test
-    void shouldPrintNoTrainingsAvailableWhenEmptyList () {
-        //Given
-        PrintStream out = mock(PrintStream.class);
-        System.setOut(out);
-        //Then
-        sportsMan.train();
-        sportsMan.train();
-        sportsMan.train();
-        sportsMan.train();
-        verify(out).println(endsWith("plan."));
-    }
-
-    @Test
-    void shouldPrintItsBadWhenCallingNullTrainingPlan () {
-        //When
-        PrintStream out = mock(PrintStream.class);
-        System.setOut(out);
-        //Then
-        sportsMan.withTrainings(null);
-        sportsMan.train();
-        verify(out).println(contains("It's bad."));
-    }
-
-    @Test
-    void shouldReturn82WhenSeed40showClosestGym () {
-        //Given
-        int seed = 40;
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-        //When
-        sportsMan.showClosestGym(seed);
-        //Then
-        assertEquals("82", outContent.toString().trim());
-    }
-}
