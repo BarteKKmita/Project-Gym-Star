@@ -32,8 +32,9 @@ class MaleSportsManTest {
     }
 
     @Test
-    void chooseTrainingPlan () {
+    void shouldReturnTrainingPlan () {
         //Given
+        //Zostawienie mock trainer.class daje null point exception
         sportsMan = new ConcreteSportsMan("Name", "Surname", GenderChoose.M, spy(Trainer.class), mock(LinkedList.class), "data\\Test", mock(TrainingStatistics.class));
         int expectedListSize = 3;
         MaleSportsMan maleSportsMan = new MaleSportsMan(sportsMan);
