@@ -21,8 +21,8 @@ public class MaleSportsMan extends SportsMan implements SportsManBuilder {
     }
 
     @Override
-    public void chooseTrainingPlan () {
-        sportsMan = sportsMan.withTrainings(trainingPlanBuilder(sportsMan.getMyTrainer(), sportsMan, 3));
+    public void chooseTrainingPlan ( int trainingDays ) {
+        sportsMan = sportsMan.withTrainings(trainingPlanBuilder(sportsMan.getMyTrainer(), sportsMan, trainingDays));
     }
 
     @Override

@@ -6,7 +6,7 @@ public interface SportsManBuilder {
 
     void chooseTrainer ( UserText userInput );
 
-    void chooseTrainingPlan();
+    void chooseTrainingPlan ( int trainingDays );
 
     ConcreteSportsMan getSportsMan ();
 }

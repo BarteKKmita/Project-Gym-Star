@@ -36,10 +36,11 @@ class MaleSportsManTest {
         //Given
         //Zostawienie mock trainer.class daje null point exception
         sportsMan = new ConcreteSportsMan("Name", "Surname", GenderChoose.M, spy(Trainer.class), mock(LinkedList.class), "data\\Test", mock(TrainingStatistics.class));
+        int trainingDays= 3;
         int expectedListSize = 3;
         MaleSportsMan maleSportsMan = new MaleSportsMan(sportsMan);
         //When
-        maleSportsMan.chooseTrainingPlan();
+        maleSportsMan.chooseTrainingPlan(trainingDays);
         ConcreteSportsMan testingSportsMan = maleSportsMan.getSportsMan();
         //Then
         assertThat(testingSportsMan.getTrainings(), Matchers.hasSize(expectedListSize));

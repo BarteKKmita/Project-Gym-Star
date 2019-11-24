@@ -5,16 +5,11 @@ import com.learning.gym.star.statistics.TrainingStatistics;
 import com.learning.gym.star.trainer.Trainer;
 import com.learning.gym.star.training.TrainingType;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.*;
+
 import static org.mockito.Mockito.*;
 
 public class ConcreteSportsManTest {
@@ -22,8 +17,8 @@ public class ConcreteSportsManTest {
 
     @BeforeEach
     void setUp () {
-        Queue<TrainingType> mock = mock(LinkedList.class);
-        sportsMan = new ConcreteSportsMan("Bartek", "Surname", GenderChoose.M,spy(Trainer.class), mock,"data\\Bartek",mock(TrainingStatistics.class));
+        Queue <TrainingType> mock = mock(LinkedList.class);
+        sportsMan = new ConcreteSportsMan("Bartek", "Surname", GenderChoose.M, spy(Trainer.class), mock, "data\\Bartek", mock(TrainingStatistics.class));
     }
 
 //    @Test
@@ -85,5 +80,5 @@ public class ConcreteSportsManTest {
 //        sportsMan.withTrainings(null);
 //        sportsMan.train();
 //        verify(out).println(contains("It's bad."));
-    }
+}
 

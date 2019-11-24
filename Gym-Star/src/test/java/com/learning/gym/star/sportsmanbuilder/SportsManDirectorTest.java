@@ -1,13 +1,6 @@
 package com.learning.gym.star.sportsmanbuilder;
 
-import com.learning.gym.star.sportsman.userinput.ConsoleUserInput;
-import com.learning.gym.star.sportsman.userinput.UserInputForTests;
-import com.learning.gym.star.trainer.Trainer;
-import com.learning.gym.star.training.TrainingType;
 import org.junit.jupiter.api.Test;
-
-import java.util.Queue;
-import java.util.concurrent.ArrayBlockingQueue;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
