@@ -9,7 +9,7 @@ import java.util.Queue;
 
 public class Plan {
     public Queue <TrainingType> generateTrainingPlan ( Gender gender, int trainingDays ) {
-        if (gender.getGender().equals(GenderChoose.M.getGender())) {
+        if (GenderChoose.M.getGender().equals(gender.getGender())) {
             return new MalePlan().generateTrainingPlan(trainingDays);
         }
         return new FemalePlan().generateTrainingPlan(trainingDays);
