@@ -4,25 +4,26 @@ import com.learning.gym.star.sportsman.GenderChoose;
 import com.learning.gym.star.sportsman.userinput.UserText;
 
 public class FemaleSportsMan extends SportsMan implements SportsManBuilder {
-    private ConcreteSportsMan sportsMan;
 
-    public FemaleSportsMan ( String name, String surname ) {
-        sportsMan = new ConcreteSportsMan(name, surname);
-        sportsMan.withGender(GenderChoose.M);
-    }
+    private ConcreteSportsMan sportsMan;
 
     public FemaleSportsMan ( ConcreteSportsMan sportsMan ) {
         this.sportsMan = sportsMan;
     }
 
+    public FemaleSportsMan ( String name, String surname ) {
+        sportsMan = new ConcreteSportsMan(name, surname);
+        sportsMan = sportsMan.withGender(GenderChoose.W);
+    }
+
     @Override
     public void chooseTrainer ( UserText userInput ) {
-        sportsMan.withMyTrainer(trainerBuilder(userInput));
+        sportsMan = sportsMan.withMyTrainer(trainerBuilder(userInput));
     }
 
     @Override
     public void chooseTrainingPlan ( int trainingDays ) {
-        sportsMan.withTrainings(trainingPlanBuilder(sportsMan.getMyTrainer(), sportsMan, trainingDays));
+        sportsMan = sportsMan.withTrainings(trainingPlanBuilder(sportsMan.getMyTrainer(), sportsMan, trainingDays));
     }
 
     @Override

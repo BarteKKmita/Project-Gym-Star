@@ -57,7 +57,7 @@ public class ConcreteSportsMan implements Gender {
         System.out.println(training.printStatistics(statistics));
     }
 
-    void printTrainingsDateAndTimeStats () {
+     void printTrainingsDateAndTimeStats () {
         try {
             System.out.println(new DateStatisticsHandler().readDateAndTimeStatistics(path));
         } catch (IOException e) {
@@ -69,7 +69,7 @@ public class ConcreteSportsMan implements Gender {
     void train () {
         if (trainings == null) {
             System.out.println("It's bad.");
-        } else if (!trainings.isEmpty()) {
+        } else if (!(trainings.isEmpty())) {
             TrainingType training = trainings.remove();
             DateStatisticsHandler dateStatisticsHandler = new DateStatisticsHandler();
             dateStatisticsHandler.saveTrainingDateAndTimeStatistics(path);
@@ -80,8 +80,7 @@ public class ConcreteSportsMan implements Gender {
         }
     }
 
-    //Ta metoda nie zależy od płci. Żeby pisać obiektowo przydałoby się to jednak zmienić.
-    // Np podobne wywyołanie metody dla chooseOtherTrainingPlan zakończyłoby się klęską :)
+    //TODO
     void chooseOtherTrainer ( UserText userInput ) {
         SportsMan sportsMan = new MaleSportsMan(this);
         this.myTrainer=sportsMan.trainerBuilder(userInput);;

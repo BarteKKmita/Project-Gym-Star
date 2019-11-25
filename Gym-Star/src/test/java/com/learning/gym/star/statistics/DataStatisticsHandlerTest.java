@@ -1,13 +1,16 @@
-package com.learning.gym.star;
+package com.learning.gym.star.statistics;
+
 import com.learning.gym.star.sportsman.ConcreteSportsMan;
 import com.learning.gym.star.sportsman.GenderChoose;
 import com.learning.gym.star.sportsman.SportsMan;
 import com.learning.gym.star.sportsman.userinput.UserInputForTests;
-import com.learning.gym.star.statistics.DateStatisticsHandler;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayInputStream;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,9 +18,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DataStatisticsHandlerTest {
 
@@ -44,7 +44,7 @@ public class DataStatisticsHandlerTest {
         String PATH = "data\\StatisticsReaderTest.txt";
         String trainerName = "Mariusz";
         String trainerSurname = "Gawryś";
-        int trainingDays =3;
+        int trainingDays = 3;
         //When
         sportsMan.chooseTrainer(new UserInputForTests(trainerName, trainerSurname));
         sportsMan.getTrainingPlan(trainingDays);
@@ -67,7 +67,7 @@ public class DataStatisticsHandlerTest {
         DateStatisticsHandler dateStatisticsHandler = new DateStatisticsHandler();
         String path = "data\\StatisticsReaderTest.txt";
         long numberOfLinesBefore = 0;
-        long numberOfLinesAfter= 0;
+        long numberOfLinesAfter = 0;
         Path file = Paths.get(path);
         try {
             numberOfLinesBefore = Files.lines(file).count();
@@ -90,10 +90,10 @@ public class DataStatisticsHandlerTest {
         //Given
         DateStatisticsHandler dateStatisticsHandler = new DateStatisticsHandler();
         String path = "data\\NotExistingFileYet.txt";
-        long numberOfLinesAfter=0;
+        long numberOfLinesAfter = 0;
         Path file = Paths.get(path);
         File checkFilePresents = file.toFile();
-        if(checkFilePresents.exists()){
+        if (checkFilePresents.exists()) {
             checkFilePresents.delete();
         }
         //When

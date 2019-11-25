@@ -1,6 +1,5 @@
-package com.learning.gym.star;
+package com.learning.gym.star.gym;
 
-import com.learning.gym.star.gym.GymDataHandler;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
