@@ -8,7 +8,7 @@ public class MaleSportsMan extends SportsMan implements SportsManBuilder {
 
     public MaleSportsMan ( String name, String surname ) {
         sportsMan = new ConcreteSportsMan(name, surname);
-        sportsMan.withGender(GenderChoose.M);
+        sportsMan = sportsMan.withGender(GenderChoose.M);
     }
 
     public MaleSportsMan ( ConcreteSportsMan sportsMan ) {

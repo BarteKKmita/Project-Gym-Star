@@ -7,21 +7,23 @@ import com.learning.gym.star.trainer.ListOfTrainers;
 import com.learning.gym.star.trainer.Trainer;
 import com.learning.gym.star.statistics.TrainingStatistics;
 import com.learning.gym.star.training.TrainingType;
+import lombok.*;
 
 import java.io.IOException;
 import java.util.*;
 
-
+@Getter
+@EqualsAndHashCode
 public class SportsMan implements Gender {
-    private String name;
+    private final String name;
     private final String surname;
     private final GenderChoose gender;
-    private Trainer chosenTrainer;
-    private Queue <TrainingType> trainings;
-    private final String path;
-    private TrainingStatistics statistics = new TrainingStatistics();
+    @EqualsAndHashCode.Exclude private Trainer chosenTrainer;
+    @EqualsAndHashCode.Exclude private Queue <TrainingType> trainings;
+    @EqualsAndHashCode.Exclude private final String path;
+    @EqualsAndHashCode.Exclude private TrainingStatistics statistics = new TrainingStatistics();
 
-    SportsMan ( String name, String surname, GenderChoose gender ) {
+    public SportsMan ( String name, String surname, GenderChoose gender ) {
         this.name = name;
         this.surname = surname;
         this.gender = gender;
@@ -31,10 +33,6 @@ public class SportsMan implements Gender {
     @Override
     public String getGender () {
         return gender.getGender();
-    }
-
-    public Trainer getChosenTrainer () {
-        return chosenTrainer;
     }
 
     public void chooseTrainer ( UserText userInput ) {
@@ -76,10 +74,6 @@ public class SportsMan implements Gender {
         chooseTrainer(userInput);
     }
 
-    void setName(String name){
-        this.name=name;
-    }
-
     public void train () {
         if (trainings == null) {
             System.out.println("It's bad.");
@@ -105,7 +99,7 @@ public class SportsMan implements Gender {
         System.out.println(training.printStatistics(statistics));
     }
 
-    void printTrainingsDateAndTimeStats () {
+    private void printTrainingsDateAndTimeStats () {
         try {
             System.out.println(new DateStatisticsHandler().readDateAndTimeStatistics(path));
         } catch (IOException e) {
@@ -123,20 +117,5 @@ public class SportsMan implements Gender {
 
     public void getTrainingPlan ( int trainingDays ) {
         trainings = chosenTrainer.preparePlan(this, trainingDays);
-    }
-
-    @Override
-    public boolean equals ( Object o ) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        SportsMan sportsMan = (SportsMan) o;
-        return name.equals(sportsMan.name) &&
-                surname.equals(sportsMan.surname) &&
-                gender == sportsMan.gender;
-    }
-
-    @Override
-    public int hashCode () {
-        return Objects.hash(name, surname, gender);
     }
 }

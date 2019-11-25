@@ -84,8 +84,7 @@ public class ConcreteSportsMan implements Gender {
     // Np podobne wywyołanie metody dla chooseOtherTrainingPlan zakończyłoby się klęską :)
     void chooseOtherTrainer ( UserText userInput ) {
         SportsMan sportsMan = new MaleSportsMan(this);
-        sportsMan.trainerBuilder(userInput);
-        this.myTrainer= sportsMan.getSportsMan().getMyTrainer();
+        this.myTrainer=sportsMan.trainerBuilder(userInput);;
     }
 
     void chooseOtherTrainingPlan ( int trainingDays ) {

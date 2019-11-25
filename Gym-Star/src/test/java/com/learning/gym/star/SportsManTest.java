@@ -4,14 +4,14 @@ import com.learning.gym.star.sportsman.ConcreteSportsMan;
 import com.learning.gym.star.sportsman.GenderChoose;
 import com.learning.gym.star.sportsman.SportsMan;
 import com.learning.gym.star.sportsman.userinput.UserInputForTests;
-import com.learning.gym.star.trainer.Trainer;
 import com.learning.gym.star.training.CardioTraining;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.*;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -139,5 +139,55 @@ public class SportsManTest {
         assertEquals("82", outContent.toString().trim());
     }
 
+    @Test
+    void shouldClassBeReflexive(){
+        //Given
+        SportsMan sportsMan = new SportsMan("Name", "Surname", GenderChoose.M);
+        //Then
+        assertEquals(sportsMan, sportsMan);
+    }
 
+    @Test
+    void shouldClassBeSymmetric (){
+        //Given
+        SportsMan sportsMan = new SportsMan("Name", "Surname", GenderChoose.M);
+        SportsMan secondSportsMan = new SportsMan("Name", "Surname", GenderChoose.M);
+        //Then
+        assertTrue(sportsMan.equals( secondSportsMan)&&secondSportsMan.equals(sportsMan));
+    }
+
+    @Test
+    void shouldBeFalseWhenComparingDifferentObjects (){
+        //Given
+        SportsMan sportsMan = new SportsMan("Name", "Surname", GenderChoose.M);
+        SportsMan secondSportsMan = new SportsMan("AnotherName", "Surname", GenderChoose.M);
+        //Then
+        assertFalse(sportsMan.equals( secondSportsMan)&&secondSportsMan.equals(sportsMan));
+    }
+
+    @Test
+    void shouldClassBeTransitive(){
+        //Given
+        SportsMan sportsMan = new SportsMan("Name", "Surname", GenderChoose.M);
+        SportsMan secondSportsMan = new SportsMan("Name", "Surname", GenderChoose.M);
+        SportsMan thirdSportsMan = new SportsMan("Name", "Surname", GenderChoose.M);
+        //When
+        if(sportsMan.equals(secondSportsMan)&& secondSportsMan.equals(thirdSportsMan)){
+            //Then
+            assertEquals(secondSportsMan, thirdSportsMan);
+        }
+    }
+
+    @Test
+    void shouldExcludedFieldsNoChangeEquals(){
+        //Given
+        String trainerName= "Mariusz";
+        String trainerSurname = "Gawryś";
+        SportsMan sportsMan = new SportsMan("Name", "Surname", GenderChoose.M);
+        SportsMan secondSportsMan = new SportsMan("Name", "Surname", GenderChoose.M);
+        //When
+        sportsMan.chooseTrainer(new UserInputForTests(trainerName, trainerSurname));
+        //Then
+        assertEquals(secondSportsMan, sportsMan);
+    }
 }
