@@ -10,7 +10,7 @@ public class Trainer {
     private String name;
     private String surname;
     private int costPerHour;
-    private Set <SportsMan> sportsMenList = new HashSet <>();
+    private Set <SportsMan> sportsMenList = new LinkedHashSet <>();
 
     public Trainer () {
     }
@@ -46,7 +46,7 @@ public class Trainer {
         sportsMenList.add(sportsMan);
     }
 
-    void removeSportsMan ( SportsMan sportsMan) {
+    void removeSportsMan ( SportsMan sportsMan ) {
         if (sportsMenList.contains(sportsMan)) {
             sportsMenList.remove(sportsMan);
         } else {
@@ -57,4 +57,27 @@ public class Trainer {
     Set <SportsMan> getSportsMenList () {
         return sportsMenList;
     }
+
+    String printSportsMen () {
+        StringBuilder sportsMenNames = new StringBuilder();
+        List <SportsMan> sportsMen = new ArrayList <>(sportsMenList);
+        for (int i = 0; i < sportsMen.size(); i++) {
+            sportsMenNames.append(sportsMen.get(i).getName()).append(", ");
+        }
+        return sportsMenNames.toString();
+    }
+
+    String printSportsManAuxiliary () {
+        return printSportsMenRecursive(new ArrayList <>(sportsMenList), 0, "");
+    }
+
+    String printSportsMenRecursive ( List <SportsMan> list, int i, String sportsMenNames ) {
+        if (list.size() == i) {
+            return sportsMenNames;
+        }
+        sportsMenNames += list.get(i).getName() + ", ";
+        i++;
+        return printSportsMenRecursive(list, i, sportsMenNames);
+    }
+
 }
