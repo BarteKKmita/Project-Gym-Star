@@ -60,9 +60,8 @@ public class Trainer {
 
     String printSportsMen () {
         StringBuilder sportsMenNames = new StringBuilder();
-        List <SportsMan> sportsMen = new ArrayList <>(sportsMenList);
-        for (int i = 0; i < sportsMen.size(); i++) {
-            sportsMenNames.append(sportsMen.get(i).getName()).append(", ");
+        for (SportsMan sportsMan : sportsMenList) {
+            sportsMenNames.append(sportsMan.getName()).append(", ");
         }
         return sportsMenNames.toString();
     }

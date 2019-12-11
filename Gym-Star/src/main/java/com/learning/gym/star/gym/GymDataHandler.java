@@ -20,18 +20,26 @@ public class GymDataHandler implements GymRepository {
         }
     }
 
+    @Override
     public List <String> getGymData () {
         return gymData;
     }
 
+
+    //TODO
     @Override
-    public void add ( String gym ) {
-        gymData.add(gym);
+    public String[] getGymDataById ( int id ) {
+        return new String[0];
     }
 
     @Override
-    public void update ( String gym, int index ) {
-        gymData.set(index, gym);
+    public void add ( Gym gym ) {
+        gymData.add(gym.toString());
+    }
+
+    @Override
+    public void update ( Gym gym, int index ) {
+        gymData.set(index, gym.toString());
     }
 
     @Override

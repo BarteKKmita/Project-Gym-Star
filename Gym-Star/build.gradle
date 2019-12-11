@@ -19,13 +19,10 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
-	implementation 'org.springframework.boot:spring-boot-starter-freemarker'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.data:spring-data-rest-hal-browser'
 	implementation 'org.apache.commons:commons-csv:1.6'
-	runtimeOnly 'org.hsqldb:hsqldb'
-	runtimeOnly 'org.postgresql:postgresql'
+	runtime 'mysql:mysql-connector-java'
+	runtime('com.h2database:h2')
 	compileOnly 'org.projectlombok:lombok:1.18.10'
 	annotationProcessor 'org.projectlombok:lombok:1.18.10'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
