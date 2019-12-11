@@ -36,6 +36,5 @@ src/main/resources/application.properties
 **/resources/application.properties
 src/test/resources/application.properties
 
-
 ### Embedded MySQL files
 **/target/
