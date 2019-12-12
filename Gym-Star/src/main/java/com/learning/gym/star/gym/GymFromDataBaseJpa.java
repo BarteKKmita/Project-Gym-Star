@@ -29,14 +29,14 @@ public class GymFromDataBaseJpa implements GymRepository {
 
     @Override
     public void update ( Gym gym, int index ) {
-        String sql = "UPDATE gym SET gym_id= ? , gym_name= ? , street = ? , city = ? , building_number= ? WHERE id = ?";
+        String sql = "UPDATE gym SET gym_id= ? , gym_name= ? , street = ? , city = ? , building_number= ? WHERE gym_id = ?";
         Object[] param = gymQueryParameters.getQueryParameters(gym, index).toArray();
         jdbcTemplate.update(sql, param);
     }
 
     @Override
     public void remove ( int index ) {
-        String sql = "DELETE FROM gym WHERE id = ?";
+        String sql = "DELETE FROM gym WHERE gym_id = ?";
         Object[] param = gymQueryParameters.getQueryParameters(index).toArray();
         jdbcTemplate.update(sql, param);
     }

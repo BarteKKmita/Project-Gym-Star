@@ -4,25 +4,26 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.sql.DataSource;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 class GymFromDataBaseTest {
-
+    private GymQueryParameters gymQueryParameters = new GymQueryParameters();
     @Autowired
-    DataSource dataSource;
-    JdbcTemplate jdbcTemplate;
+    private DataSource dataSource;
+
 
     @Test
     void testJdbcTemplateCreation () {
-        //assertNotNull(dataSource);
-        //assertNotNull(jdbcTemplate);
+        assertNotNull(dataSource);
     }
 
     @Test
@@ -31,9 +32,78 @@ class GymFromDataBaseTest {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         GymQueryParameters gymQueryParameters = new GymQueryParameters();
         GymFromDataBaseJpa gymFromDataBase = new GymFromDataBaseJpa(jdbcTemplate, gymQueryParameters);
+        int expectedColumns = 5;
+        int gym_id = 1;
         //When
-        String[] gymData = gymFromDataBase.getGymDataById(1);
+        String[] gymData = gymFromDataBase.getGymDataById(gym_id);
         //Then
-        assertNotNull(gymData);
+        assertEquals(expectedColumns, gymData.length);
     }
+
+    @Test
+    void shouldThrowExceptionWhenCallingNotExistingGymRecord () {
+        //Given
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        GymQueryParameters gymQueryParameters = new GymQueryParameters();
+        GymFromDataBaseJpa gymFromDataBase = new GymFromDataBaseJpa(jdbcTemplate, gymQueryParameters);
+        int gym_id = 6;
+        //Then
+        assertThrows(EmptyResultDataAccessException.class, () -> gymFromDataBase.getGymDataById(gym_id));
+    }
+
+    @Test
+    void shouldAddRecordToGymTable () {
+        //Given
+        Gym testGym = Gym.builder().gym_id("2")
+                .gym_name("Test Gym")
+                .city("Test city")
+                .building_number("1")
+                .street("Sezamkowa")
+                .build();
+        GymFromDataBaseJpa gymFromDataBaseJpa = new GymFromDataBaseJpa(new JdbcTemplate(dataSource), gymQueryParameters);
+        //Then
+        assertDoesNotThrow(() -> gymFromDataBaseJpa.add(testGym));
+
+    }
+
+    @Test
+    void shouldThrowExceptionWhenAddingRecordWithExistingGymId () {
+        //Given
+        Gym testGym = Gym.builder().gym_id("1")
+                .gym_name("Test Gym")
+                .city("Test city")
+                .building_number("1")
+                .street("Sezamkowa")
+                .build();
+        GymFromDataBaseJpa gymFromDataBaseJpa = new GymFromDataBaseJpa(new JdbcTemplate(dataSource), gymQueryParameters);
+        //Then
+        assertThrows(DuplicateKeyException.class, () -> gymFromDataBaseJpa.add(testGym));
+    }
+
+    @Test
+    void shouldUpdateExistingGym () {
+        //Given
+        Gym testGym = Gym.builder().gym_id("1")
+                .gym_name("Test Gym")
+                .city("Test city")
+                .building_number("1")
+                .street("Sezamkowa")
+                .build();
+        int gym_id = 1;
+        GymFromDataBaseJpa gymFromDataBaseJpa = new GymFromDataBaseJpa(new JdbcTemplate(dataSource), gymQueryParameters);
+        //Then
+        assertDoesNotThrow(() -> gymFromDataBaseJpa.update(testGym, gym_id));
+    }
+
+    @Test
+    void shouldDeleteExistingGym () {
+        //Given
+        int gym_id = 1;
+        GymFromDataBaseJpa gymFromDataBaseJpa = new GymFromDataBaseJpa(new JdbcTemplate(dataSource), gymQueryParameters);
+        //Then
+        assertDoesNotThrow(() -> gymFromDataBaseJpa.remove(gym_id));
+    }
+
+    //TODO
+    //Write test cases for reading data from embedded database after specified CRUD transactions
 }
