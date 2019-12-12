@@ -7,14 +7,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @AllArgsConstructor
 @Repository("database access JDBC")
 public class GymFromDataBaseJDBC implements GymRepository {
 
-    JdbcConnecotr jdbcConnecotr;
+    private JdbcConnecotr jdbcConnecotr;
+    private GymQueryParameters gymQueryParameters;
 
     public GymFromDataBaseJDBC () {
         jdbcConnecotr = new JdbcConnecotr();
@@ -23,28 +23,27 @@ public class GymFromDataBaseJDBC implements GymRepository {
     @Override
     public void add ( Gym gym ) {
         String sql = "INSERT INTO gym Values (?, ? , ? ,? , ? )";
-        List <String> queryParameters = getQueryParameters(gym);
+        List <String> queryParameters = gymQueryParameters.getQueryParameters(gym);
         changeTableData(sql, queryParameters);
     }
 
     @Override
     public void update ( Gym gym, int gymId ) {
         String sql = "UPDATE gym SET gym_id=?, gym_name= ? , street = ? , city = ? , building_number= ?  WHERE gym_id = ?";
-        List <String> queryParameters = getQueryParameters(gym, gymId);
+        List <String> queryParameters = gymQueryParameters.getQueryParameters(gym, gymId);
         changeTableData(sql, queryParameters);
     }
 
     @Override
     public void remove ( int gymId ) {
         String sql = "DELETE FROM gym WHERE gym_id=?";
-        changeTableData(sql, getQueryParameters(gymId));
+        changeTableData(sql, gymQueryParameters.getQueryParameters(gymId));
     }
 
     @Override
     public List <String> getGymData () {
         String sql = "SELECT * FROM gym";
-        List <String> listOfGyms = getGymDataFromQuery(sql);
-        return listOfGyms;
+        return getGymDataFromQuery(sql);
     }
 
     @Override
@@ -98,24 +97,5 @@ public class GymFromDataBaseJDBC implements GymRepository {
             dataFromDataBase.add(singleGymData.toString());
         }
         return dataFromDataBase;
-    }
-
-    private List <String> getQueryParameters ( int gymId ) {
-        List <String> queryParameters = new ArrayList <>();
-        queryParameters.add(Integer.toString(gymId));
-        return queryParameters;
-    }
-
-    private List <String> getQueryParameters ( Gym gym ) {
-        String[] gymDataArray = {gym.getGym_id(), gym.getGym_name(), gym.getStreet(), gym.getCity(), gym.getBuilding_number()};
-        List <String> gymData = new ArrayList <>();
-        Collections.addAll(gymData, gymDataArray);
-        return gymData;
-    }
-
-    private List <String> getQueryParameters ( Gym gym, int gymId ) {
-        List <String> gymData = getQueryParameters(gym);
-        gymData.add(Integer.toString(gymId));
-        return gymData;
     }
 }

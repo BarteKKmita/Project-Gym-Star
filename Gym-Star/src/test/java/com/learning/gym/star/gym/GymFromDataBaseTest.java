@@ -8,10 +8,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.sql.DataSource;
-import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -29,8 +27,13 @@ class GymFromDataBaseTest {
 
     @Test
     void shouldRerunGymData () {
+        //Given
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        GymFromDataBaseJpa gymFromDataBase = new GymFromDataBaseJpa(jdbcTemplate);
-        assertNotNull(Arrays.toString(gymFromDataBase.getGymDataById(1)));
+        GymQueryParameters gymQueryParameters = new GymQueryParameters();
+        GymFromDataBaseJpa gymFromDataBase = new GymFromDataBaseJpa(jdbcTemplate, gymQueryParameters);
+        //When
+        String[] gymData = gymFromDataBase.getGymDataById(1);
+        //Then
+        assertNotNull(gymData);
     }
 }
