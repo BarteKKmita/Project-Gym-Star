@@ -54,10 +54,10 @@ class GymFromDataBaseTest {
     @Test
     void shouldAddRecordToGymTable () {
         //Given
-        Gym testGym = Gym.builder().gym_id("2")
-                .gym_name("Test Gym")
+        Gym testGym = Gym.builder().gymId("2")
+                .gymName("Test Gym")
                 .city("Test city")
-                .building_number("1")
+                .buildingNumber("1")
                 .street("Sezamkowa")
                 .build();
         GymFromDataBaseJpa gymFromDataBaseJpa = new GymFromDataBaseJpa(new JdbcTemplate(dataSource), gymQueryParameters);
@@ -69,10 +69,10 @@ class GymFromDataBaseTest {
     @Test
     void shouldThrowExceptionWhenAddingRecordWithExistingGymId () {
         //Given
-        Gym testGym = Gym.builder().gym_id("1")
-                .gym_name("Test Gym")
+        Gym testGym = Gym.builder().gymId("1")
+                .gymName("Test Gym")
                 .city("Test city")
-                .building_number("1")
+                .buildingNumber("1")
                 .street("Sezamkowa")
                 .build();
         GymFromDataBaseJpa gymFromDataBaseJpa = new GymFromDataBaseJpa(new JdbcTemplate(dataSource), gymQueryParameters);
@@ -83,10 +83,10 @@ class GymFromDataBaseTest {
     @Test
     void shouldUpdateExistingGym () {
         //Given
-        Gym testGym = Gym.builder().gym_id("1")
-                .gym_name("Test Gym")
+        Gym testGym = Gym.builder().gymId("1")
+                .gymName("Test Gym")
                 .city("Test city")
-                .building_number("1")
+                .buildingNumber("1")
                 .street("Sezamkowa")
                 .build();
         int gym_id = 1;
@@ -101,7 +101,7 @@ class GymFromDataBaseTest {
         int gym_id = 1;
         GymFromDataBaseJpa gymFromDataBaseJpa = new GymFromDataBaseJpa(new JdbcTemplate(dataSource), gymQueryParameters);
         //Then
-        assertDoesNotThrow(() -> gymFromDataBaseJpa.remove(gym_id));
+        assertDoesNotThrow(() -> gymFromDataBaseJpa.delete(gym_id));
     }
 
     //TODO

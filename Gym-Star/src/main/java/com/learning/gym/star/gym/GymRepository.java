@@ -9,7 +9,7 @@ public interface GymRepository {
 
     void update ( Gym gym, int index );
 
-    void remove ( int index );
+    void delete ( int index );
 
     List <String> getGymData ();
 

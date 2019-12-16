@@ -13,50 +13,54 @@ import java.util.List;
 @Repository("database access JDBC")
 public class GymFromDataBaseJDBC implements GymRepository {
 
-    private JdbcConnecotr jdbcConnecotr;
+    private JdbcConnector jdbcConnecotr;
     private GymQueryParameters gymQueryParameters;
+    private static final String ADD_QUERY = "INSERT INTO gym VALUES (?, ? , ? ,? , ? )";
+    private static final String UPDATE_QUERY = "UPDATE gym SET gym_id=?, gym_name= ? , street = ? , city = ? , building_number= ?  WHERE gym_id = ?";
+    private static final String DELETE_QUERY = "DELETE FROM gym WHERE gym_id=?";
+    private static final String SELECT_ALL_QUERY = "SELECT * FROM gym";
+    private static final String SELECT_ONE_QUERY = "SELECT * FROM gym WHERE gym_id = ?";
 
     public GymFromDataBaseJDBC () {
-        jdbcConnecotr = new JdbcConnecotr();
+        jdbcConnecotr = new JdbcConnector();
+    }
+
+    public GymFromDataBaseJDBC ( JdbcConnector jdbcConnecotr ) {
+        this.jdbcConnecotr = jdbcConnecotr;
     }
 
     @Override
     public void add ( Gym gym ) {
-        String sql = "INSERT INTO gym Values (?, ? , ? ,? , ? )";
         List <String> queryParameters = gymQueryParameters.getQueryParameters(gym);
-        changeTableData(sql, queryParameters);
+        changeTableData(ADD_QUERY, queryParameters);
     }
 
     @Override
     public void update ( Gym gym, int gymId ) {
-        String sql = "UPDATE gym SET gym_id=?, gym_name= ? , street = ? , city = ? , building_number= ?  WHERE gym_id = ?";
         List <String> queryParameters = gymQueryParameters.getQueryParameters(gym, gymId);
-        changeTableData(sql, queryParameters);
+        changeTableData(UPDATE_QUERY, queryParameters);
     }
 
     @Override
-    public void remove ( int gymId ) {
-        String sql = "DELETE FROM gym WHERE gym_id=?";
-        changeTableData(sql, gymQueryParameters.getQueryParameters(gymId));
+    public void delete ( int gymId ) {
+        changeTableData(DELETE_QUERY, gymQueryParameters.getQueryParameters(gymId));
     }
 
     @Override
     public List <String> getGymData () {
-        String sql = "SELECT * FROM gym";
-        return getGymDataFromQuery(sql);
+        return getGymDataFromQuery(SELECT_ALL_QUERY);
     }
 
     @Override
     public String[] getGymDataById ( int gymId ) {
-        String sql = "SELECT * FROM gym WHERE gym_id = ?";
-        List <String> listOfGyms = getGymDataFromQuery(sql);
+        List <String> listOfGyms = getGymDataFromQuery(SELECT_ONE_QUERY);
         return listOfGyms.get(0).split(" ");
     }
 
-    private List <String> getGymDataFromQuery ( String sql, List <String> queryParameters ) {
+    private List <String> getGymDataFromQuery ( String sqlQuery, List <String> queryParameters ) {
         List <String> listOfGyms = new ArrayList <>();
         try {
-            ResultSet resultSet = jdbcConnecotr.prepareStatement(sql, queryParameters).executeQuery();
+            ResultSet resultSet = jdbcConnecotr.prepareStatement(sqlQuery, queryParameters).executeQuery();
             listOfGyms = getGymsFromDataBaseResponse(resultSet);
         } catch (SQLException e) {
             System.out.println("Data base connection failure. Check ip address, login and password");
@@ -65,13 +69,13 @@ public class GymFromDataBaseJDBC implements GymRepository {
         return listOfGyms;
     }
 
-    private List <String> getGymDataFromQuery ( String sql ) {
-        return getGymDataFromQuery(sql, new ArrayList <>());
+    private List <String> getGymDataFromQuery ( String sqlQuery ) {
+        return getGymDataFromQuery(sqlQuery, new ArrayList <>());
     }
 
-    private void changeTableData ( String sql, List <String> queryParameters ) {
+    private void changeTableData ( String sqlQuery, List <String> queryParameters ) {
         try {
-            PreparedStatement statement = jdbcConnecotr.prepareStatement(sql, queryParameters);
+            PreparedStatement statement = jdbcConnecotr.prepareStatement(sqlQuery, queryParameters);
             statement.execute();
         } catch (SQLException e) {
             System.out.println("Data base connection or query failure. Check configuration, login, password and query syntax");

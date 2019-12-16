@@ -1,7 +1,7 @@
 package com.learning.gym.star.gym;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 public class GymQueryParameters {
@@ -13,10 +13,8 @@ public class GymQueryParameters {
     }
 
     List <String> getQueryParameters ( Gym gym ) {
-        String[] gymDataArray = {gym.getGym_id(), gym.getGym_name(), gym.getStreet(), gym.getCity(), gym.getBuilding_number()};
-        List <String> gymData = new ArrayList <>();
-        Collections.addAll(gymData, gymDataArray);
-        return gymData;
+        String[] gymDataArray = {gym.getGymId(), gym.getGymName(), gym.getStreet(), gym.getCity(), gym.getBuildingNumber()};
+        return Arrays.asList(gymDataArray);
     }
 
     List <String> getQueryParameters ( Gym gym, int gymId ) {

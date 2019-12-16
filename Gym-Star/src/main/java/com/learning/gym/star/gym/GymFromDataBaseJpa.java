@@ -13,6 +13,12 @@ public class GymFromDataBaseJpa implements GymRepository {
 
     private final JdbcTemplate jdbcTemplate;
     private GymQueryParameters gymQueryParameters;
+    private static final String ADD_QUERY = "INSERT INTO gym VALUES (?, ? , ? ,? , ? )";
+    private static final String UPDATE_QUERY = "UPDATE gym SET gym_id=?, gym_name= ? , street = ? , city = ? , building_number= ?  WHERE gym_id = ?";
+    private static final String DELETE_QUERY = "DELETE FROM gym WHERE gym_id=?";
+    private static final String SELECT_ALL_QUERY = "SELECT * FROM gym";
+    private static final String SELECT_ONE_QUERY = "SELECT * FROM gym WHERE gym_id = ?";
+
 
     @Autowired
     public GymFromDataBaseJpa ( JdbcTemplate jdbcTemplate, GymQueryParameters gymQueryParameters ) {
@@ -22,38 +28,32 @@ public class GymFromDataBaseJpa implements GymRepository {
 
     @Override
     public void add ( Gym gym ) {
-        String sql = "INSERT INTO gym  VALUES( ? ,  ? , ? , ? , ?)";
         Object[] param = gymQueryParameters.getQueryParameters(gym).toArray();
-        jdbcTemplate.update(sql, param);
+        jdbcTemplate.update(ADD_QUERY, param);
     }
 
     @Override
     public void update ( Gym gym, int index ) {
-        String sql = "UPDATE gym SET gym_id= ? , gym_name= ? , street = ? , city = ? , building_number= ? WHERE gym_id = ?";
         Object[] param = gymQueryParameters.getQueryParameters(gym, index).toArray();
-        jdbcTemplate.update(sql, param);
+        jdbcTemplate.update(UPDATE_QUERY, param);
     }
 
     @Override
-    public void remove ( int index ) {
-        String sql = "DELETE FROM gym WHERE gym_id = ?";
+    public void delete ( int index ) {
         Object[] param = gymQueryParameters.getQueryParameters(index).toArray();
-        jdbcTemplate.update(sql, param);
+        jdbcTemplate.update(DELETE_QUERY, param);
     }
 
     @Override
     public List <String> getGymData () {
-        String sql = "SELECT * FROM gym";
         //Lambda expression copied from tutorial code. I don't understand whole core of it yet.
-        List <String> gymData = jdbcTemplate.query(sql, ( resultSet, i ) -> getDataFromQuery(resultSet));
-        return gymData;
+        return jdbcTemplate.query(SELECT_ALL_QUERY, ( resultSet, i ) -> getDataFromQuery(resultSet));
     }
 
     @Override
     public String[] getGymDataById ( int id ) {
-        String sql = "SELECT * FROM gym WHERE gym_id= ?";
         //Lambda expression copied from tutorial code. I don't understand whole core of it yet.
-        String[] output = jdbcTemplate.queryForObject(sql, new Object[]{id}, ( resultSet, i ) -> {
+        String[] output = jdbcTemplate.queryForObject(SELECT_ONE_QUERY, new Object[]{id}, ( resultSet, i ) -> {
             String gym_id = resultSet.getString("gym_id");
             String gym_name = resultSet.getString("gym_name");
             String street = resultSet.getString("street");

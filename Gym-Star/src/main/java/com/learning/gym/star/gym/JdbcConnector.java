@@ -6,34 +6,34 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-public class JdbcConnecotr {
+public class JdbcConnector {
 
     private final String url;
     private final String user;
     private final String password;
 
-    public JdbcConnecotr ( String url, String user, String password ) {
+    public JdbcConnector ( String url, String user, String password ) {
         this.url = url;
         this.user = user;
         this.password = password;
     }
 
-    public JdbcConnecotr () {
+    public JdbcConnector () {
         url = "jdbc:mysql://localhost:3306/firstdatabase?serverTimezone=UTC";
         user = "root";
         password = "root";
     }
 
-    PreparedStatement prepareStatement ( String sql, List <String> queryParameters ) throws SQLException {
-        PreparedStatement statement = prepareQuery(sql);
+    PreparedStatement prepareStatement ( String sqlQuery, List <String> queryParameters ) throws SQLException {
+        PreparedStatement statement = prepareQuery(sqlQuery);
         for (int i = 0; i < queryParameters.size(); i++) {
             statement.setString(i + 1, queryParameters.get(i));
         }
         return statement;
     }
 
-    private PreparedStatement prepareQuery ( String sql ) throws SQLException {
-        return getConnection().prepareStatement(sql);
+    private PreparedStatement prepareQuery ( String sqlQuery ) throws SQLException {
+        return getConnection().prepareStatement(sqlQuery);
     }
 
     private Connection getConnection () throws SQLException {

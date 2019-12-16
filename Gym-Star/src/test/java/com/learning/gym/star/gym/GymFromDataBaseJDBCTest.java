@@ -1,6 +1,9 @@
 package com.learning.gym.star.gym;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 
 /**
@@ -8,14 +11,19 @@ import org.junit.jupiter.api.Test;
  * <p>
  * By this I want to create JdbcConnector class with proper H2 url link, in the same way like in MySQL url.
  */
+
+
+@SpringBootTest
+@ActiveProfiles("test")
+@AutoConfigureTestDatabase()
 class GymFromDataBaseJDBCTest {
 
     @Test
     void shouldAddRecord () {
         GymFromDataBaseJDBC gymFromDataBaseJDBC = new GymFromDataBaseJDBC();
-        Gym gym = Gym.builder().gym_id("6")
-                .gym_name("1")
-                .building_number("1")
+        Gym gym = Gym.builder().gymId("6")
+                .gymName("1")
+                .buildingNumber("1")
                 .street("1")
                 .city("1")
                 .build();
@@ -25,15 +33,15 @@ class GymFromDataBaseJDBCTest {
     @Test
     void shouldRemoveRecord () {
         GymFromDataBaseJDBC gymFromDataBaseJDBC = new GymFromDataBaseJDBC();
-        gymFromDataBaseJDBC.remove(3);
+        gymFromDataBaseJDBC.delete(3);
     }
 
     @Test
     void shouldUpdateRecord () {
         GymFromDataBaseJDBC gymFromDataBaseJDBC = new GymFromDataBaseJDBC();
-        Gym gym = Gym.builder().gym_id("0")
-                .gym_name("Pompa")
-                .building_number("1")
+        Gym gym = Gym.builder().gymId("0")
+                .gymName("Pompa")
+                .buildingNumber("1")
                 .street("1")
                 .city("1")
                 .build();

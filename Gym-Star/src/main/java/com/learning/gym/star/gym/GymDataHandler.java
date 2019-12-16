@@ -43,7 +43,7 @@ public class GymDataHandler implements GymRepository {
     }
 
     @Override
-    public void remove ( int index ) {
+    public void delete ( int index ) {
         gymData.remove(index);
     }
 }

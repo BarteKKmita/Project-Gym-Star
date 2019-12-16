@@ -10,9 +10,9 @@ import lombok.*;
 @Getter
 public class Gym {
 
-    private String gym_id;
-    private String gym_name;
+    private String gymId;
+    private String gymName;
     private String street;
     private String city;
-    private String building_number;
+    private String buildingNumber;
 }
