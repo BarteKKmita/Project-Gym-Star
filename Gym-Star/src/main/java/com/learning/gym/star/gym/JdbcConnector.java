@@ -8,20 +8,21 @@ import java.util.List;
 
 public class JdbcConnector {
 
+    JdbcPropertiesReader jdbcPropertiesReader;
     private final String url;
     private final String user;
     private final String password;
 
-    public JdbcConnector ( String url, String user, String password ) {
-        this.url = url;
-        this.user = user;
-        this.password = password;
+    public JdbcConnector ( JdbcPropertiesReader jdbcPropertiesReader ) {
+        this.jdbcPropertiesReader = jdbcPropertiesReader;
+        String[] databaseProperties = jdbcPropertiesReader.getDatabaseProperties();
+        url = databaseProperties[0];
+        user = databaseProperties[1];
+        password = databaseProperties[2];
     }
 
     public JdbcConnector () {
-        url = "jdbc:mysql://localhost:3306/firstdatabase?serverTimezone=UTC";
-        user = "root";
-        password = "root";
+        this(new JdbcPropertiesReader());
     }
 
     PreparedStatement prepareStatement ( String sqlQuery, List <String> queryParameters ) throws SQLException {

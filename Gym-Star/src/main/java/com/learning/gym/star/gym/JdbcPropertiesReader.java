@@ -1,6 +1,7 @@
 package com.learning.gym.star.gym;
 
 import lombok.AllArgsConstructor;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,6 +28,7 @@ public class JdbcPropertiesReader {
             properties[1] = propertiesReader.getProperty(USERNAME);
             properties[2] = propertiesReader.getProperty(PASSWORD);
         } catch (IOException ex) {
+            System.out.println("File cannot be opened or not exists");
             ex.printStackTrace();
         }
         return properties;
