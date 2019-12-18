@@ -8,13 +8,11 @@ import java.util.List;
 
 public class JdbcConnector {
 
-    JdbcPropertiesReader jdbcPropertiesReader;
     private final String url;
     private final String user;
     private final String password;
 
     public JdbcConnector ( JdbcPropertiesReader jdbcPropertiesReader ) {
-        this.jdbcPropertiesReader = jdbcPropertiesReader;
         String[] databaseProperties = jdbcPropertiesReader.getDatabaseProperties();
         url = databaseProperties[0];
         user = databaseProperties[1];

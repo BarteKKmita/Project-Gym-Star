@@ -19,7 +19,6 @@ public class GymFromDataBaseJpa implements GymRepository {
     private static final String SELECT_ALL_QUERY = "SELECT * FROM gym";
     private static final String SELECT_ONE_QUERY = "SELECT * FROM gym WHERE gym_id = ?";
 
-
     @Autowired
     public GymFromDataBaseJpa ( JdbcTemplate jdbcTemplate, GymQueryParameters gymQueryParameters ) {
         this.jdbcTemplate = jdbcTemplate;
@@ -50,6 +49,7 @@ public class GymFromDataBaseJpa implements GymRepository {
         return jdbcTemplate.query(SELECT_ALL_QUERY, ( resultSet, i ) -> getDataFromQuery(resultSet));
     }
 
+    //serializator
     @Override
     public String[] getGymDataById ( int id ) {
         //Lambda expression copied from tutorial code. I don't understand whole core of it yet.

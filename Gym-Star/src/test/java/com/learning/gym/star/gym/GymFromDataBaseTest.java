@@ -27,7 +27,7 @@ class GymFromDataBaseTest {
     }
 
     @Test
-    void shouldRerunGymData () {
+    void shouldReturnGymData () {
         //Given
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         GymQueryParameters gymQueryParameters = new GymQueryParameters();

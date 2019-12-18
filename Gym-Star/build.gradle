@@ -25,6 +25,7 @@ dependencies {
 	//runtime('com.h2database:h2')
 	compileOnly 'org.projectlombok:lombok:1.18.10'
 	annotationProcessor 'org.projectlombok:lombok:1.18.10'
+	implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.0'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		//exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}

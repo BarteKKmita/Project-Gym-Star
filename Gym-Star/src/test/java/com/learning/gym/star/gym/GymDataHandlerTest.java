@@ -9,7 +9,7 @@ public class GymDataHandlerTest {
     @Test
     void shouldReturn90RecordsWithGymData () {
         //Given
-        GymDataHandler gymDataHandler = new GymDataHandler();
+        GymRepository gymDataHandler = new GymDataHandler();
         int listSizeExpected = 90;
         //When
         int output = gymDataHandler.getGymData().size();

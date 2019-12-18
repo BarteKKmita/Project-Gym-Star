@@ -1,14 +1,18 @@
 package com.learning.gym.star.sportsmanbuilder;
 
 import com.learning.gym.star.gym.GymDataHandler;
-import com.learning.gym.star.sportsman.Gender;
-import com.learning.gym.star.sportsman.GenderChoose;
-import com.learning.gym.star.sportsman.userinput.UserText;
+import com.learning.gym.star.gym.GymRepository;
+import com.learning.gym.star.sportsmanbuilder.gender.Gender;
+import com.learning.gym.star.sportsmanbuilder.gender.GenderChoose;
+import com.learning.gym.star.sportsmanbuilder.userinput.UserText;
 import com.learning.gym.star.statistics.DateStatisticsHandler;
-import com.learning.gym.star.trainer.Trainer;
 import com.learning.gym.star.statistics.TrainingStatistics;
+import com.learning.gym.star.trainer.Trainer;
 import com.learning.gym.star.training.TrainingType;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.With;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,7 +26,7 @@ import java.util.Random;
 public class ConcreteSportsMan implements Gender {
     private final String name;
     private final String surname;
-    private GenderChoose gender;
+    @EqualsAndHashCode.Exclude private GenderChoose gender;
     @EqualsAndHashCode.Exclude private Trainer myTrainer;
     @EqualsAndHashCode.Exclude private Queue <TrainingType> trainings;
     @EqualsAndHashCode.Exclude private final String path;
@@ -40,7 +44,7 @@ public class ConcreteSportsMan implements Gender {
     }
 
     void showClosestGym ( int randomSeed ) {
-        GymDataHandler gymDataHandler = new GymDataHandler();
+        GymRepository gymDataHandler = new GymDataHandler();
         List <String> gymData = gymDataHandler.getGymData();
         Random random = new Random(randomSeed);
         System.out.println(gymData.get(random.nextInt(gymData.size())).trim());
@@ -66,7 +70,7 @@ public class ConcreteSportsMan implements Gender {
         }
     }
 
-    void train () {
+    public void train () {
         if (trainings == null) {
             System.out.println("It's bad.");
         } else if (!(trainings.isEmpty())) {

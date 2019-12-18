@@ -17,10 +17,11 @@ class TrainerTest {
         trainer.addSportsMan(new SportsMan(name, surname, GenderChoose.M));
         trainer.addSportsMan(new SportsMan("Ania", "Wojcik", GenderChoose.W));
         trainer.addSportsMan(new SportsMan("Bartek", "Kmita", GenderChoose.M));
+        String expectedOutput = name + ", " + "Ania" + ", " + "Bartek" + ", ";
         //When
         String output = trainer.printSportsManAuxiliary();
         //Then
-        assertEquals(name + ", " + "Ania" + ", " + "Bartek" + ", ", output);
+        assertEquals(expectedOutput, output);
     }
 
     @Test

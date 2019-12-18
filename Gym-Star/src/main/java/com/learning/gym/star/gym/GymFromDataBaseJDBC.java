@@ -1,6 +1,7 @@
 package com.learning.gym.star.gym;
 
-import lombok.AllArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
@@ -9,11 +10,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
 @Repository("database access JDBC")
 public class GymFromDataBaseJDBC implements GymRepository {
 
-    private JdbcConnector jdbcConnecotr;
+    final static Logger logger = LogManager.getLogger(GymFromDataBaseJDBC.class.getName());
+    private JdbcConnector jdbcConnector;
     private GymQueryParameters gymQueryParameters;
     private static final String ADD_QUERY = "INSERT INTO gym VALUES (?, ? , ? ,? , ? )";
     private static final String UPDATE_QUERY = "UPDATE gym SET gym_id=?, gym_name= ? , street = ? , city = ? , building_number= ?  WHERE gym_id = ?";
@@ -22,11 +23,13 @@ public class GymFromDataBaseJDBC implements GymRepository {
     private static final String SELECT_ONE_QUERY = "SELECT * FROM gym WHERE gym_id = ?";
 
     public GymFromDataBaseJDBC () {
-        jdbcConnecotr = new JdbcConnector();
+        jdbcConnector = new JdbcConnector();
+        gymQueryParameters = new GymQueryParameters();
     }
 
-    public GymFromDataBaseJDBC ( JdbcConnector jdbcConnecotr ) {
-        this.jdbcConnecotr = jdbcConnecotr;
+    public GymFromDataBaseJDBC ( JdbcConnector jdbcConnector ) {
+        this.jdbcConnector = jdbcConnector;
+        gymQueryParameters = new GymQueryParameters();
     }
 
     @Override
@@ -60,10 +63,10 @@ public class GymFromDataBaseJDBC implements GymRepository {
     private List <String> getGymDataFromQuery ( String sqlQuery, List <String> queryParameters ) {
         List <String> listOfGyms = new ArrayList <>();
         try {
-            ResultSet resultSet = jdbcConnecotr.prepareStatement(sqlQuery, queryParameters).executeQuery();
+            ResultSet resultSet = jdbcConnector.prepareStatement(sqlQuery, queryParameters).executeQuery();
             listOfGyms = getGymsFromDataBaseResponse(resultSet);
         } catch (SQLException e) {
-            System.out.println("Data base connection failure. Check ip address, login and password");
+            logger.fatal("Data base connection failure. Check ip address, login and password");
             e.printStackTrace();
         }
         return listOfGyms;
@@ -74,11 +77,10 @@ public class GymFromDataBaseJDBC implements GymRepository {
     }
 
     private void changeTableData ( String sqlQuery, List <String> queryParameters ) {
-        try {
-            PreparedStatement statement = jdbcConnecotr.prepareStatement(sqlQuery, queryParameters);
+        try (PreparedStatement statement = jdbcConnector.prepareStatement(sqlQuery, queryParameters)) {
             statement.execute();
         } catch (SQLException e) {
-            System.out.println("Data base connection or query failure. Check configuration, login, password and query syntax");
+            logger.fatal("Data base connection or query failure. Check configuration, login, password and query syntax");
             e.printStackTrace();
         }
     }
