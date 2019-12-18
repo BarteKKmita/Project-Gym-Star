@@ -1,9 +1,8 @@
 package com.learning.gym.star.trainer;
 
-import com.learning.gym.star.sportsmanbuilder.Gender;
-import com.learning.gym.star.sportsmanbuilder.GenderChoose;
+import com.learning.gym.star.sportsmanbuilder.gender.Gender;
+import com.learning.gym.star.sportsmanbuilder.gender.GenderChoose;
 import com.learning.gym.star.training.TrainingType;
-
 
 import java.util.Queue;
 

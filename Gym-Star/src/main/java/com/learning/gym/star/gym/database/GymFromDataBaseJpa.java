@@ -1,5 +1,7 @@
-package com.learning.gym.star.gym;
+package com.learning.gym.star.gym.database;
 
+import com.learning.gym.star.gym.Gym;
+import com.learning.gym.star.gym.GymRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

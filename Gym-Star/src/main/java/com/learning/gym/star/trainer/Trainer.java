@@ -1,7 +1,7 @@
 package com.learning.gym.star.trainer;
 
-import com.learning.gym.star.sportsmanbuilder.Gender;
 import com.learning.gym.star.sportsmanbuilder.ConcreteSportsMan;
+import com.learning.gym.star.sportsmanbuilder.gender.Gender;
 import com.learning.gym.star.training.TrainingType;
 
 import java.util.*;
@@ -78,5 +78,4 @@ public class Trainer {
         i++;
         return printSportsMenRecursive(list, i, sportsMenNames);
     }
-
 }

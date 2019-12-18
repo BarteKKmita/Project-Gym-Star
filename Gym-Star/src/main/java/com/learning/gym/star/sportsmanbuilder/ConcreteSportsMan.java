@@ -1,12 +1,17 @@
 package com.learning.gym.star.sportsmanbuilder;
 
 import com.learning.gym.star.gym.GymDataHandler;
+import com.learning.gym.star.sportsmanbuilder.gender.Gender;
+import com.learning.gym.star.sportsmanbuilder.gender.GenderChoose;
 import com.learning.gym.star.sportsmanbuilder.userinput.UserText;
 import com.learning.gym.star.statistics.DateStatisticsHandler;
-import com.learning.gym.star.trainer.Trainer;
 import com.learning.gym.star.statistics.TrainingStatistics;
+import com.learning.gym.star.trainer.Trainer;
 import com.learning.gym.star.training.TrainingType;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.With;
 
 import java.io.IOException;
 import java.util.List;

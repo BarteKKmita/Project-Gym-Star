@@ -1,27 +1,25 @@
 package com.learning.gym.star.sportsmanbuilder;
 
+import com.learning.gym.star.sportsmanbuilder.gender.GenderChoose;
 import com.learning.gym.star.sportsmanbuilder.userinput.UserInputForTests;
 import com.learning.gym.star.statistics.TrainingStatistics;
 import com.learning.gym.star.trainer.Trainer;
 import com.learning.gym.star.training.CardioTraining;
 import com.learning.gym.star.training.PowerTraining;
 import com.learning.gym.star.training.TrainingType;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import static org.mockito.Mockito.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.LinkedList;
 import java.util.Queue;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ConcreteSportsManTest {

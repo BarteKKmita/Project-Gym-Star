@@ -1,5 +1,6 @@
 package com.learning.gym.star.gym;
 
+import com.learning.gym.star.gym.database.GymFromDataBaseJDBC;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;

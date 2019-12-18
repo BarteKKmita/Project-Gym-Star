@@ -1,5 +1,7 @@
 package com.learning.gym.star.gym;
 
+import com.learning.gym.star.gym.database.GymFromDataBaseJpa;
+import com.learning.gym.star.gym.database.GymQueryParameters;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

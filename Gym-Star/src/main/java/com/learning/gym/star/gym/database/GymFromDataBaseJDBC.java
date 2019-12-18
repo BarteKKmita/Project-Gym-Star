@@ -1,5 +1,7 @@
-package com.learning.gym.star.gym;
+package com.learning.gym.star.gym.database;
 
+import com.learning.gym.star.gym.Gym;
+import com.learning.gym.star.gym.GymRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;

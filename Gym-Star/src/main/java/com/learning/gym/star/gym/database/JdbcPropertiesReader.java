@@ -1,4 +1,4 @@
-package com.learning.gym.star.gym;
+package com.learning.gym.star.gym.database;
 
 import lombok.AllArgsConstructor;
 
@@ -19,7 +19,7 @@ public class JdbcPropertiesReader {
         pathToFile = "src/main/resources/application.properties";
     }
 
-    String[] getDatabaseProperties () {
+    public String[] getDatabaseProperties () {
         String[] properties = new String[3];
         try (InputStream input = new FileInputStream(pathToFile)) {
             Properties propertiesReader = new Properties();

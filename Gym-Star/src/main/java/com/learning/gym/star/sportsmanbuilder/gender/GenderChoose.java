@@ -1,4 +1,4 @@
-package com.learning.gym.star.sportsmanbuilder;
+package com.learning.gym.star.sportsmanbuilder.gender;
 
 public enum GenderChoose {
     M("Male"),
