@@ -10,7 +10,7 @@ import java.util.Properties;
 @AllArgsConstructor
 public class JdbcPropertiesReader {
 
-    private String pathToFile;
+    private final String pathToFile;
     private final static String URL = "spring.datasource.url";
     private final static String USERNAME = "spring.datasource.username";
     private final static String PASSWORD = "spring.datasource.password";
@@ -19,19 +19,29 @@ public class JdbcPropertiesReader {
         pathToFile = "src/main/resources/application.properties";
     }
 
-    public String[] getDatabaseProperties () {
-        String[] properties = new String[3];
+    public String getURL () {
+        return getDatabaseProperties(URL);
+    }
+
+    String getUsername () {
+        return getDatabaseProperties(USERNAME);
+    }
+
+    public String getPassword () {
+        return getDatabaseProperties(PASSWORD);
+    }
+
+    private String getDatabaseProperties ( String property ) {
+        String readProperty = "";
         try (InputStream input = new FileInputStream(pathToFile)) {
             Properties propertiesReader = new Properties();
             propertiesReader.load(input);
-            properties[0] = propertiesReader.getProperty(URL);
-            properties[1] = propertiesReader.getProperty(USERNAME);
-            properties[2] = propertiesReader.getProperty(PASSWORD);
+            readProperty = propertiesReader.getProperty(property);
         } catch (IOException ex) {
             System.out.println("File cannot be opened or not exists");
             ex.printStackTrace();
         }
-        return properties;
+        return readProperty;
     }
 }
 

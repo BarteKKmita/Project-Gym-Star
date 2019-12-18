@@ -6,17 +6,16 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-public class JdbcConnector {
+class JdbcConnector {
 
     private final String url;
     private final String user;
     private final String password;
 
     public JdbcConnector ( JdbcPropertiesReader jdbcPropertiesReader ) {
-        String[] databaseProperties = jdbcPropertiesReader.getDatabaseProperties();
-        url = databaseProperties[0];
-        user = databaseProperties[1];
-        password = databaseProperties[2];
+        url = jdbcPropertiesReader.getURL();
+        user = jdbcPropertiesReader.getUsername();
+        password = jdbcPropertiesReader.getPassword();
     }
 
     public JdbcConnector () {

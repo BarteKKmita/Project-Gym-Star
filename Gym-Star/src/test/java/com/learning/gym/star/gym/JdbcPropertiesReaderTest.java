@@ -8,13 +8,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class JdbcPropertiesReaderTest {
 
     @Test
-    void shouldReturnDatabaseProperties () {
+    void shouldReturnDatabaseProperty () {
         //Given
-        int expectedLength = 3;
-        JdbcPropertiesReader jdbcPropertiesReader = new JdbcPropertiesReader();
+        String expectedPassword = "Some_secret_password";
+        JdbcPropertiesReader jdbcPropertiesReader = new JdbcPropertiesReader("data/PropertiesTest.txt");
         //When
-        String[] properties = jdbcPropertiesReader.getDatabaseProperties();
+        String property = jdbcPropertiesReader.getPassword();
         //Then
-        assertEquals(expectedLength, properties.length);
+        assertEquals(expectedPassword, property);
     }
 }
