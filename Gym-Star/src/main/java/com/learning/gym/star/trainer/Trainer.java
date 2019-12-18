@@ -1,7 +1,7 @@
 package com.learning.gym.star.trainer;
 
-import com.learning.gym.star.sportsman.Gender;
-import com.learning.gym.star.sportsman.SportsMan;
+import com.learning.gym.star.sportsmanbuilder.Gender;
+import com.learning.gym.star.sportsmanbuilder.ConcreteSportsMan;
 import com.learning.gym.star.training.TrainingType;
 
 import java.util.*;
@@ -10,7 +10,7 @@ public class Trainer {
     private String name;
     private String surname;
     private int costPerHour;
-    private Set <SportsMan> sportsMenList = new LinkedHashSet <>();
+    private Set <ConcreteSportsMan> sportsMenList = new LinkedHashSet <>();
 
     public Trainer () {
     }
@@ -42,11 +42,11 @@ public class Trainer {
         return plan.generateTrainingPlan(gender, trainingDays);
     }
 
-    void addSportsMan ( SportsMan sportsMan ) {
+    void addSportsMan ( ConcreteSportsMan sportsMan ) {
         sportsMenList.add(sportsMan);
     }
 
-    void removeSportsMan ( SportsMan sportsMan ) {
+    void removeSportsMan ( ConcreteSportsMan sportsMan ) {
         if (sportsMenList.contains(sportsMan)) {
             sportsMenList.remove(sportsMan);
         } else {
@@ -54,13 +54,13 @@ public class Trainer {
         }
     }
 
-    Set <SportsMan> getSportsMenList () {
+    Set <ConcreteSportsMan> getSportsMenList () {
         return sportsMenList;
     }
 
     String printSportsMen () {
         StringBuilder sportsMenNames = new StringBuilder();
-        for (SportsMan sportsMan : sportsMenList) {
+        for (ConcreteSportsMan sportsMan : sportsMenList) {
             sportsMenNames.append(sportsMan.getName()).append(", ");
         }
         return sportsMenNames.toString();
@@ -70,7 +70,7 @@ public class Trainer {
         return printSportsMenRecursive(new ArrayList <>(sportsMenList), 0, "");
     }
 
-    String printSportsMenRecursive ( List <SportsMan> list, int i, String sportsMenNames ) {
+    String printSportsMenRecursive ( List <ConcreteSportsMan> list, int i, String sportsMenNames ) {
         if (list.size() == i) {
             return sportsMenNames;
         }

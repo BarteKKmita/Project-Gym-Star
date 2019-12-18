@@ -1,7 +1,6 @@
 package com.learning.gym.star.sportsmanbuilder;
 
-import com.learning.gym.star.sportsman.GenderChoose;
-import com.learning.gym.star.sportsman.userinput.UserText;
+import com.learning.gym.star.sportsmanbuilder.userinput.UserText;
 
 public class FemaleSportsMan extends SportsMan implements SportsManBuilder {
 

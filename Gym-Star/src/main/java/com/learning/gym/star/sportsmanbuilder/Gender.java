@@ -1,4 +1,4 @@
-package com.learning.gym.star.sportsman;
+package com.learning.gym.star.sportsmanbuilder;
 
 public interface Gender {
     String getGender ();

@@ -1,6 +1,6 @@
 package com.learning.gym.star.trainer;
 
-import com.learning.gym.star.sportsman.Gender;
+import com.learning.gym.star.sportsmanbuilder.Gender;
 import com.learning.gym.star.training.CardioTraining;
 import com.learning.gym.star.training.PowerTraining;
 import com.learning.gym.star.training.TrainingType;

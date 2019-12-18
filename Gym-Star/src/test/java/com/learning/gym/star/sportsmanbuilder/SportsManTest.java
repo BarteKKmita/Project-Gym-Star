@@ -1,6 +1,6 @@
 package com.learning.gym.star.sportsmanbuilder;
 
-import com.learning.gym.star.sportsman.userinput.UserInputForTests;
+import com.learning.gym.star.sportsmanbuilder.userinput.UserInputForTests;
 import com.learning.gym.star.trainer.Trainer;
 import com.learning.gym.star.training.TrainingType;
 
