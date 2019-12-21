@@ -18,13 +18,13 @@ import static com.wix.mysql.distribution.Version.v5_7_19;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        DatabaseTest.class
+        GymFromDataBaseJpaTest.class
 })
 public class TestSuite {
     private static EmbeddedMysql embeddedMysql;
 
     @BeforeClass
-    public static void _setupBeforeClass () {
+    public static void setupBeforeClass () {
         MysqldConfig config = MysqldConfig.aMysqldConfig(v5_7_19)
                 .withPort(3307)
                 .withTimeZone(TimeZone.getTimeZone(ZoneId.of("UTC")))
@@ -42,7 +42,7 @@ public class TestSuite {
     }
 
     @AfterClass
-    public static void _tearDownAfterClass () {
+    public static void tearDownAfterClass () {
         if (null != embeddedMysql) {
             embeddedMysql.stop();
         }

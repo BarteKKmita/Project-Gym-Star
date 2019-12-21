@@ -58,8 +58,9 @@ public class GymFromDataBaseJpa implements GymRepository {
             String gym_id = resultSet.getString("gym_id");
             String gym_name = resultSet.getString("gym_name");
             String street = resultSet.getString("street");
+            String city = resultSet.getString("city");
             String building_number = resultSet.getString("building_number");
-            return new String[]{gym_id, gym_name, street, building_number};
+            return new String[]{gym_id, gym_name, street, city, building_number};
         });
         return output;
     }

@@ -202,4 +202,22 @@ class GymFromDataBaseJDBCTest {
         //Then
         assertEquals(expectedDataLength, gymData.size());
     }
+
+    @Test
+    void shouldThrowExceptionWhenAddingRecordWithExistingGymId () {
+        //Given
+        String expectedGymName = "pierwsza";
+        int gymId = 1;
+        Gym testGym = Gym.builder().gymId("1")
+                .gymName("Test Gym")
+                .city("Test city")
+                .buildingNumber("1")
+                .street("Sezamkowa")
+                .build();
+        //When
+        gymFromDataBaseJDBC.add(testGym);
+        String[] gymDataById = gymFromDataBaseJDBC.getGymDataById(gymId);
+        //Then
+        assertEquals(expectedGymName, gymDataById[1]);
+    }
 }
