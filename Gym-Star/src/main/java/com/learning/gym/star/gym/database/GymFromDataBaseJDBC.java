@@ -15,7 +15,7 @@ import java.util.List;
 @Repository("database access JDBC")
 public class GymFromDataBaseJDBC implements GymRepository {
 
-    final static Logger logger = LogManager.getLogger(GymFromDataBaseJDBC.class.getName());
+    private final static Logger logger = LogManager.getLogger(GymFromDataBaseJDBC.class.getName());
     private JdbcConnector jdbcConnector;
     private GymQueryParameters gymQueryParameters;
     private static final String ADD_QUERY = "INSERT INTO gym VALUES (?, ? , ? ,? , ? )";
@@ -58,14 +58,18 @@ public class GymFromDataBaseJDBC implements GymRepository {
 
     @Override
     public String[] getGymDataById ( int gymId ) {
-        List <String> listOfGyms = getGymDataFromQuery(SELECT_ONE_QUERY);
+        List <String> idAsString = new ArrayList <>();
+        idAsString.add(Integer.toString(gymId));
+        List <String> listOfGyms = getGymDataFromQuery(SELECT_ONE_QUERY, idAsString);
+        if (listOfGyms.isEmpty()) {
+            return null;
+        }
         return listOfGyms.get(0).split(" ");
     }
 
     private List <String> getGymDataFromQuery ( String sqlQuery, List <String> queryParameters ) {
         List <String> listOfGyms = new ArrayList <>();
-        try {
-            ResultSet resultSet = jdbcConnector.prepareStatement(sqlQuery, queryParameters).executeQuery();
+        try (ResultSet resultSet = jdbcConnector.prepareStatement(sqlQuery, queryParameters).executeQuery()) {
             listOfGyms = getGymsFromDataBaseResponse(resultSet);
         } catch (SQLException e) {
             logger.fatal("Data base connection failure. Check ip address, login and password");

@@ -23,7 +23,7 @@ public class JdbcPropertiesReader {
         return getDatabaseProperties(URL);
     }
 
-    String getUsername () {
+    public String getUsername () {
         return getDatabaseProperties(USERNAME);
     }
 

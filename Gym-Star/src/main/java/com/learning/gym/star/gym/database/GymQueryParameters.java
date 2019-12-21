@@ -1,11 +1,13 @@
 package com.learning.gym.star.gym.database;
 
 import com.learning.gym.star.gym.Gym;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+@Configuration
 public class GymQueryParameters {
 
     List <String> getQueryParameters ( int gymId ) {
@@ -16,13 +18,15 @@ public class GymQueryParameters {
 
     List <String> getQueryParameters ( Gym gym ) {
         String[] gymDataArray = {gym.getGymId(), gym.getGymName(), gym.getStreet(), gym.getCity(), gym.getBuildingNumber()};
-        return Arrays.asList(gymDataArray);
+        List <String> gymData = new ArrayList <>();
+        Collections.addAll(gymData, gymDataArray);
+        return gymData;
     }
 
     List <String> getQueryParameters ( Gym gym, int gymId ) {
         List <String> gymData = getQueryParameters(gym);
-        gymData.add(Integer.toString(gymId));
+        String gymIdAsString = Integer.toString(gymId);
+        gymData.add(gymIdAsString);
         return gymData;
     }
-
 }

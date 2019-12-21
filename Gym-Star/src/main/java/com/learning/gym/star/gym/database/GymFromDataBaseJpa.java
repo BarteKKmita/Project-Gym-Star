@@ -51,7 +51,6 @@ public class GymFromDataBaseJpa implements GymRepository {
         return jdbcTemplate.query(SELECT_ALL_QUERY, ( resultSet, i ) -> getDataFromQuery(resultSet));
     }
 
-    //serializator
     @Override
     public String[] getGymDataById ( int id ) {
         //Lambda expression copied from tutorial code. I don't understand whole core of it yet.

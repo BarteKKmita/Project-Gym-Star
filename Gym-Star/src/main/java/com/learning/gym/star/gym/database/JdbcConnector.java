@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-class JdbcConnector {
+public class JdbcConnector {
 
     private final String url;
     private final String user;
@@ -18,7 +18,7 @@ class JdbcConnector {
         password = jdbcPropertiesReader.getPassword();
     }
 
-    public JdbcConnector () {
+    JdbcConnector () {
         this(new JdbcPropertiesReader());
     }
 
