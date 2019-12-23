@@ -70,7 +70,7 @@ public class Trainer {
         return printSportsMenRecursive(new ArrayList <>(sportsMenList), 0, "");
     }
 
-    String printSportsMenRecursive ( List <ConcreteSportsMan> list, int i, String sportsMenNames ) {
+    private String printSportsMenRecursive ( List <ConcreteSportsMan> list, int i, String sportsMenNames ) {
         if (list.size() == i) {
             return sportsMenNames;
         }

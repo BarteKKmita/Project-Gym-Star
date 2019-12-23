@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-@Repository("database access")
+@Repository("gym database access")
 public class GymFromDataBaseJpa implements GymRepository {
 
     private final JdbcTemplate jdbcTemplate;
@@ -20,6 +20,7 @@ public class GymFromDataBaseJpa implements GymRepository {
     private static final String DELETE_QUERY = "DELETE FROM gym WHERE gym_id=?";
     private static final String SELECT_ALL_QUERY = "SELECT * FROM gym";
     private static final String SELECT_ONE_QUERY = "SELECT * FROM gym WHERE gym_id = ?";
+
 
     @Autowired
     public GymFromDataBaseJpa ( JdbcTemplate jdbcTemplate, GymQueryParameters gymQueryParameters ) {
