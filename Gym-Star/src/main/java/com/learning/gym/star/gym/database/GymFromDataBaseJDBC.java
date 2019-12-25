@@ -4,7 +4,6 @@ import com.learning.gym.star.gym.Gym;
 import com.learning.gym.star.gym.GymRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,8 +11,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository("database access JDBC")
-public class GymFromDataBaseJDBC implements GymRepository {
+//@Repository("database access JDBC")
+class GymFromDataBaseJDBC implements GymRepository {
 
     private final static Logger logger = LogManager.getLogger(GymFromDataBaseJDBC.class.getName());
     private JdbcConnector jdbcConnector;
@@ -24,12 +23,12 @@ public class GymFromDataBaseJDBC implements GymRepository {
     private static final String SELECT_ALL_QUERY = "SELECT * FROM gym";
     private static final String SELECT_ONE_QUERY = "SELECT * FROM gym WHERE gym_id = ?";
 
-    public GymFromDataBaseJDBC () {
+    GymFromDataBaseJDBC () {
         jdbcConnector = new JdbcConnector();
         gymQueryParameters = new GymQueryParameters();
     }
 
-    public GymFromDataBaseJDBC ( JdbcConnector jdbcConnector ) {
+    GymFromDataBaseJDBC ( JdbcConnector jdbcConnector ) {
         this.jdbcConnector = jdbcConnector;
         gymQueryParameters = new GymQueryParameters();
     }

@@ -8,18 +8,18 @@ import java.io.InputStream;
 import java.util.Properties;
 
 @AllArgsConstructor
-public class JdbcPropertiesReader {
+class JdbcPropertiesReader {
 
     private final String pathToFile;
     private final static String URL = "spring.datasource.url";
     private final static String USERNAME = "spring.datasource.username";
     private final static String PASSWORD = "spring.datasource.password";
 
-    public JdbcPropertiesReader () {
-        pathToFile = "src/main/resources/application.properties";
+    JdbcPropertiesReader () {
+        pathToFile = "src/main/resources/application2.properties";
     }
 
-    public String getURL () {
+    String getURL () {
         return getDatabaseProperties(URL);
     }
 

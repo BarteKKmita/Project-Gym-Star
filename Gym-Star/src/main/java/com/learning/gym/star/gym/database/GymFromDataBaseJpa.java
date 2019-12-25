@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository("gym database access")
-public class GymFromDataBaseJpa implements GymRepository {
+class GymFromDataBaseJpa implements GymRepository {
 
     private final JdbcTemplate jdbcTemplate;
     private GymQueryParameters gymQueryParameters;
@@ -23,7 +23,7 @@ public class GymFromDataBaseJpa implements GymRepository {
 
 
     @Autowired
-    public GymFromDataBaseJpa ( JdbcTemplate jdbcTemplate, GymQueryParameters gymQueryParameters ) {
+    GymFromDataBaseJpa ( JdbcTemplate jdbcTemplate, GymQueryParameters gymQueryParameters ) {
         this.jdbcTemplate = jdbcTemplate;
         this.gymQueryParameters = gymQueryParameters;
     }
