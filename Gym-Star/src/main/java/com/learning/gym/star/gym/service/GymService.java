@@ -25,4 +25,15 @@ public class GymService {
         gymRepository.add(gym);
     }
 
+    public void updateGym ( Gym gym, int gymId ) {
+        gymRepository.update(gym, gymId);
+    }
+
+    public String[] getGymByIdm ( int gymId ) {
+        return gymRepository.getGymDataById(gymId);
+    }
+
+    public void deleteGymById ( int gymId ) {
+        gymRepository.delete(gymId);
+    }
 }

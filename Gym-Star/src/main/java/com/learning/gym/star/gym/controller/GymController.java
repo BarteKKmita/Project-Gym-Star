@@ -18,15 +18,30 @@ public class GymController {
     private final GymService gymService;
 
     @PostMapping()
-    public void addPerson ( @Valid @NotNull @RequestBody Gym gym ) {
+    public void addGym ( @Valid @NotNull @RequestBody Gym gym ) {
         gymService.addGym(gym);
     }
 
-    @GetMapping()
+    @GetMapping(path = {"/all"})
     public List <String> getAllGyms () {
         return gymService.getAllGyms();
     }
 
+    @GetMapping(path = "{id}")
+    public String[] getGymById ( @PathVariable("id") int gymId ) {
+        return gymService.getGymByIdm(gymId);
+    }
+
+    @PutMapping()
+    public void updateGym ( @Valid @NotNull @RequestBody Gym gym ) {
+        int gymId = Integer.parseInt(gym.getGymId());
+        gymService.updateGym(gym, gymId);
+    }
+
+    @DeleteMapping(path = "{id}")
+    public void deleteGymById ( @PathVariable("id") int gymId ) {
+        gymService.deleteGymById(gymId);
+    }
 }
 
 
