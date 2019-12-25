@@ -9,7 +9,7 @@ import java.util.Queue;
 
 public abstract class PreparePlan {
 
-    public Queue <TrainingType> generateTrainingPlan (int trainingDays) {
+    Queue <TrainingType> generateTrainingPlan ( int trainingDays ) {
         Queue <TrainingType> trainings = new LinkedList <>();
         for (int trainingDay = 0; trainingDay < trainingDays; trainingDay++) {
             if (isPowerTraining(trainingDay)) {

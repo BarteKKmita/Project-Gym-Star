@@ -1,5 +1,6 @@
 package com.learning.gym.star.gym;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
@@ -40,5 +41,6 @@ public class Gym {
     private String buildingNumber;
 
     @Transient
+    @ApiModelProperty(hidden = true)
     private String auxiliary;
 }
