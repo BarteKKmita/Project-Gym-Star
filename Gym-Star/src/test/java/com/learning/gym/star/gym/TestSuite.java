@@ -1,6 +1,6 @@
 package com.learning.gym.star.gym;
 
-
+import com.learning.gym.star.gym.database.GymFromDataBaseJpaTest;
 import com.wix.mysql.EmbeddedMysql;
 import com.wix.mysql.config.Charset;
 import com.wix.mysql.config.MysqldConfig;

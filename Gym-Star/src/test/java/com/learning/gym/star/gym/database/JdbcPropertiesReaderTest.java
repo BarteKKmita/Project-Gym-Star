@@ -1,6 +1,5 @@
-package com.learning.gym.star.gym;
+package com.learning.gym.star.gym.database;
 
-import com.learning.gym.star.gym.database.JdbcPropertiesReader;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

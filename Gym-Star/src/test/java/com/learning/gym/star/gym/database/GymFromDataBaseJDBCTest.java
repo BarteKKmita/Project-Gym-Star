@@ -1,8 +1,6 @@
-package com.learning.gym.star.gym;
+package com.learning.gym.star.gym.database;
 
-import com.learning.gym.star.gym.database.GymFromDataBaseJDBC;
-import com.learning.gym.star.gym.database.JdbcConnector;
-import com.learning.gym.star.gym.database.JdbcPropertiesReader;
+import com.learning.gym.star.gym.Gym;
 import com.wix.mysql.EmbeddedMysql;
 import com.wix.mysql.config.Charset;
 import com.wix.mysql.config.MysqldConfig;

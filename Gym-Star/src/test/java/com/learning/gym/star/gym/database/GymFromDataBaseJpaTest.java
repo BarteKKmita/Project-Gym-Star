@@ -1,7 +1,6 @@
-package com.learning.gym.star.gym;
+package com.learning.gym.star.gym.database;
 
-import com.learning.gym.star.gym.database.GymFromDataBaseJpa;
-import com.learning.gym.star.gym.database.GymQueryParameters;
+import com.learning.gym.star.gym.Gym;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
