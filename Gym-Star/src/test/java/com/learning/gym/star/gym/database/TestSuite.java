@@ -1,6 +1,5 @@
-package com.learning.gym.star.gym;
+package com.learning.gym.star.gym.database;
 
-import com.learning.gym.star.gym.database.GymFromDataBaseJpaTest;
 import com.wix.mysql.EmbeddedMysql;
 import com.wix.mysql.config.Charset;
 import com.wix.mysql.config.MysqldConfig;
@@ -20,11 +19,22 @@ import static com.wix.mysql.distribution.Version.v5_7_19;
 @Suite.SuiteClasses({
         GymFromDataBaseJpaTest.class
 })
-public class TestSuite {
+public class TestSuite{
     private static EmbeddedMysql embeddedMysql;
 
     @BeforeClass
-    public static void setupBeforeClass () {
+    public static void setupBeforeClass(){
+        setupEmbeddedMySQL();
+    }
+
+    @AfterClass
+    public static void tearDownAfterClass(){
+        if(null != embeddedMysql) {
+            embeddedMysql.stop();
+        }
+    }
+
+    public static void setupEmbeddedMySQL(){
         MysqldConfig config = MysqldConfig.aMysqldConfig(v5_7_19)
                 .withPort(3307)
                 .withTimeZone(TimeZone.getTimeZone(ZoneId.of("UTC")))
@@ -39,12 +49,5 @@ public class TestSuite {
         embeddedMysql = EmbeddedMysql.anEmbeddedMysql(config)
                 .addSchema(schemaConfig)
                 .start();
-    }
-
-    @AfterClass
-    public static void tearDownAfterClass () {
-        if (null != embeddedMysql) {
-            embeddedMysql.stop();
-        }
     }
 }

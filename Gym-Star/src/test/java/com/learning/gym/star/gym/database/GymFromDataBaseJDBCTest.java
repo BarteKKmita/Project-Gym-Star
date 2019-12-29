@@ -2,19 +2,12 @@ package com.learning.gym.star.gym.database;
 
 import com.learning.gym.star.gym.Gym;
 import com.wix.mysql.EmbeddedMysql;
-import com.wix.mysql.config.Charset;
-import com.wix.mysql.config.MysqldConfig;
-import com.wix.mysql.config.SchemaConfig;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.time.ZoneId;
 import java.util.List;
-import java.util.TimeZone;
 
-import static com.wix.mysql.ScriptResolver.classPathScript;
-import static com.wix.mysql.distribution.Version.v5_7_19;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -22,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
  * By this I want to test connection with database only with usage of Java without any external framework (like Spring).
  */
 
-class GymFromDataBaseJDBCTest {
+class GymFromDataBaseJDBCTest{
 
     private static EmbeddedMysql embeddedMysql;
     private static JdbcPropertiesReader propertiesReader = new JdbcPropertiesReader("src/main/resources/application-test.properties");
@@ -30,30 +23,19 @@ class GymFromDataBaseJDBCTest {
     private GymFromDataBaseJDBC gymFromDataBaseJDBC = new GymFromDataBaseJDBC(jdbcConnector);
 
     @BeforeAll
-    private static void setupBeforeClass () {
-        MysqldConfig config = MysqldConfig.aMysqldConfig(v5_7_19)
-                .withPort(3307)
-                .withTimeZone(TimeZone.getTimeZone(ZoneId.of("UTC")))
-                .withUser(propertiesReader.getUsername(), propertiesReader.getPassword())
-                .build();
-        SchemaConfig schemaConfig = SchemaConfig.aSchemaConfig("test_database")
-                .withScripts(classPathScript(("db/schema.sql")))
-                .withCharset(Charset.UTF8)
-                .build();
-        embeddedMysql = EmbeddedMysql.anEmbeddedMysql(config)
-                .addSchema(schemaConfig)
-                .start();
+    private static void setupBeforeClass(){
+        TestSuite.setupBeforeClass();
     }
 
     @AfterAll
-    private static void tearDownAfterClass () {
-        if (null != embeddedMysql) {
+    private static void tearDownAfterClass(){
+        if(null != embeddedMysql) {
             embeddedMysql.stop();
         }
     }
 
     @Test
-    void shouldGetAllGymData () {
+    void shouldGetAllGymData(){
         //Given
         int expectedDataLength = 3;
         //When
@@ -63,7 +45,7 @@ class GymFromDataBaseJDBCTest {
     }
 
     @Test
-    void shouldGetGymDataFromGym_id () {
+    void shouldGetGymDataFromGym_id(){
         //Given
         int gymId = 1;
         int expectedSize = 5;
@@ -76,7 +58,7 @@ class GymFromDataBaseJDBCTest {
     }
 
     @Test
-    void shouldAddRecord () {
+    void shouldAddRecord(){
         //Given
         int gymId = 6;
         Gym gym = Gym.builder().gymId("6")
@@ -93,7 +75,7 @@ class GymFromDataBaseJDBCTest {
     }
 
     @Test
-    void shouldNotAddRecordWithoutAllData () {
+    void shouldNotAddRecordWithoutAllData(){
         //Given
         int gymId = 6;
         Gym gym = Gym.builder().gymId("6")
@@ -109,7 +91,7 @@ class GymFromDataBaseJDBCTest {
     }
 
     @Test
-    void shouldNotAddRecordWithEmptyData () {
+    void shouldNotAddRecordWithEmptyData(){
         //Given
         int gymId = 7;
         Gym gym = Gym.builder().gymId("6")
@@ -126,7 +108,7 @@ class GymFromDataBaseJDBCTest {
     }
 
     @Test
-    void shouldUpdateRecord () {
+    void shouldUpdateRecord(){
         //Given
         int gymId = 2;
         String expectedGymName = "UpdateTest";
@@ -144,7 +126,7 @@ class GymFromDataBaseJDBCTest {
     }
 
     @Test
-    void shouldNotUpdateRecordWithoutAllData () {
+    void shouldNotUpdateRecordWithoutAllData(){
         //Given
         int gymId = 1;
         String expectedGymName = "pierwsza";
@@ -161,7 +143,7 @@ class GymFromDataBaseJDBCTest {
     }
 
     @Test
-    void shouldNotUpdateRecordWhenWrongId () {
+    void shouldNotUpdateRecordWhenWrongId(){
         //Given
         int gymId = 7;
         Gym gym = Gym.builder().gymId("1")
@@ -178,7 +160,7 @@ class GymFromDataBaseJDBCTest {
     }
 
     @Test
-    void shouldRemoveRecord () {
+    void shouldRemoveRecord(){
         //Given
         int gymIdToDelete = 2;
         int expectedDataLength = 2;
@@ -190,7 +172,7 @@ class GymFromDataBaseJDBCTest {
     }
 
     @Test
-    void shouldNotRemoveRecordWhenNotExistingRecord () {
+    void shouldNotRemoveRecordWhenNotExistingRecord(){
         //Given
         int gymIdToDelete = 4;
         int expectedDataLength = 2;
@@ -202,7 +184,7 @@ class GymFromDataBaseJDBCTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenAddingRecordWithExistingGymId () {
+    void shouldThrowExceptionWhenAddingRecordWithExistingGymId(){
         //Given
         String expectedGymName = "pierwsza";
         int gymId = 1;
