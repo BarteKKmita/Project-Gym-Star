@@ -7,7 +7,6 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
-
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,8 +14,7 @@ import javax.validation.constraints.NotEmpty;
 @Getter
 @Entity
 @Table(name = "Gym")
-public class Gym {
-
+public class Gym{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -9,31 +9,31 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class GymService {
+public class GymService{
     private GymRepository gymRepository;
 
     @Autowired
-    public GymService ( @Qualifier("gym database access") GymRepository gymRepository ) {
+    public GymService(@Qualifier("gym database access") GymRepository gymRepository){
         this.gymRepository = gymRepository;
     }
 
-    public List <String> getAllGyms () {
+    public List <String> getAllGyms(){
         return gymRepository.getGymData();
     }
 
-    public void addGym ( Gym gym ) {
+    public void addGym(Gym gym){
         gymRepository.add(gym);
     }
 
-    public void updateGym ( Gym gym, int gymId ) {
+    public void updateGym(Gym gym, int gymId){
         gymRepository.update(gym, gymId);
     }
 
-    public String[] getGymByIdm ( int gymId ) {
+    public String[] getGymByIdm(int gymId){
         return gymRepository.getGymDataById(gymId);
     }
 
-    public void deleteGymById ( int gymId ) {
+    public void deleteGymById(int gymId){
         gymRepository.delete(gymId);
     }
 }
