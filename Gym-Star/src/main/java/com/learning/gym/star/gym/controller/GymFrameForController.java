@@ -3,6 +3,7 @@ package com.learning.gym.star.gym.controller;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 
 @NoArgsConstructor
@@ -22,5 +23,9 @@ public class GymFrameForController{
     private String city;
     @NotEmpty
     private String buildingNumber;
+
+    @Transient
+    @ApiModelProperty(hidden = true)
+    private String auxiliary;
 }
 
