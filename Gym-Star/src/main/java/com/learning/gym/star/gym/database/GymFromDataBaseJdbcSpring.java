@@ -4,14 +4,16 @@ import com.learning.gym.star.gym.Gym;
 import com.learning.gym.star.gym.GymRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 @Repository("gym database access")
-class GymFromDataBaseJpa implements GymRepository {
+class GymFromDataBaseJdbcSpring implements GymRepository{
 
     private final JdbcTemplate jdbcTemplate;
     private GymQueryParameters gymQueryParameters;
@@ -23,39 +25,45 @@ class GymFromDataBaseJpa implements GymRepository {
 
 
     @Autowired
-    GymFromDataBaseJpa ( JdbcTemplate jdbcTemplate, GymQueryParameters gymQueryParameters ) {
+    GymFromDataBaseJdbcSpring(JdbcTemplate jdbcTemplate, GymQueryParameters gymQueryParameters){
         this.jdbcTemplate = jdbcTemplate;
         this.gymQueryParameters = gymQueryParameters;
     }
 
     @Override
-    public void add ( Gym gym ) {
-        Object[] param = gymQueryParameters.getQueryParameters(gym).toArray();
-        jdbcTemplate.update(ADD_QUERY, param);
+    @Transactional
+    public String add(Gym gym){
+        KeyHolder generatedIdHolder = new GeneratedKeyHolder();
+        List <String> queryParameters = gymQueryParameters.getQueryParameters(gym);
+        jdbcTemplate.update(connection -> {
+            return getPreparedStatement(queryParameters, connection);
+        }, generatedIdHolder);
+        System.out.println((generatedIdHolder.getKey()));//First better way to get generated Id
+        return jdbcTemplate.queryForObject("select @@identity", String.class);//Second way much simpler and cleaner but dangerous. To discuss.
     }
 
     @Override
-    public void update ( Gym gym, int index ) {
+    public void update(Gym gym, int index){
         Object[] param = gymQueryParameters.getQueryParameters(gym, index).toArray();
         jdbcTemplate.update(UPDATE_QUERY, param);
     }
 
     @Override
-    public void delete ( int index ) {
+    public void delete(int index){
         Object[] param = gymQueryParameters.getQueryParameters(index).toArray();
         jdbcTemplate.update(DELETE_QUERY, param);
     }
 
     @Override
-    public List <String> getGymData () {
+    public List <String> getGymData(){
         //Lambda expression copied from tutorial code. I don't understand whole core of it yet.
-        return jdbcTemplate.query(SELECT_ALL_QUERY, ( resultSet, i ) -> getDataFromQuery(resultSet));
+        return jdbcTemplate.query(SELECT_ALL_QUERY, (resultSet, i) -> getDataFromQuery(resultSet));
     }
 
     @Override
-    public String[] getGymDataById ( int id ) {
+    public String[] getGymDataById(int id){
         //Lambda expression copied from tutorial code. I don't understand whole core of it yet.
-        String[] output = jdbcTemplate.queryForObject(SELECT_ONE_QUERY, new Object[]{id}, ( resultSet, i ) -> {
+        String[] output = jdbcTemplate.queryForObject(SELECT_ONE_QUERY, new Object[]{id}, (resultSet, i) -> {
             String gym_id = resultSet.getString("gym_id");
             String gym_name = resultSet.getString("gym_name");
             String street = resultSet.getString("street");
@@ -66,7 +74,7 @@ class GymFromDataBaseJpa implements GymRepository {
         return output;
     }
 
-    private String getDataFromQuery ( ResultSet resultSet ) throws SQLException {
+    private String getDataFromQuery(ResultSet resultSet) throws SQLException{
         String gym_id = resultSet.getString("gym_id");
         String gym_name = resultSet.getString("gym_name");
         String street = resultSet.getString("street");
@@ -79,5 +87,13 @@ class GymFromDataBaseJpa implements GymRepository {
                 .append(city).append(" ")
                 .append(building_number)
                 .toString();
+    }
+
+    private PreparedStatement getPreparedStatement(List <String> queryParameters, Connection connection) throws SQLException{
+        PreparedStatement preparedStatement = connection.prepareStatement((ADD_QUERY), Statement.RETURN_GENERATED_KEYS);
+        for(int i = 0; i < queryParameters.size(); i++) {
+            preparedStatement.setString(i + 1, queryParameters.get(i));
+        }
+        return preparedStatement;
     }
 }

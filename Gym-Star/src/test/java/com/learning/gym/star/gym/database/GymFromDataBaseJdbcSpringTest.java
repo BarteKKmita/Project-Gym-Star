@@ -27,19 +27,19 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
-public class GymFromDataBaseJpaTest {
+public class GymFromDataBaseJdbcSpringTest{
 
     @Resource
     private DataSource dataSource;
 
     private GymQueryParameters gymQueryParameters = new GymQueryParameters();
     private static JdbcTemplate jdbcTemplate;
-    private GymFromDataBaseJpa gymFromDataBaseJpa;
+    private GymFromDataBaseJdbcSpring gymFromDataBaseJdbcSpring;
 
     @Before
     public void before () {
         jdbcTemplate = new JdbcTemplate(dataSource);
-        gymFromDataBaseJpa = new GymFromDataBaseJpa(jdbcTemplate, gymQueryParameters);
+        gymFromDataBaseJdbcSpring = new GymFromDataBaseJdbcSpring(jdbcTemplate, gymQueryParameters);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class GymFromDataBaseJpaTest {
         //Given
         int expectedSize = 2;
         //When
-        int gymDataSize = gymFromDataBaseJpa.getGymData().size();
+        int gymDataSize = gymFromDataBaseJdbcSpring.getGymData().size();
         //Then
         assertEquals(expectedSize, gymDataSize);
     }
@@ -68,7 +68,7 @@ public class GymFromDataBaseJpaTest {
         String expectedCity = "rudy";
         String expectedBuildingNumber = "102";
         //When
-        String[] gymDataById = gymFromDataBaseJpa.getGymDataById(gymId);
+        String[] gymDataById = gymFromDataBaseJdbcSpring.getGymDataById(gymId);
         //Then
         assertEquals(expectedSize, gymDataById.length);
         assertEquals(expectedName, gymDataById[1]);
@@ -89,14 +89,14 @@ public class GymFromDataBaseJpaTest {
                 .city("TestCity")
                 .build();
         //When
-        gymFromDataBaseJpa.add(gym);
+        gymFromDataBaseJdbcSpring.add(gym);
         //Then
-        assertEquals(expectedLength, gymFromDataBaseJpa.getGymDataById(gymId).length);
+        assertEquals(expectedLength, gymFromDataBaseJdbcSpring.getGymDataById(gymId).length);
     }
 
     @After
     public void removeAddedRecordForTestsControl () {
-        gymFromDataBaseJpa.delete(6);
+        gymFromDataBaseJdbcSpring.delete(6);
     }
 
     @Test
@@ -108,7 +108,7 @@ public class GymFromDataBaseJpaTest {
                 .city("TestCity")
                 .build();
         //Then
-        assertThrows(NonTransientDataAccessException.class, () -> gymFromDataBaseJpa.add(gym));
+        assertThrows(NonTransientDataAccessException.class, () -> gymFromDataBaseJdbcSpring.add(gym));
     }
 
     @Test
@@ -121,7 +121,7 @@ public class GymFromDataBaseJpaTest {
                 .city("")
                 .build();
         //Then
-        assertThrows(NonTransientDataAccessException.class, () -> gymFromDataBaseJpa.add(gym));
+        assertThrows(NonTransientDataAccessException.class, () -> gymFromDataBaseJdbcSpring.add(gym));
     }
 
     @Test
@@ -136,8 +136,8 @@ public class GymFromDataBaseJpaTest {
                 .city("TestCity")
                 .build();
         //When
-        gymFromDataBaseJpa.update(gym, gymId);
-        String[] gymDataById = gymFromDataBaseJpa.getGymDataById(gymId);
+        gymFromDataBaseJdbcSpring.update(gym, gymId);
+        String[] gymDataById = gymFromDataBaseJdbcSpring.getGymDataById(gymId);
         //Then
         assertEquals(expectedGymName, gymDataById[1]);
     }
@@ -152,7 +152,7 @@ public class GymFromDataBaseJpaTest {
                 .street("Sezamkowa")
                 .city("TestCity")
                 .build();
-        gymFromDataBaseJpa.update(gym, gymId);
+        gymFromDataBaseJdbcSpring.update(gym, gymId);
     }
 
     @Test
@@ -165,7 +165,7 @@ public class GymFromDataBaseJpaTest {
                 .street("Sezamkowa")
                 .build();
         //Then
-        assertThrows(NonTransientDataAccessException.class, () -> gymFromDataBaseJpa.update(gym, gymId));
+        assertThrows(NonTransientDataAccessException.class, () -> gymFromDataBaseJdbcSpring.update(gym, gymId));
     }
 
     @Test
@@ -179,9 +179,9 @@ public class GymFromDataBaseJpaTest {
                 .city("TestCity")
                 .build();
         //When
-        gymFromDataBaseJpa.update(gym, gymId);
+        gymFromDataBaseJdbcSpring.update(gym, gymId);
         //Then
-        assertThrows(NonTransientDataAccessException.class, () -> gymFromDataBaseJpa.getGymDataById(gymId));
+        assertThrows(NonTransientDataAccessException.class, () -> gymFromDataBaseJdbcSpring.getGymDataById(gymId));
     }
 
     @Test
@@ -190,8 +190,8 @@ public class GymFromDataBaseJpaTest {
         int gymIdToDelete = 2;
         int expectedDataLength = 1;
         //When
-        gymFromDataBaseJpa.delete(gymIdToDelete);
-        List <String> gymData = gymFromDataBaseJpa.getGymData();
+        gymFromDataBaseJdbcSpring.delete(gymIdToDelete);
+        List <String> gymData = gymFromDataBaseJdbcSpring.getGymData();
         //Then
         assertEquals(expectedDataLength, gymData.size());
     }
@@ -201,7 +201,7 @@ public class GymFromDataBaseJpaTest {
         //Given
         int gym_id = 6;
         //Then
-        assertThrows(EmptyResultDataAccessException.class, () -> gymFromDataBaseJpa.getGymDataById(gym_id));
+        assertThrows(EmptyResultDataAccessException.class, () -> gymFromDataBaseJdbcSpring.getGymDataById(gym_id));
     }
 
     @Test
@@ -214,6 +214,6 @@ public class GymFromDataBaseJpaTest {
                 .street("Sezamkowa")
                 .build();
         //Then
-        assertThrows(DuplicateKeyException.class, () -> gymFromDataBaseJpa.add(testGym));
+        assertThrows(DuplicateKeyException.class, () -> gymFromDataBaseJdbcSpring.add(testGym));
     }
 }

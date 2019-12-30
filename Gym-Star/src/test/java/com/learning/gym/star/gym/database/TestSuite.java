@@ -17,7 +17,7 @@ import static com.wix.mysql.distribution.Version.v5_7_19;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        GymFromDataBaseJpaTest.class
+        GymFromDataBaseJdbcSpringTest.class
 })
 public class TestSuite{
     private static EmbeddedMysql embeddedMysql;
