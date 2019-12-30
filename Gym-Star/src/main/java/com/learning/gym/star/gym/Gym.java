@@ -17,7 +17,7 @@ import javax.validation.constraints.NotEmpty;
 public class Gym{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "gym_id")
     private String gymId;
 
