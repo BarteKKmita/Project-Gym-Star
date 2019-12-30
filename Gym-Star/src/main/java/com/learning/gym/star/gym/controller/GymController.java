@@ -20,8 +20,8 @@ public class GymController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void addGym ( @Valid @NotNull @RequestBody Gym gym ) {
-        gymService.addGym(gym);
+    public String addGym(@Valid @NotNull @RequestBody GymFrameForController gymFrame){
+        return "Your gym id: " + gymService.addGym(gymFrame);
     }
 
     @GetMapping(path = {"/all"})
@@ -30,8 +30,8 @@ public class GymController {
     }
 
     @GetMapping(path = "{id}")
-    public String[] getGymById ( @PathVariable("id") int gymId ) {
-        return gymService.getGymByIdm(gymId);
+    public GymFrameForController gymFrame(@PathVariable("id") int gymId){
+        return gymService.getGymById(gymId);
     }
 
     @PutMapping
