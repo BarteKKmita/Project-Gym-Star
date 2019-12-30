@@ -2,9 +2,10 @@ package com.learning.gym.star.gym.controller;
 
 import com.learning.gym.star.gym.Gym;
 import com.learning.gym.star.gym.service.GymService;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -12,11 +13,14 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RequestMapping("api/gym")
-@AllArgsConstructor(onConstructor = @__(@Autowired))
 @RestController
-public class GymController {
+public class GymController{
 
     private final GymService gymService;
+
+    public GymController(@Qualifier("GymServiceJpa") GymService gymService){
+        this.gymService = gymService;
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -30,18 +34,28 @@ public class GymController {
     }
 
     @GetMapping(path = "{id}")
-    public GymFrameForController gymFrame(@PathVariable("id") int gymId){
-        return gymService.getGymById(gymId);
+    public ResponseEntity getGymById(@PathVariable("id") int gymId){
+        GymFrameForController gymFrame = gymService.getGymById(gymId);
+        if(gymFrame != null) {
+            return new ResponseEntity <>(gymFrame, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity <>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    public ResponseEntity handleContentNotAllowedException(){
+        return new ResponseEntity <>("Record not found", HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping
-    public void updateGym ( @Valid @NotNull @RequestBody Gym gym ) {
+    public void updateGym(@Valid @NotNull @RequestBody Gym gym){
         int gymId = Integer.parseInt(gym.getGymId());
         gymService.updateGym(gym, gymId);
     }
 
     @DeleteMapping(path = "{id}")
-    public void deleteGymById ( @PathVariable("id") int gymId ) {
+    public void deleteGymById(@PathVariable("id") int gymId){
         gymService.deleteGymById(gymId);
     }
 }
