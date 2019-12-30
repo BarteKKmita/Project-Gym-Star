@@ -6,7 +6,7 @@ import java.util.List;
  * This class was created to simulate getting gym data from SQL dadabase.
  */
 
-public class GymDataHandler implements GymRepository {
+public class GymDataHandler implements GymRepository{
     private final List <String> gymData;
 
     public GymDataHandler () {
@@ -33,8 +33,9 @@ public class GymDataHandler implements GymRepository {
     }
 
     @Override
-    public void add ( Gym gym ) {
+    public String add(Gym gym){
         gymData.add(gym.toString());
+        return "";
     }
 
     @Override

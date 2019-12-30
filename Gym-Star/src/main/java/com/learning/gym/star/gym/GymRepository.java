@@ -5,7 +5,7 @@ import java.util.List;
 public interface GymRepository {
 
 
-    void add ( Gym gym );
+    String add(Gym gym);
 
     void update ( Gym gym, int index );
 
