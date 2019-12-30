@@ -29,6 +29,10 @@ public class TestSuite{
 
     @AfterClass
     public static void tearDownAfterClass(){
+        tearDown();
+    }
+
+    private static void tearDown(){
         if(null != embeddedMysql) {
             embeddedMysql.stop();
         }

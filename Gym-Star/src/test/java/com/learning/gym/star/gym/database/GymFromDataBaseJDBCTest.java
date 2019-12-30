@@ -29,9 +29,7 @@ class GymFromDataBaseJDBCTest{
 
     @AfterAll
     private static void tearDownAfterClass(){
-        if(null != embeddedMysql) {
-            embeddedMysql.stop();
-        }
+        TestSuite.tearDownAfterClass();
     }
 
     @Test
