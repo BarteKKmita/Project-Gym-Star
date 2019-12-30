@@ -1,7 +1,6 @@
 package com.learning.gym.star.gym.database;
 
 import com.learning.gym.star.gym.Gym;
-import com.learning.gym.star.gym.GymRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,9 +33,10 @@ class GymFromDataBaseJDBC implements GymRepository{
     }
 
     @Override
-    public void add(Gym gym){
+    public String add(Gym gym){
         List <String> queryParameters = gymQueryParameters.getQueryParameters(gym);
         changeTableData(ADD_QUERY, queryParameters);
+        return gym.getGymId();
     }
 
     @Override
