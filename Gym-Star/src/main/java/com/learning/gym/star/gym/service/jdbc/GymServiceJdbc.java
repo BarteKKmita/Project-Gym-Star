@@ -4,7 +4,6 @@ import com.learning.gym.star.gym.Gym;
 import com.learning.gym.star.gym.controller.GymFrameForController;
 import com.learning.gym.star.gym.database.jdbc.GymRepository;
 import com.learning.gym.star.gym.service.GymSerializer;
-import com.learning.gym.star.gym.service.GymService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service("GymServiceJdbc")
-public class GymServiceJdbc implements GymService{
+public class GymServiceJdbc{
 
     private GymRepository gymRepository;
     private GymSerializer gymSerializer;

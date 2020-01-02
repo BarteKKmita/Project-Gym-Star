@@ -1,8 +1,8 @@
-package com.learning.gym.star.gym.controller;
+package com.learning.gym.star.gym.controller.jdbc;
 
 import com.learning.gym.star.gym.Gym;
-import com.learning.gym.star.gym.service.GymService;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.learning.gym.star.gym.controller.GymFrameForController;
+import com.learning.gym.star.gym.service.jdbc.GymServiceJdbc;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,13 +14,11 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@RequestMapping("api/gym")
-@RestController
-public class GymController{
+public class GymControllerJdbc{
 
-    private final GymService gymService;
+    private final GymServiceJdbc gymService;
 
-    public GymController(@Qualifier("GymServiceJpa") GymService gymService){
+    public GymControllerJdbc(GymServiceJdbc gymService){
         this.gymService = gymService;
     }
 
@@ -64,5 +62,3 @@ public class GymController{
         gymService.deleteGymById(gymId);
     }
 }
-
-
