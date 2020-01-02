@@ -23,13 +23,13 @@ class GymFromDataBaseJDBCTest{
     private GymFromDataBaseJDBC gymFromDataBaseJDBC = new GymFromDataBaseJDBC(jdbcConnector);
 
     @BeforeAll
-    private static void setupBeforeClass(){
-        TestSuite.setupBeforeClass();
+    private static void setUp(){
+        TestSuite.setUpClass();
     }
 
     @AfterAll
-    private static void tearDownAfterClass(){
-        TestSuite.tearDownAfterClass();
+    private static void tearDown(){
+        TestSuite.tearDownClass();
     }
 
     @Test

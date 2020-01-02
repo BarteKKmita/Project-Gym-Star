@@ -23,16 +23,16 @@ public class TestSuite{
     private static EmbeddedMysql embeddedMysql;
 
     @BeforeClass
-    public static void setupBeforeClass(){
+    public static void setUpClass(){
         setupEmbeddedMySQL();
     }
 
     @AfterClass
-    public static void tearDownAfterClass(){
-        tearDown();
+    public static void tearDownClass(){
+        stopAndCloseDatabase();
     }
 
-    private static void tearDown(){
+    private static void stopAndCloseDatabase(){
         if(null != embeddedMysql) {
             embeddedMysql.stop();
         }
@@ -44,12 +44,10 @@ public class TestSuite{
                 .withTimeZone(TimeZone.getTimeZone(ZoneId.of("UTC")))
                 .withUser("test", "test")
                 .build();
-
         SchemaConfig schemaConfig = SchemaConfig.aSchemaConfig("test_database")
                 .withScripts(classPathScript(("db/schema.sql")))
                 .withCharset(Charset.UTF8)
                 .build();
-
         embeddedMysql = EmbeddedMysql.anEmbeddedMysql(config)
                 .addSchema(schemaConfig)
                 .start();

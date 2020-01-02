@@ -1,15 +1,14 @@
 package com.learning.gym.star.statistics;
 
-import com.learning.gym.star.sportsmanbuilder.userinput.UserInputForTests;
 import com.learning.gym.star.sportsmanbuilder.ConcreteSportsMan;
 import com.learning.gym.star.sportsmanbuilder.MaleSportsMan;
 import com.learning.gym.star.sportsmanbuilder.SportsManBuilder;
 import com.learning.gym.star.sportsmanbuilder.SportsManDirector;
+import com.learning.gym.star.sportsmanbuilder.userinput.UserInputForTests;
 import com.learning.gym.star.trainer.Trainer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,12 +17,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class DataStatisticsHandlerTest {
 
     private ConcreteSportsMan sportsMan;
 
     @BeforeEach
-    void initListOfTrainers () {
+    void setUp(){
         SportsManBuilder sportsManBuilder = new MaleSportsMan("Test", "SportsMan");
         SportsManDirector director = new SportsManDirector(sportsManBuilder);
         director.setConcreteSportsMan(new UserInputForTests("Mariusz", "Gawryś"));

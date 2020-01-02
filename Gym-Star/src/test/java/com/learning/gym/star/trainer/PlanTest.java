@@ -17,7 +17,7 @@ class PlanTest {
     private Plan plan;
 
     @BeforeEach
-    void init(){
+    void setUp(){
          plan = new Plan();
          trainingDays = 4;
     }

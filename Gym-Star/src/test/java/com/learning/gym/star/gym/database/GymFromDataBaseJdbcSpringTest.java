@@ -37,7 +37,7 @@ public class GymFromDataBaseJdbcSpringTest{
     private GymFromDataBaseJdbcSpring gymFromDataBaseJdbcSpring;
 
     @Before
-    public void before () {
+    public void setUpClass(){
         jdbcTemplate = new JdbcTemplate(dataSource);
         gymFromDataBaseJdbcSpring = new GymFromDataBaseJdbcSpring(jdbcTemplate, gymQueryParameters);
     }
@@ -94,8 +94,9 @@ public class GymFromDataBaseJdbcSpringTest{
         assertEquals(expectedLength, gymFromDataBaseJdbcSpring.getGymDataById(gymId).length);
     }
 
+    //Not sure if this is right naming convention
     @After
-    public void removeAddedRecordForTestsControl () {
+    public void tearDown2(){
         gymFromDataBaseJdbcSpring.delete(6);
     }
 
@@ -140,19 +141,6 @@ public class GymFromDataBaseJdbcSpringTest{
         String[] gymDataById = gymFromDataBaseJdbcSpring.getGymDataById(gymId);
         //Then
         assertEquals(expectedGymName, gymDataById[1]);
-    }
-
-    @After
-    public void revertUpdateForTestsControl () {
-        int gymId = 2;
-        String expectedGymName = "pierwsza";
-        Gym gym = Gym.builder().gymId("2")
-                .gymName(expectedGymName)
-                .buildingNumber("51")
-                .street("Sezamkowa")
-                .city("TestCity")
-                .build();
-        gymFromDataBaseJdbcSpring.update(gym, gymId);
     }
 
     @Test
@@ -215,5 +203,18 @@ public class GymFromDataBaseJdbcSpringTest{
                 .build();
         //Then
         assertThrows(DuplicateKeyException.class, () -> gymFromDataBaseJdbcSpring.add(testGym));
+    }
+
+    @After
+    public void tearDown(){
+        int gymId = 2;
+        String expectedGymName = "pierwsza";
+        Gym gym = Gym.builder().gymId("2")
+                .gymName(expectedGymName)
+                .buildingNumber("51")
+                .street("Sezamkowa")
+                .city("TestCity")
+                .build();
+        gymFromDataBaseJdbcSpring.update(gym, gymId);
     }
 }
