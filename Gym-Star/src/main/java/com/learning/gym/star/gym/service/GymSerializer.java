@@ -7,10 +7,10 @@ import com.learning.gym.star.gym.controller.GymFrameForController;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-class GymSerializer{
+public class GymSerializer{
     private static ObjectMapper objectMapper = new ObjectMapper();
 
-    Gym getGymFromGymFrame(GymFrameForController gymFrame){
+    public Gym getGymFromGymFrame(GymFrameForController gymFrame){
         String gymAsJson = "";
         try {
             gymAsJson = objectMapper.writeValueAsString(gymFrame);
@@ -27,7 +27,7 @@ class GymSerializer{
         return databaseGym;
     }
 
-    GymFrameForController getGymFrameFromGym(Gym databaseGym){
+    public GymFrameForController getGymFrameFromGym(Gym databaseGym){
         String gymAsJson = "";
         try {
             gymAsJson = objectMapper.writeValueAsString(databaseGym);

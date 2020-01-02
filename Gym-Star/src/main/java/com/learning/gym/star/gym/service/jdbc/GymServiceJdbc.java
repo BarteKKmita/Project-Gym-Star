@@ -1,8 +1,10 @@
-package com.learning.gym.star.gym.service;
+package com.learning.gym.star.gym.service.jdbc;
 
 import com.learning.gym.star.gym.Gym;
 import com.learning.gym.star.gym.controller.GymFrameForController;
-import com.learning.gym.star.gym.database.GymRepository;
+import com.learning.gym.star.gym.database.jdbc.GymRepository;
+import com.learning.gym.star.gym.service.GymSerializer;
+import com.learning.gym.star.gym.service.GymService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

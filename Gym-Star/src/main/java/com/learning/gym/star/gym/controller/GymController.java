@@ -4,8 +4,10 @@ import com.learning.gym.star.gym.Gym;
 import com.learning.gym.star.gym.service.GymService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -36,8 +38,10 @@ public class GymController{
     @GetMapping(path = "{id}")
     public ResponseEntity getGymById(@PathVariable("id") int gymId){
         GymFrameForController gymFrame = gymService.getGymById(gymId);
+        MultiValueMap <String, String> header = new HttpHeaders();
+        header.add("Content-type", "application/json");
         if(gymFrame != null) {
-            return new ResponseEntity <>(gymFrame, HttpStatus.CREATED);
+            return new ResponseEntity <>(gymFrame, header, HttpStatus.CREATED);
         } else {
             return new ResponseEntity <>(null, HttpStatus.NOT_FOUND);
         }
@@ -47,6 +51,7 @@ public class GymController{
     public ResponseEntity handleContentNotAllowedException(){
         return new ResponseEntity <>("Record not found", HttpStatus.BAD_REQUEST);
     }
+
 
     @PutMapping
     public void updateGym(@Valid @NotNull @RequestBody Gym gym){

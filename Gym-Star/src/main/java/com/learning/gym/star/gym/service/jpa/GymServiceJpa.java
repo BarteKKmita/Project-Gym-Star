@@ -1,8 +1,10 @@
-package com.learning.gym.star.gym.service;
+package com.learning.gym.star.gym.service.jpa;
 
 import com.learning.gym.star.gym.Gym;
 import com.learning.gym.star.gym.controller.GymFrameForController;
-import com.learning.gym.star.gym.database.GymJpaRepository;
+import com.learning.gym.star.gym.database.jpa.GymJpaRepository;
+import com.learning.gym.star.gym.service.GymSerializer;
+import com.learning.gym.star.gym.service.GymService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +44,5 @@ public class GymServiceJpa implements GymService{
 
     @Override
     public void deleteGymById(int gymId){
-
     }
 }

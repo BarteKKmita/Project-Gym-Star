@@ -1,4 +1,4 @@
-package com.learning.gym.star.gym.database;
+package com.learning.gym.star.gym.database.jdbc;
 
 import com.wix.mysql.EmbeddedMysql;
 import com.wix.mysql.config.Charset;

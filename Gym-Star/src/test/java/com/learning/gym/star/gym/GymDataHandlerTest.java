@@ -1,6 +1,6 @@
 package com.learning.gym.star.gym;
 
-import com.learning.gym.star.gym.database.GymRepository;
+import com.learning.gym.star.gym.database.jdbc.GymRepository;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

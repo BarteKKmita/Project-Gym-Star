@@ -1,4 +1,4 @@
-package com.learning.gym.star.gym.service;
+package com.learning.gym.star.gym.controller;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;

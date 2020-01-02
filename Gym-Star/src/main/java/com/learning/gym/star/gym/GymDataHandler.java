@@ -1,6 +1,6 @@
 package com.learning.gym.star.gym;
 
-import com.learning.gym.star.gym.database.GymRepository;
+import com.learning.gym.star.gym.database.jdbc.GymRepository;
 
 import java.util.ArrayList;
 import java.util.List;
