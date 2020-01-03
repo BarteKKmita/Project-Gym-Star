@@ -2,7 +2,9 @@ package com.learning.gym.star.gym.controller.jpa;
 
 import com.learning.gym.star.gym.controller.GymFrameForController;
 import com.learning.gym.star.gym.service.jpa.GymServiceJpa;
+import org.hibernate.exception.GenericJDBCException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.IncorrectUpdateSemanticsDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.NoSuchElementException;
 
 @RequestMapping("api/jpa/gym")
 @RestController
@@ -46,7 +49,8 @@ public class GymControllerJpa{
     }
 
     @PutMapping
-    public void updateGym(@Valid @NotNull @RequestBody GymFrameForController gymFrame){
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateGym(@Valid @RequestBody GymFrameForController gymFrame){
         gymService.updateGym(gymFrame);
     }
 
@@ -56,7 +60,23 @@ public class GymControllerJpa{
     }
 
     @ExceptionHandler(EmptyResultDataAccessException.class)
-    public ResponseEntity handleContentNotAllowedException(){
+    public ResponseEntity handleEmptyResult(){
+        return new ResponseEntity <>("Record not found", HttpStatus.BAD_REQUEST);
+    }
+
+
+    @ExceptionHandler(IncorrectUpdateSemanticsDataAccessException.class)
+    public ResponseEntity handleWrongUpdateStatement(){
+        return new ResponseEntity <>("Gym id cannot be null", HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(GenericJDBCException.class)
+    public ResponseEntity handleWrongTypeInHttpMethod(){
+        return new ResponseEntity <>("One of given parameter has a wrong type.", HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity handleNoSuchRecordInDatabase(){
         return new ResponseEntity <>("Record not found", HttpStatus.BAD_REQUEST);
     }
 }
