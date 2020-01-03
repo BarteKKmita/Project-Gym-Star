@@ -1,6 +1,5 @@
 package com.learning.gym.star.gym.controller.jpa;
 
-import com.learning.gym.star.gym.Gym;
 import com.learning.gym.star.gym.controller.GymFrameForController;
 import com.learning.gym.star.gym.service.jpa.GymServiceJpa;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -12,9 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
-@RequestMapping("api/gym")
+@RequestMapping("api/jpa/gym")
 @RestController
 public class GymControllerJpa{
 
@@ -31,8 +29,8 @@ public class GymControllerJpa{
     }
 
     @GetMapping(path = {"/all"})
-    public List <String> getAllGyms(){
-        return gymService.getAllGyms();
+    public ResponseEntity getAllGyms(){
+        return new ResponseEntity <>(gymService.getAllGyms(), HttpStatus.OK);
     }
 
     @GetMapping(path = "{id}")
@@ -47,21 +45,19 @@ public class GymControllerJpa{
         }
     }
 
-    @ExceptionHandler(EmptyResultDataAccessException.class)
-    public ResponseEntity handleContentNotAllowedException(){
-        return new ResponseEntity <>("Record not found", HttpStatus.BAD_REQUEST);
-    }
-
-
     @PutMapping
-    public void updateGym(@Valid @NotNull @RequestBody Gym gym){
-        int gymId = Integer.parseInt(gym.getGymId());
-        gymService.updateGym(gym, gymId);
+    public void updateGym(@Valid @NotNull @RequestBody GymFrameForController gymFrame){
+        gymService.updateGym(gymFrame);
     }
 
     @DeleteMapping(path = "{id}")
-    public void deleteGymById(@PathVariable("id") int gymId){
+    public void deleteGymById(@PathVariable("id") String gymId){
         gymService.deleteGymById(gymId);
+    }
+
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    public ResponseEntity handleContentNotAllowedException(){
+        return new ResponseEntity <>("Record not found", HttpStatus.BAD_REQUEST);
     }
 }
 
