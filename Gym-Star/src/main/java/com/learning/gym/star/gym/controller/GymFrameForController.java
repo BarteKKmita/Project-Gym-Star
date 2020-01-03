@@ -1,9 +1,8 @@
 package com.learning.gym.star.gym.controller;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import javax.persistence.Transient;
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 
 @NoArgsConstructor
@@ -13,8 +12,7 @@ import javax.validation.constraints.NotEmpty;
 @Getter
 public class GymFrameForController{
 
-    @ApiModelProperty(hidden = true)
-    private String gymId = null;
+    private String gymId;
     @NotEmpty
     private String gymName;
     @NotEmpty
@@ -22,10 +20,11 @@ public class GymFrameForController{
     @NotEmpty
     private String city;
     @NotEmpty
+    @Valid
     private String buildingNumber;
 
-    @Transient
-    @ApiModelProperty(hidden = true)
-    private String auxiliary;
+    public String[] toStringArray(){
+        return new String[]{gymId, gymName, street, city, buildingNumber};
+    }
 }
 
