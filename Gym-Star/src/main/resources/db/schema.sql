@@ -9,12 +9,8 @@ building_number INT NOT NULL
 DELIMITER $$
 CREATE TRIGGER notempty BEFORE INSERT ON Gym
      FOR EACH ROW BEGIN
-     IF NEW.gym_name = '' THEN
-    signal sqlstate '45000';
-     ELSEIF NEW.street = '' THEN
-    signal sqlstate '45000';
-     ELSEIF NEW.city = '' THEN
-    signal sqlstate '45000';
+     IF NEW.gym_name = '' OR  NEW.street = '' OR NEW.city = ''
+     THEN signal sqlstate '45000';
      END IF;
      END$$
  DELIMITER ;
