@@ -45,7 +45,7 @@ public class TestSuite{
                 .withUser("test", "test")
                 .build();
         SchemaConfig schemaConfig = SchemaConfig.aSchemaConfig("test_database")
-                .withScripts(classPathScript(("db/schema.sql")))
+                .withScripts(classPathScript(("../../test/resources/db/schema.sql")))
                 .withCharset(Charset.UTF8)
                 .build();
         embeddedMysql = EmbeddedMysql.anEmbeddedMysql(config)
