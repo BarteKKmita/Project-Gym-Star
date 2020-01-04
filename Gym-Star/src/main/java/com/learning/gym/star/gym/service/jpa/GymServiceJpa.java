@@ -30,6 +30,9 @@ public class GymServiceJpa{
     }
 
     public String addGym(GymFrameForController gym){
+        if(gymRepository.existsById(gym.getGymId())) {
+            return "";
+        }
         return gymRepository.saveAndFlush(gymSerializer.getGymFromGymFrame(gym)).getGymId();
     }
 
