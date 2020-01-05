@@ -1,7 +1,7 @@
 package com.learning.gym.star.gym.service.jdbc;
 
 import com.learning.gym.star.gym.Gym;
-import com.learning.gym.star.gym.controller.GymFrameForController;
+import com.learning.gym.star.gym.controller.GymFrame;
 import com.learning.gym.star.gym.database.jdbc.GymRepository;
 import com.learning.gym.star.gym.service.GymSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +22,11 @@ public class GymServiceJdbc{
         this.gymSerializer = gymSerializer;
     }
 
-    public List <GymFrameForController> getAllGyms(){
+    public List <GymFrame> getAllGyms(){
         return gymSerializer.buildGymForControllerFromStringList(gymRepository.getGymData());
     }
 
-    public String addGym(GymFrameForController gym){
+    public String addGym(GymFrame gym){
         return gymRepository.add(gymSerializer.getGymFromGymFrame(gym));
     }
 
@@ -34,7 +34,7 @@ public class GymServiceJdbc{
         gymRepository.update(gym, gymId);
     }
 
-    public GymFrameForController getGymById(int gymId){
+    public GymFrame getGymById(int gymId){
         String[] gymAsStringArray = gymRepository.getGymDataById(gymId);
         return gymSerializer.buildGymFrameForController(gymAsStringArray);
     }

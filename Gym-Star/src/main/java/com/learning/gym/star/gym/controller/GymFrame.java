@@ -10,7 +10,7 @@ import javax.validation.constraints.NotEmpty;
 @Builder
 @ToString
 @Getter
-public class GymFrameForController{
+public class GymFrame {
 
     private String gymId;
     @NotEmpty

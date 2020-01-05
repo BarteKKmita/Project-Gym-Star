@@ -1,7 +1,7 @@
 package com.learning.gym.star.gym.controller.jdbc;
 
 import com.learning.gym.star.gym.Gym;
-import com.learning.gym.star.gym.controller.GymFrameForController;
+import com.learning.gym.star.gym.controller.GymFrame;
 import com.learning.gym.star.gym.service.jdbc.GymServiceJdbc;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -14,8 +14,7 @@ import java.sql.SQLException;
 
 @RequestMapping("api/jdbc/gym")
 @RestController
-public class GymControllerJdbc{
-
+public class GymControllerJdbc {
     private final GymServiceJdbc gymService;
 
     public GymControllerJdbc(GymServiceJdbc gymService){
@@ -34,10 +33,9 @@ public class GymControllerJdbc{
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity addGym(@RequestBody GymFrameForController gymFrame){
+    public ResponseEntity addGym(@RequestBody GymFrame gymFrame){
         return new ResponseEntity("Your gym id: " + gymService.addGym(gymFrame), HttpStatus.OK);
     }
-
 
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -55,7 +53,6 @@ public class GymControllerJdbc{
     public ResponseEntity handleWrongTypeInHttpMethod(){
         return new ResponseEntity <>("One of given parameter has a wrong type.", HttpStatus.BAD_REQUEST);
     }
-
 
     @ExceptionHandler(EmptyResultDataAccessException.class)
     public ResponseEntity handleContentNotAllowedException(){

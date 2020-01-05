@@ -3,7 +3,7 @@ package com.learning.gym.star.gym.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.learning.gym.star.gym.Gym;
-import com.learning.gym.star.gym.controller.GymFrameForController;
+import com.learning.gym.star.gym.controller.GymFrame;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.List;
 public class GymSerializer{
     private static ObjectMapper objectMapper = new ObjectMapper();
 
-    public Gym getGymFromGymFrame(GymFrameForController gymFrame){
+    public Gym getGymFromGymFrame(GymFrame gymFrame){
         String gymAsJson = "";
         try {
             gymAsJson = objectMapper.writeValueAsString(gymFrame);
@@ -31,7 +31,7 @@ public class GymSerializer{
         return databaseGym;
     }
 
-    public GymFrameForController getGymFrameFromGym(Gym databaseGym){
+    public GymFrame getGymFrameFromGym(Gym databaseGym){
         String gymAsJson = "";
         try {
             gymAsJson = objectMapper.writeValueAsString(databaseGym);
@@ -39,17 +39,17 @@ public class GymSerializer{
         } catch(JsonProcessingException e) {
             e.printStackTrace();
         }
-        GymFrameForController gymFrame = null;
+        GymFrame gymFrame = null;
         try {
-            gymFrame = objectMapper.readValue(gymAsJson, GymFrameForController.class);
+            gymFrame = objectMapper.readValue(gymAsJson, GymFrame.class);
         } catch(JsonProcessingException e) {
             e.printStackTrace();
         }
         return gymFrame;
     }
 
-    public GymFrameForController buildGymFrameForController(String[] gymAsStringArray){
-        return GymFrameForController.builder()
+    public GymFrame buildGymFrameForController(String[] gymAsStringArray){
+        return GymFrame.builder()
                 .gymId(gymAsStringArray[0])
                 .gymName(gymAsStringArray[1])
                 .street(gymAsStringArray[2])
@@ -58,14 +58,14 @@ public class GymSerializer{
                 .build();
     }
 
-    public List <GymFrameForController> buildGymListForController(List <Gym> gymsFromDatabase){
-        List <GymFrameForController> gymListForController = new ArrayList <>();
+    public List <GymFrame> buildGymListForController(List <Gym> gymsFromDatabase){
+        List <GymFrame> gymListForController = new ArrayList <>();
         gymsFromDatabase.forEach(gym -> gymListForController.add(buildGymFrameForController(gym.toStringArray())));
         return gymListForController;
     }
 
-    public List <GymFrameForController> buildGymForControllerFromStringList(List <String> gymsFromDatabase){
-        List <GymFrameForController> gymListForController = new ArrayList <>();
+    public List <GymFrame> buildGymForControllerFromStringList(List <String> gymsFromDatabase){
+        List <GymFrame> gymListForController = new ArrayList <>();
         gymsFromDatabase.forEach(gym -> gymListForController.add(buildGymFrameForController(gym.split(" "))));
         return gymListForController;
     }
