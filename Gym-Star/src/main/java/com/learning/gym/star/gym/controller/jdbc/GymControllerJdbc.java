@@ -4,16 +4,16 @@ import com.learning.gym.star.gym.Gym;
 import com.learning.gym.star.gym.controller.GymFrameForController;
 import com.learning.gym.star.gym.service.jdbc.GymServiceJdbc;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.sql.SQLException;
 
+@RequestMapping("api/jdbc/gym")
+@RestController
 public class GymControllerJdbc{
 
     private final GymServiceJdbc gymService;
@@ -22,36 +22,25 @@ public class GymControllerJdbc{
         this.gymService = gymService;
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public String addGym(@Valid @NotNull @RequestBody GymFrameForController gymFrame){
-        return "Your gym id: " + gymService.addGym(gymFrame);
-    }
-
     @GetMapping(path = {"/all"})
-    public List <String> getAllGyms(){
-        return gymService.getAllGyms();
+    public ResponseEntity getAllGyms(){
+        return new ResponseEntity <>(gymService.getAllGyms(), HttpStatus.OK);
     }
 
     @GetMapping(path = "{id}")
     public ResponseEntity getGymById(@PathVariable("id") int gymId){
-        GymFrameForController gymFrame = gymService.getGymById(gymId);
-        MultiValueMap <String, String> header = new HttpHeaders();
-        header.add("Content-type", "application/json");
-        if(gymFrame != null) {
-            return new ResponseEntity <>(gymFrame, header, HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity <>(null, HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity <>(gymService.getGymById(gymId), HttpStatus.OK);
     }
 
-    @ExceptionHandler(EmptyResultDataAccessException.class)
-    public ResponseEntity handleContentNotAllowedException(){
-        return new ResponseEntity <>("Record not found", HttpStatus.BAD_REQUEST);
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity addGym(@RequestBody GymFrameForController gymFrame){
+        return new ResponseEntity("Your gym id: " + gymService.addGym(gymFrame), HttpStatus.OK);
     }
 
 
     @PutMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateGym(@Valid @NotNull @RequestBody Gym gym){
         int gymId = Integer.parseInt(gym.getGymId());
         gymService.updateGym(gym, gymId);
@@ -60,5 +49,16 @@ public class GymControllerJdbc{
     @DeleteMapping(path = "{id}")
     public void deleteGymById(@PathVariable("id") int gymId){
         gymService.deleteGymById(gymId);
+    }
+
+    @ExceptionHandler(SQLException.class)
+    public ResponseEntity handleWrongTypeInHttpMethod(){
+        return new ResponseEntity <>("One of given parameter has a wrong type.", HttpStatus.BAD_REQUEST);
+    }
+
+
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    public ResponseEntity handleContentNotAllowedException(){
+        return new ResponseEntity <>("Record not found", HttpStatus.BAD_REQUEST);
     }
 }

@@ -22,8 +22,8 @@ public class GymServiceJdbc{
         this.gymSerializer = gymSerializer;
     }
 
-    public List <String> getAllGyms(){
-        return gymRepository.getGymData();
+    public List <GymFrameForController> getAllGyms(){
+        return gymSerializer.buildGymForControllerFromStringList(gymRepository.getGymData());
     }
 
     public String addGym(GymFrameForController gym){
@@ -36,20 +36,10 @@ public class GymServiceJdbc{
 
     public GymFrameForController getGymById(int gymId){
         String[] gymAsStringArray = gymRepository.getGymDataById(gymId);
-        return buildGymForController(gymAsStringArray);
+        return gymSerializer.buildGymFrameForController(gymAsStringArray);
     }
 
     public void deleteGymById(int gymId){
         gymRepository.delete(gymId);
-    }
-
-    private GymFrameForController buildGymForController(String[] gymAsStringArray){
-        return GymFrameForController.builder()
-                .gymId(gymAsStringArray[0])
-                .gymName(gymAsStringArray[1])
-                .street(gymAsStringArray[2])
-                .city(gymAsStringArray[3])
-                .buildingNumber(gymAsStringArray[4])
-                .build();
     }
 }

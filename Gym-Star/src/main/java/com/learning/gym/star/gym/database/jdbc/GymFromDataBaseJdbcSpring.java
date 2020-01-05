@@ -6,7 +6,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.*;
 import java.util.List;
@@ -30,15 +29,13 @@ class GymFromDataBaseJdbcSpring implements GymRepository{
     }
 
     @Override
-    @Transactional
     public String add(Gym gym){
         KeyHolder generatedIdHolder = new GeneratedKeyHolder();
         List <String> queryParameters = gymQueryParameters.getQueryParameters(gym);
         jdbcTemplate.update(connection -> {
             return getPreparedStatement(queryParameters, connection);
         }, generatedIdHolder);
-        System.out.println((generatedIdHolder.getKey()));//First better way to get generated Id
-        return jdbcTemplate.queryForObject("select @@identity", String.class);//Second way much simpler and cleaner but dangerous. To discuss.
+        return String.valueOf(generatedIdHolder.getKey());
     }
 
     @Override
@@ -63,12 +60,7 @@ class GymFromDataBaseJdbcSpring implements GymRepository{
     public String[] getGymDataById(int id){
         //Lambda expression copied from tutorial code. I don't understand whole core of it yet.
         String[] output = jdbcTemplate.queryForObject(SELECT_ONE_QUERY, new Object[]{id}, (resultSet, i) -> {
-            String gym_id = resultSet.getString("gym_id");
-            String gym_name = resultSet.getString("gym_name");
-            String street = resultSet.getString("street");
-            String city = resultSet.getString("city");
-            String building_number = resultSet.getString("building_number");
-            return new String[]{gym_id, gym_name, street, city, building_number};
+            return this.getDataFromQuery(resultSet).split(" ");
         });
         return output;
     }
