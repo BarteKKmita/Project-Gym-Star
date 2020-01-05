@@ -26,9 +26,12 @@ public class GymControllerJpa{
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public String addGym(@Valid @NotNull @RequestBody GymFrameForController gymFrame){
-        return "Your gym id: " + gymService.addGym(gymFrame);
+    public ResponseEntity addGym(@Valid @NotNull @RequestBody GymFrame gymFrame){
+        String gymId = gymService.addGym(gymFrame);
+        if (gymId.isEmpty()) {
+            return new ResponseEntity("Specified gym id already exists ", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity("Your gym id: " + gymId, HttpStatus.CREATED);
     }
 
     @GetMapping(path = {"/all"})
@@ -63,7 +66,6 @@ public class GymControllerJpa{
     public ResponseEntity handleEmptyResult(){
         return new ResponseEntity <>("Record not found", HttpStatus.NOT_FOUND);
     }
-
 
     @ExceptionHandler(IncorrectUpdateSemanticsDataAccessException.class)
     public ResponseEntity handleWrongUpdateStatement(){
