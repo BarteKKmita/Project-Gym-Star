@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service("GymServiceJdbc")
-public class GymServiceJdbc{
+public class GymServiceJdbc {
 
     private GymRepository gymRepository;
     private GymSerializer gymSerializer;

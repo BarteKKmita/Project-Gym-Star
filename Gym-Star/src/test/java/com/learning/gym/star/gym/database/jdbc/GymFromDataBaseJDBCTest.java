@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
  * By this I want to test connection with database only with usage of Java without any external framework (like Spring).
  */
 
-class GymFromDataBaseJDBCTest{
+class GymFromDataBaseJDBCTest {
 
     private static EmbeddedMysql embeddedMysql;
     private static JdbcPropertiesReader propertiesReader = new JdbcPropertiesReader("src/main/resources/application-test.properties");

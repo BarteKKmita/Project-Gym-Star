@@ -17,7 +17,7 @@ import java.util.NoSuchElementException;
 
 @RequestMapping("api/jpa/gym")
 @RestController
-public class GymControllerJpa{
+public class GymControllerJpa {
 
     private final GymServiceJpa gymService;
 
@@ -29,7 +29,7 @@ public class GymControllerJpa{
     public ResponseEntity addGym(@Valid @NotNull @RequestBody GymFrame gymFrame){
         String gymId = gymService.addGym(gymFrame);
         if (gymId.isEmpty()) {
-            return new ResponseEntity("Specified gym id already exists ", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("Specified gym id already exists ", HttpStatus.CONFLICT);
         }
         return new ResponseEntity("Your gym id: " + gymId, HttpStatus.CREATED);
     }
@@ -44,7 +44,7 @@ public class GymControllerJpa{
         GymFrame gymFrame = gymService.getGymById(gymId);
         MultiValueMap <String, String> header = new HttpHeaders();
         header.add("Content-type", "application/json");
-        if(gymFrame != null) {
+        if (gymFrame != null) {
             return new ResponseEntity <>(gymFrame, header, HttpStatus.OK);
         } else {
             return new ResponseEntity <>(null, HttpStatus.NOT_FOUND);
@@ -58,6 +58,7 @@ public class GymControllerJpa{
     }
 
     @DeleteMapping(path = "{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteGymById(@PathVariable("id") String gymId){
         gymService.deleteGymById(gymId);
     }

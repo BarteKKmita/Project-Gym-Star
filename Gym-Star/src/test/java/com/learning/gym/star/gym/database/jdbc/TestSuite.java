@@ -19,7 +19,7 @@ import static com.wix.mysql.distribution.Version.v5_7_19;
 @Suite.SuiteClasses({
         GymFromDataBaseJdbcSpringTest.class
 })
-public class TestSuite{
+public class TestSuite {
     private static EmbeddedMysql embeddedMysql;
 
     @BeforeClass
@@ -33,7 +33,7 @@ public class TestSuite{
     }
 
     private static void stopAndCloseDatabase(){
-        if(null != embeddedMysql) {
+        if (null != embeddedMysql) {
             embeddedMysql.stop();
         }
     }

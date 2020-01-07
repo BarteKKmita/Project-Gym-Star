@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-public class JdbcConnector{
+public class JdbcConnector {
 
     private final String url;
     private final String user;
@@ -24,7 +24,7 @@ public class JdbcConnector{
 
     PreparedStatement prepareStatement(String sqlQuery, List <String> queryParameters) throws SQLException{
         PreparedStatement statement = prepareQuery(sqlQuery);
-        for(int i = 0; i < queryParameters.size(); i++) {
+        for (int i = 0; i < queryParameters.size(); i++) {
             statement.setString(i + 1, queryParameters.get(i));
         }
         return statement;

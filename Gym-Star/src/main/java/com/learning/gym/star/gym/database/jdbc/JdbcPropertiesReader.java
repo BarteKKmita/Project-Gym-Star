@@ -15,23 +15,23 @@ class JdbcPropertiesReader {
     private final static String USERNAME = "spring.datasource.username";
     private final static String PASSWORD = "spring.datasource.password";
 
-    JdbcPropertiesReader () {
+    JdbcPropertiesReader(){
         pathToFile = "src/main/resources/application2.properties";
     }
 
-    String getURL () {
+    String getURL(){
         return getDatabaseProperties(URL);
     }
 
-    public String getUsername () {
+    public String getUsername(){
         return getDatabaseProperties(USERNAME);
     }
 
-    public String getPassword () {
+    public String getPassword(){
         return getDatabaseProperties(PASSWORD);
     }
 
-    private String getDatabaseProperties ( String property ) {
+    private String getDatabaseProperties(String property){
         String readProperty = "";
         try (InputStream input = new FileInputStream(pathToFile)) {
             Properties propertiesReader = new Properties();

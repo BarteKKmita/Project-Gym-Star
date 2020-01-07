@@ -32,9 +32,8 @@ public class GymControllerJdbc {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity addGym(@RequestBody GymFrame gymFrame){
-        return new ResponseEntity("Your gym id: " + gymService.addGym(gymFrame), HttpStatus.OK);
+        return new ResponseEntity("Your gym id: " + gymService.addGym(gymFrame), HttpStatus.CREATED);
     }
 
     @PutMapping
@@ -45,6 +44,7 @@ public class GymControllerJdbc {
     }
 
     @DeleteMapping(path = "{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteGymById(@PathVariable("id") int gymId){
         gymService.deleteGymById(gymId);
     }
@@ -56,6 +56,6 @@ public class GymControllerJdbc {
 
     @ExceptionHandler(EmptyResultDataAccessException.class)
     public ResponseEntity handleContentNotAllowedException(){
-        return new ResponseEntity <>("Record not found", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity <>("Record not found", HttpStatus.NOT_FOUND);
     }
 }

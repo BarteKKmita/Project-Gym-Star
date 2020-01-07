@@ -4,13 +4,15 @@ import com.learning.gym.star.gym.Gym;
 import com.learning.gym.star.gym.controller.GymFrame;
 import com.learning.gym.star.gym.database.jpa.GymJpaRepository;
 import com.learning.gym.star.gym.service.GymSerializer;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service("GymServiceJpa")
-public class GymServiceJpa{
+@NoArgsConstructor
+public class GymServiceJpa {
     private GymJpaRepository gymRepository;
     private GymSerializer gymSerializer;
 
@@ -37,7 +39,7 @@ public class GymServiceJpa{
     }
 
     public void updateGym(GymFrame gymFrame){
-        if(gymFrame.getGymId() == null) {
+        if (gymFrame.getGymId() == null) {
             throw new org.springframework.dao.IncorrectUpdateSemanticsDataAccessException("Gym id cannot be null");
         }
         gymRepository.saveAndFlush(gymSerializer.getGymFromGymFrame(gymFrame));
