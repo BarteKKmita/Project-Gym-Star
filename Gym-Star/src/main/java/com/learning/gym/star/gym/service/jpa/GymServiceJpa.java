@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service("GymServiceJpa")
-public class GymServiceJpa{
+    @Service("GymServiceJpa")
+    public class GymServiceJpa {
     private GymJpaRepository gymRepository;
     private GymSerializer gymSerializer;
 
@@ -37,7 +37,7 @@ public class GymServiceJpa{
     }
 
     public void updateGym(GymFrame gymFrame){
-        if(gymFrame.getGymId() == null) {
+        if (gymFrame.getGymId() == null) {
             throw new org.springframework.dao.IncorrectUpdateSemanticsDataAccessException("Gym id cannot be null");
         }
         gymRepository.saveAndFlush(gymSerializer.getGymFromGymFrame(gymFrame));

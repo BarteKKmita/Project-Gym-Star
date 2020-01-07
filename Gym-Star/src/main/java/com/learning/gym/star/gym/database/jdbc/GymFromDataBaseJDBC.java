@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //@Repository("database access JDBC")
-class GymFromDataBaseJDBC implements GymRepository{
+class GymFromDataBaseJDBC implements GymRepository {
 
     private final static Logger logger = LogManager.getLogger(GymFromDataBaseJDBC.class.getName());
     private JdbcConnector jdbcConnector;
@@ -60,7 +60,7 @@ class GymFromDataBaseJDBC implements GymRepository{
         List <String> idAsString = new ArrayList <>();
         idAsString.add(Integer.toString(gymId));
         List <String> listOfGyms = getGymDataFromQuery(SELECT_ONE_QUERY, idAsString);
-        if(listOfGyms.isEmpty()) {
+        if (listOfGyms.isEmpty()) {
             return null;
         }
         return listOfGyms.get(0).split(" ");
@@ -68,9 +68,9 @@ class GymFromDataBaseJDBC implements GymRepository{
 
     private List <String> getGymDataFromQuery(String sqlQuery, List <String> queryParameters){
         List <String> listOfGyms = new ArrayList <>();
-        try(ResultSet resultSet = jdbcConnector.prepareStatement(sqlQuery, queryParameters).executeQuery()) {
+        try (ResultSet resultSet = jdbcConnector.prepareStatement(sqlQuery, queryParameters).executeQuery()) {
             listOfGyms = getGymsFromDataBaseResponse(resultSet);
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             logger.fatal("Data base connection failure. Check ip address, login and password");
             e.printStackTrace();
         }
@@ -82,9 +82,9 @@ class GymFromDataBaseJDBC implements GymRepository{
     }
 
     private void changeTableData(String sqlQuery, List <String> queryParameters){
-        try(PreparedStatement statement = jdbcConnector.prepareStatement(sqlQuery, queryParameters)) {
+        try (PreparedStatement statement = jdbcConnector.prepareStatement(sqlQuery, queryParameters)) {
             statement.execute();
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             logger.fatal("Data base connection or query failure. Check configuration, login, password and query syntax");
             e.printStackTrace();
         }
@@ -93,7 +93,7 @@ class GymFromDataBaseJDBC implements GymRepository{
     //TODO
     private List <String> getGymsFromDataBaseResponse(ResultSet resultSet) throws SQLException{
         List <String> dataFromDataBase = new ArrayList <>();
-        while(resultSet.next()) {
+        while (resultSet.next()) {
             String gym_id = resultSet.getString("gym_id");
             String gym_name = resultSet.getString("gym_name");
             String street = resultSet.getString("street");

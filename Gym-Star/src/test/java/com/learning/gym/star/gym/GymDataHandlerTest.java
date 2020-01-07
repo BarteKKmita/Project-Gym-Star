@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class GymDataHandlerTest {
 
     @Test
-    void shouldReturn90RecordsWithGymData () {
+    void shouldReturn90RecordsWithGymData(){
         //Given
         GymRepository gymDataHandler = new GymDataHandler();
         int listSizeExpected = 90;

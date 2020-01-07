@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class JdbcPropertiesReaderTest {
 
     @Test
-    void shouldReturnDatabaseProperty () {
+    void shouldReturnDatabaseProperty(){
         //Given
         String expectedPassword = "Some_secret_password";
         JdbcPropertiesReader jdbcPropertiesReader = new JdbcPropertiesReader("data/PropertiesTest.txt");
