@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
-public class GymFromDataBaseJdbcSpringTest{
+public class GymFromDataBaseJdbcSpringTest {
 
     @Resource
     private DataSource dataSource;
@@ -43,13 +43,13 @@ public class GymFromDataBaseJdbcSpringTest{
     }
 
     @Test
-    public void testJdbcTemplateCreation () {
+    public void testJdbcTemplateCreation(){
         assertNotNull(dataSource);
         assertNotNull(jdbcTemplate);
     }
 
     @Test
-    public void shouldGetAllGymData () {
+    public void shouldGetAllGymData(){
         //Given
         int expectedSize = 2;
         //When
@@ -59,7 +59,7 @@ public class GymFromDataBaseJdbcSpringTest{
     }
 
     @Test
-    public void shouldGetGymDataByGymId () {
+    public void shouldGetGymDataByGymId(){
         //Given
         int gymId = 1;
         int expectedSize = 5;
@@ -78,7 +78,7 @@ public class GymFromDataBaseJdbcSpringTest{
     }
 
     @Test
-    public void shouldAddRecord () {
+    public void shouldAddRecord(){
         //Given
         int gymId = 6;
         int expectedLength = 5;
@@ -94,14 +94,8 @@ public class GymFromDataBaseJdbcSpringTest{
         assertEquals(expectedLength, gymFromDataBaseJdbcSpring.getGymDataById(gymId).length);
     }
 
-    //Not sure if this is right naming convention
-    @After
-    public void tearDown2(){
-        gymFromDataBaseJdbcSpring.delete(6);
-    }
-
     @Test
-    public void shouldThrowExceptionWhenAddingRecordWithoutAllData () {
+    public void shouldThrowExceptionWhenAddingRecordWithoutAllData(){
         //Given
         Gym gym = Gym.builder().gymId("6")
                 .gymName("TestName")
@@ -113,7 +107,7 @@ public class GymFromDataBaseJdbcSpringTest{
     }
 
     @Test
-    public void shouldNotAddRecordWithEmptyData () {
+    public void shouldNotAddRecordWithEmptyData(){
         //Given
         Gym gym = Gym.builder().gymId("6")
                 .gymName("")
@@ -126,7 +120,7 @@ public class GymFromDataBaseJdbcSpringTest{
     }
 
     @Test
-    public void shouldUpdateRecord () {
+    public void shouldUpdateRecord(){
         //Given
         int gymId = 2;
         String expectedGymName = "UpdateTest";
@@ -144,7 +138,7 @@ public class GymFromDataBaseJdbcSpringTest{
     }
 
     @Test
-    public void shouldNotUpdateRecordWithoutAllData () {
+    public void shouldNotUpdateRecordWithoutAllData(){
         //Given
         int gymId = 1;
         Gym gym = Gym.builder().gymId("1")
@@ -157,7 +151,7 @@ public class GymFromDataBaseJdbcSpringTest{
     }
 
     @Test
-    public void shouldNotUpdateRecordWhenWrongId () {
+    public void shouldNotUpdateRecordWhenWrongId(){
         //Given
         int gymId = 7;
         Gym gym = Gym.builder().gymId("1")
@@ -173,7 +167,7 @@ public class GymFromDataBaseJdbcSpringTest{
     }
 
     @Test
-    public void shouldRemoveRecord () {
+    public void shouldRemoveRecord(){
         //Given
         int gymIdToDelete = 2;
         int expectedDataLength = 1;
@@ -185,7 +179,7 @@ public class GymFromDataBaseJdbcSpringTest{
     }
 
     @Test
-    public void shouldThrowExceptionWhenCallingNotExistingGymRecord () {
+    public void shouldThrowExceptionWhenCallingNotExistingGymRecord(){
         //Given
         int gym_id = 6;
         //Then
@@ -193,7 +187,7 @@ public class GymFromDataBaseJdbcSpringTest{
     }
 
     @Test
-    public void shouldThrowExceptionWhenAddingRecordWithExistingGymId () {
+    public void shouldThrowExceptionWhenAddingRecordWithExistingGymId(){
         //Given
         Gym testGym = Gym.builder().gymId("1")
                 .gymName("Test Gym")
@@ -207,6 +201,7 @@ public class GymFromDataBaseJdbcSpringTest{
 
     @After
     public void tearDown(){
+        gymFromDataBaseJdbcSpring.delete(6);
         int gymId = 2;
         String expectedGymName = "pierwsza";
         Gym gym = Gym.builder().gymId("2")

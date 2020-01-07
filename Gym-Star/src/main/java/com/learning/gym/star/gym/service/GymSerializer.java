@@ -10,21 +10,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-public class GymSerializer{
+public class GymSerializer {
     private static ObjectMapper objectMapper = new ObjectMapper();
 
     public Gym getGymFromGymFrame(GymFrame gymFrame){
         String gymAsJson = "";
         try {
             gymAsJson = objectMapper.writeValueAsString(gymFrame);
-        } catch(JsonProcessingException e) {
+        } catch (JsonProcessingException e) {
             System.out.println("Serialization of gym failure.");
             e.printStackTrace();
         }
         Gym databaseGym = null;
         try {
             databaseGym = objectMapper.readValue(gymAsJson, Gym.class);
-        } catch(JsonProcessingException e) {
+        } catch (JsonProcessingException e) {
             System.out.println("Deserialization of gym failure.");
             e.printStackTrace();
         }
@@ -36,13 +36,13 @@ public class GymSerializer{
         try {
             gymAsJson = objectMapper.writeValueAsString(databaseGym);
 
-        } catch(JsonProcessingException e) {
+        } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
         GymFrame gymFrame = null;
         try {
             gymFrame = objectMapper.readValue(gymAsJson, GymFrame.class);
-        } catch(JsonProcessingException e) {
+        } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
         return gymFrame;

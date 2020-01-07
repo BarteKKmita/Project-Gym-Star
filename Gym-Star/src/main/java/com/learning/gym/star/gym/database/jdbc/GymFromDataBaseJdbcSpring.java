@@ -11,7 +11,7 @@ import java.sql.*;
 import java.util.List;
 
 @Repository("gym database access")
-class GymFromDataBaseJdbcSpring implements GymRepository{
+class GymFromDataBaseJdbcSpring implements GymRepository {
 
     private final JdbcTemplate jdbcTemplate;
     private GymQueryParameters gymQueryParameters;
@@ -59,7 +59,7 @@ class GymFromDataBaseJdbcSpring implements GymRepository{
     @Override
     public String[] getGymDataById(int id){
         //Lambda expression copied from tutorial code. I don't understand whole core of it yet.
-        String[] output = jdbcTemplate.queryForObject(SELECT_ONE_QUERY, new Object[]{id}, (resultSet, i) -> {
+        String[] output = jdbcTemplate.queryForObject(SELECT_ONE_QUERY, new Object[] {id}, (resultSet, i) -> {
             return this.getDataFromQuery(resultSet).split(" ");
         });
         return output;
@@ -82,7 +82,7 @@ class GymFromDataBaseJdbcSpring implements GymRepository{
 
     private PreparedStatement getPreparedStatement(List <String> queryParameters, Connection connection) throws SQLException{
         PreparedStatement preparedStatement = connection.prepareStatement((ADD_QUERY), Statement.RETURN_GENERATED_KEYS);
-        for(int i = 0; i < queryParameters.size(); i++) {
+        for (int i = 0; i < queryParameters.size(); i++) {
             preparedStatement.setString(i + 1, queryParameters.get(i));
         }
         return preparedStatement;
