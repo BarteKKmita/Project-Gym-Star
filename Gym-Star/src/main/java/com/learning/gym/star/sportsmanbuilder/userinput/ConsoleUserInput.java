@@ -1,4 +1,4 @@
-package com.learning.gym.star.sportsman.userinput;
+package com.learning.gym.star.sportsmanbuilder.userinput;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;

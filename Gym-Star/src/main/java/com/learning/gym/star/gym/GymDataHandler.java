@@ -1,12 +1,14 @@
 package com.learning.gym.star.gym;
 
+import com.learning.gym.star.gym.database.jdbc.GymRepository;
+
 import java.util.ArrayList;
 import java.util.List;
 /**
  * This class was created to simulate getting gym data from SQL dadabase.
  */
 
-public class GymDataHandler implements GymRepository {
+public class GymDataHandler implements GymRepository{
     private final List <String> gymData;
 
     public GymDataHandler () {
@@ -20,22 +22,31 @@ public class GymDataHandler implements GymRepository {
         }
     }
 
+    @Override
     public List <String> getGymData () {
         return gymData;
     }
 
+
+    //TODO
     @Override
-    public void add ( String gym ) {
-        gymData.add(gym);
+    public String[] getGymDataById ( int id ) {
+        return new String[0];
     }
 
     @Override
-    public void update ( String gym, int index ) {
-        gymData.set(index, gym);
+    public String add(Gym gym){
+        gymData.add(gym.toString());
+        return "";
     }
 
     @Override
-    public void remove ( int index ) {
+    public void update ( Gym gym, int index ) {
+        gymData.set(index, gym.toString());
+    }
+
+    @Override
+    public void delete ( int index ) {
         gymData.remove(index);
     }
 }

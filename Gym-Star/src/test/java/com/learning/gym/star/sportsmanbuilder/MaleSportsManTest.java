@@ -1,12 +1,14 @@
 package com.learning.gym.star.sportsmanbuilder;
 
-import com.learning.gym.star.sportsman.GenderChoose;
-import com.learning.gym.star.sportsman.userinput.UserInputForTests;
+import com.learning.gym.star.sportsmanbuilder.gender.GenderChoose;
+import com.learning.gym.star.sportsmanbuilder.userinput.UserInputForTests;
 import com.learning.gym.star.statistics.TrainingStatistics;
 import com.learning.gym.star.trainer.Trainer;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+
 import java.util.LinkedList;
+
 import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;

@@ -1,4 +1,4 @@
-package com.learning.gym.star.sportsman.userinput;
+package com.learning.gym.star.sportsmanbuilder.userinput;
 
 public class UserInputForTests implements UserText {
     private String name;

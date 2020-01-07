@@ -1,6 +1,6 @@
 package com.learning.gym.star.sportsmanbuilder;
 
-import com.learning.gym.star.sportsman.userinput.ConsoleUserInput;
+import com.learning.gym.star.sportsmanbuilder.userinput.ConsoleUserInput;
 
 public class SportsManClient {
     public static void main ( String[] args ) {
