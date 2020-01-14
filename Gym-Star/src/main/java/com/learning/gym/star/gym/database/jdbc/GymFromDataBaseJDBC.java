@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Repository("database access JDBC")
 class GymFromDataBaseJDBC implements GymRepository {
 
     private final static Logger logger = LogManager.getLogger(GymFromDataBaseJDBC.class.getName());
@@ -57,9 +56,7 @@ class GymFromDataBaseJDBC implements GymRepository {
 
     @Override
     public String[] getGymDataById(int gymId){
-        List<String> idAsString = new ArrayList<>();
-        idAsString.add(Integer.toString(gymId));
-        List<String> listOfGyms = getGymDataFromQuery(SELECT_ONE_QUERY, idAsString);
+        List<String> listOfGyms = getGymDataFromQuery(SELECT_ONE_QUERY, gymQueryParameters.getQueryParameters(gymId));
         if (listOfGyms.isEmpty()) {
             return null;
         }
@@ -71,7 +68,7 @@ class GymFromDataBaseJDBC implements GymRepository {
         try (ResultSet resultSet = jdbcConnector.prepareStatement(sqlQuery, queryParameters).executeQuery()) {
             listOfGyms = getGymsFromDataBaseResponse(resultSet);
         } catch (SQLException e) {
-            logger.fatal("Data base connection failure. Check ip address, login and password");
+            logger.error("Data base connection failure. Check ip address, login and password");
             e.printStackTrace();
         }
         return listOfGyms;
@@ -85,7 +82,7 @@ class GymFromDataBaseJDBC implements GymRepository {
         try (PreparedStatement statement = jdbcConnector.prepareStatement(sqlQuery, queryParameters)) {
             statement.execute();
         } catch (SQLException e) {
-            logger.fatal("Data base connection or query failure. Check configuration, login, password and query syntax");
+            logger.error("Data base connection or query failure. Check configuration, login, password and query syntax");
             e.printStackTrace();
         }
     }
