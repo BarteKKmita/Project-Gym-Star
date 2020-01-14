@@ -22,7 +22,7 @@ public class GymServiceJpa {
         this.gymSerializer = gymSerializer;
     }
 
-    public List <GymFrame> getAllGyms(){
+    public List<GymFrame> getAllGyms(){
         return gymSerializer.buildGymListForController(gymRepository.findAll());
     }
 

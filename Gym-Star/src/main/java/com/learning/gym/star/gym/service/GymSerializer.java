@@ -58,14 +58,14 @@ public class GymSerializer {
                 .build();
     }
 
-    public List <GymFrame> buildGymListForController(List <Gym> gymsFromDatabase){
-        List <GymFrame> gymListForController = new ArrayList <>();
+    public List<GymFrame> buildGymListForController(List<Gym> gymsFromDatabase){
+        List<GymFrame> gymListForController = new ArrayList<>();
         gymsFromDatabase.forEach(gym -> gymListForController.add(buildGymFrameForController(gym.toStringArray())));
         return gymListForController;
     }
 
-    public List <GymFrame> buildGymForControllerFromStringList(List <String> gymsFromDatabase){
-        List <GymFrame> gymListForController = new ArrayList <>();
+    public List<GymFrame> buildGymForControllerFromStringList(List<String> gymsFromDatabase){
+        List<GymFrame> gymListForController = new ArrayList<>();
         gymsFromDatabase.forEach(gym -> gymListForController.add(buildGymFrameForController(gym.split(" "))));
         return gymListForController;
     }

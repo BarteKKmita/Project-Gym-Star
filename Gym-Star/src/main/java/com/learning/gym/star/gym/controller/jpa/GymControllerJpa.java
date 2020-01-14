@@ -36,18 +36,18 @@ public class GymControllerJpa {
 
     @GetMapping(path = {"/all"})
     public ResponseEntity getAllGyms(){
-        return new ResponseEntity <>(gymService.getAllGyms(), HttpStatus.OK);
+        return new ResponseEntity<>(gymService.getAllGyms(), HttpStatus.OK);
     }
 
     @GetMapping(path = "{id}")
     public ResponseEntity getGymById(@PathVariable("id") int gymId){
         GymFrame gymFrame = gymService.getGymById(gymId);
-        MultiValueMap <String, String> header = new HttpHeaders();
+        MultiValueMap<String, String> header = new HttpHeaders();
         header.add("Content-type", "application/json");
         if (gymFrame != null) {
-            return new ResponseEntity <>(gymFrame, header, HttpStatus.OK);
+            return new ResponseEntity<>(gymFrame, header, HttpStatus.OK);
         } else {
-            return new ResponseEntity <>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
 
@@ -65,22 +65,22 @@ public class GymControllerJpa {
 
     @ExceptionHandler(EmptyResultDataAccessException.class)
     public ResponseEntity handleEmptyResult(){
-        return new ResponseEntity <>("Record not found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Record not found", HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(IncorrectUpdateSemanticsDataAccessException.class)
     public ResponseEntity handleWrongUpdateStatement(){
-        return new ResponseEntity <>("Gym id cannot be null", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("Gym id cannot be null", HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(GenericJDBCException.class)
     public ResponseEntity handleWrongTypeInHttpMethod(){
-        return new ResponseEntity <>("One of given parameter has a wrong type.", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("One of given parameter has a wrong type.", HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity handleNoSuchRecordInDatabase(){
-        return new ResponseEntity <>("Record not found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Record not found", HttpStatus.NOT_FOUND);
     }
 }
 

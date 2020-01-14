@@ -23,12 +23,12 @@ public class GymControllerJdbc {
 
     @GetMapping(path = {"/all"})
     public ResponseEntity getAllGyms(){
-        return new ResponseEntity <>(gymService.getAllGyms(), HttpStatus.OK);
+        return new ResponseEntity<>(gymService.getAllGyms(), HttpStatus.OK);
     }
 
     @GetMapping(path = "{id}")
     public ResponseEntity getGymById(@PathVariable("id") int gymId){
-        return new ResponseEntity <>(gymService.getGymById(gymId), HttpStatus.OK);
+        return new ResponseEntity<>(gymService.getGymById(gymId), HttpStatus.OK);
     }
 
     @PostMapping
@@ -51,11 +51,11 @@ public class GymControllerJdbc {
 
     @ExceptionHandler(SQLException.class)
     public ResponseEntity handleWrongTypeInHttpMethod(){
-        return new ResponseEntity <>("One of given parameter has a wrong type.", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("One of given parameter has a wrong type.", HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(EmptyResultDataAccessException.class)
     public ResponseEntity handleContentNotAllowedException(){
-        return new ResponseEntity <>("Record not found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Record not found", HttpStatus.NOT_FOUND);
     }
 }

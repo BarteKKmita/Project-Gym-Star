@@ -22,7 +22,7 @@ public class GymServiceJdbc {
         this.gymSerializer = gymSerializer;
     }
 
-    public List <GymFrame> getAllGyms(){
+    public List<GymFrame> getAllGyms(){
         return gymSerializer.buildGymForControllerFromStringList(gymRepository.getGymData());
     }
 

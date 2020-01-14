@@ -173,7 +173,7 @@ public class GymFromDataBaseJdbcSpringTest {
         int expectedDataLength = 1;
         //When
         gymFromDataBaseJdbcSpring.delete(gymIdToDelete);
-        List <String> gymData = gymFromDataBaseJdbcSpring.getGymData();
+        List<String> gymData = gymFromDataBaseJdbcSpring.getGymData();
         //Then
         assertEquals(expectedDataLength, gymData.size());
     }

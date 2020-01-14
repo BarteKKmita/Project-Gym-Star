@@ -12,7 +12,7 @@ public interface GymRepository {
 
     void delete(int index);
 
-    List <String> getGymData();
+    List<String> getGymData();
 
     String[] getGymDataById(int id);
 }

@@ -34,14 +34,14 @@ class GymFromDataBaseJDBC implements GymRepository {
 
     @Override
     public String add(Gym gym){
-        List <String> queryParameters = gymQueryParameters.getQueryParameters(gym);
+        List<String> queryParameters = gymQueryParameters.getQueryParameters(gym);
         changeTableData(ADD_QUERY, queryParameters);
         return gym.getGymId();
     }
 
     @Override
     public void update(Gym gym, int gymId){
-        List <String> queryParameters = gymQueryParameters.getQueryParameters(gym, gymId);
+        List<String> queryParameters = gymQueryParameters.getQueryParameters(gym, gymId);
         changeTableData(UPDATE_QUERY, queryParameters);
     }
 
@@ -51,23 +51,23 @@ class GymFromDataBaseJDBC implements GymRepository {
     }
 
     @Override
-    public List <String> getGymData(){
+    public List<String> getGymData(){
         return getGymDataFromQuery(SELECT_ALL_QUERY);
     }
 
     @Override
     public String[] getGymDataById(int gymId){
-        List <String> idAsString = new ArrayList <>();
+        List<String> idAsString = new ArrayList<>();
         idAsString.add(Integer.toString(gymId));
-        List <String> listOfGyms = getGymDataFromQuery(SELECT_ONE_QUERY, idAsString);
+        List<String> listOfGyms = getGymDataFromQuery(SELECT_ONE_QUERY, idAsString);
         if (listOfGyms.isEmpty()) {
             return null;
         }
         return listOfGyms.get(0).split(" ");
     }
 
-    private List <String> getGymDataFromQuery(String sqlQuery, List <String> queryParameters){
-        List <String> listOfGyms = new ArrayList <>();
+    private List<String> getGymDataFromQuery(String sqlQuery, List<String> queryParameters){
+        List<String> listOfGyms = new ArrayList<>();
         try (ResultSet resultSet = jdbcConnector.prepareStatement(sqlQuery, queryParameters).executeQuery()) {
             listOfGyms = getGymsFromDataBaseResponse(resultSet);
         } catch (SQLException e) {
@@ -77,11 +77,11 @@ class GymFromDataBaseJDBC implements GymRepository {
         return listOfGyms;
     }
 
-    private List <String> getGymDataFromQuery(String sqlQuery){
-        return getGymDataFromQuery(sqlQuery, new ArrayList <>());
+    private List<String> getGymDataFromQuery(String sqlQuery){
+        return getGymDataFromQuery(sqlQuery, new ArrayList<>());
     }
 
-    private void changeTableData(String sqlQuery, List <String> queryParameters){
+    private void changeTableData(String sqlQuery, List<String> queryParameters){
         try (PreparedStatement statement = jdbcConnector.prepareStatement(sqlQuery, queryParameters)) {
             statement.execute();
         } catch (SQLException e) {
@@ -91,8 +91,8 @@ class GymFromDataBaseJDBC implements GymRepository {
     }
 
     //TODO
-    private List <String> getGymsFromDataBaseResponse(ResultSet resultSet) throws SQLException{
-        List <String> dataFromDataBase = new ArrayList <>();
+    private List<String> getGymsFromDataBaseResponse(ResultSet resultSet) throws SQLException{
+        List<String> dataFromDataBase = new ArrayList<>();
         while (resultSet.next()) {
             String gym_id = resultSet.getString("gym_id");
             String gym_name = resultSet.getString("gym_name");

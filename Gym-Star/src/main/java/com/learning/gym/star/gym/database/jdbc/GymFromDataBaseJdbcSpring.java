@@ -31,7 +31,7 @@ class GymFromDataBaseJdbcSpring implements GymRepository {
     @Override
     public String add(Gym gym){
         KeyHolder generatedIdHolder = new GeneratedKeyHolder();
-        List <String> queryParameters = gymQueryParameters.getQueryParameters(gym);
+        List<String> queryParameters = gymQueryParameters.getQueryParameters(gym);
         jdbcTemplate.update(connection -> {
             return getPreparedStatement(queryParameters, connection);
         }, generatedIdHolder);
@@ -51,7 +51,7 @@ class GymFromDataBaseJdbcSpring implements GymRepository {
     }
 
     @Override
-    public List <String> getGymData(){
+    public List<String> getGymData(){
         //Lambda expression copied from tutorial code. I don't understand whole core of it yet.
         return jdbcTemplate.query(SELECT_ALL_QUERY, (resultSet, i) -> getDataFromQuery(resultSet));
     }
@@ -80,9 +80,9 @@ class GymFromDataBaseJdbcSpring implements GymRepository {
                 .toString();
     }
 
-    private PreparedStatement getPreparedStatement(List <String> queryParameters, Connection connection) throws SQLException{
+    private PreparedStatement getPreparedStatement(List<String> queryParameters, Connection connection) throws SQLException{
         PreparedStatement preparedStatement = connection.prepareStatement((ADD_QUERY), Statement.RETURN_GENERATED_KEYS);
-        for (int i = 0; i < queryParameters.size(); i++) {
+        for(int i = 0; i < queryParameters.size(); i++) {
             preparedStatement.setString(i + 1, queryParameters.get(i));
         }
         return preparedStatement;
