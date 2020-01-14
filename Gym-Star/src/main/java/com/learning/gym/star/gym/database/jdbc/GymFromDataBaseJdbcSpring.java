@@ -81,7 +81,7 @@ class GymFromDataBaseJdbcSpring implements GymRepository {
     }
 
     private PreparedStatement getPreparedStatement(List<String> queryParameters, Connection connection) throws SQLException{
-        PreparedStatement preparedStatement = connection.prepareStatement((ADD_QUERY), Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement preparedStatement = connection.prepareStatement(ADD_QUERY, Statement.RETURN_GENERATED_KEYS);
         for(int i = 0; i < queryParameters.size(); i++) {
             preparedStatement.setString(i + 1, queryParameters.get(i));
         }
