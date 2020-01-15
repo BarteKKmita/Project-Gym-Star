@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.learning.gym.star.gym.Gym;
 import com.learning.gym.star.gym.controller.GymFrame;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
@@ -12,20 +14,21 @@ import java.util.List;
 @Configuration
 public class GymSerializer {
     private static ObjectMapper objectMapper = new ObjectMapper();
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public Gym getGymFromGymFrame(GymFrame gymFrame){
         String gymAsJson = "";
         try {
             gymAsJson = objectMapper.writeValueAsString(gymFrame);
         } catch (JsonProcessingException e) {
-            System.out.println("Serialization of gym failure.");
+            logger.error("Serialization of gym failure.");
             e.printStackTrace();
         }
         Gym databaseGym = null;
         try {
             databaseGym = objectMapper.readValue(gymAsJson, Gym.class);
         } catch (JsonProcessingException e) {
-            System.out.println("Deserialization of gym failure.");
+            logger.error("Deserialization of gym failure.");
             e.printStackTrace();
         }
         return databaseGym;
