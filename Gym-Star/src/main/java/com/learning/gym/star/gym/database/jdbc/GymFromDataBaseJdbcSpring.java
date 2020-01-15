@@ -31,7 +31,7 @@ class GymFromDataBaseJdbcSpring implements GymRepository {
     @Override
     public String add(Gym gym){
         KeyHolder generatedIdHolder = new GeneratedKeyHolder();
-        List<String> queryParameters = gymQueryParameters.getQueryParameters(gym);
+        List<String> queryParameters = gymQueryParameters.getGymAsList(gym);
         jdbcTemplate.update(connection -> {
             return getPreparedStatement(queryParameters, connection);
         }, generatedIdHolder);
@@ -40,13 +40,13 @@ class GymFromDataBaseJdbcSpring implements GymRepository {
 
     @Override
     public void update(Gym gym, int index){
-        Object[] param = gymQueryParameters.getQueryParameters(gym, index).toArray();
+        Object[] param = gymQueryParameters.getGymAsList(gym, index).toArray();
         jdbcTemplate.update(UPDATE_QUERY, param);
     }
 
     @Override
     public void delete(int index){
-        Object[] param = gymQueryParameters.getQueryParameters(index).toArray();
+        Object[] param = gymQueryParameters.getGymIdAsList(index).toArray();
         jdbcTemplate.update(DELETE_QUERY, param);
     }
 

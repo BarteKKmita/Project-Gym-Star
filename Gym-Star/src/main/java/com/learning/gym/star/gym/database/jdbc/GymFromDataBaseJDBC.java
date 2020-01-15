@@ -33,20 +33,20 @@ class GymFromDataBaseJDBC implements GymRepository {
 
     @Override
     public String add(Gym gym){
-        List<String> queryParameters = gymQueryParameters.getQueryParameters(gym);
+        List<String> queryParameters = gymQueryParameters.getGymAsList(gym);
         changeTableData(ADD_QUERY, queryParameters);
         return gym.getGymId();
     }
 
     @Override
     public void update(Gym gym, int gymId){
-        List<String> queryParameters = gymQueryParameters.getQueryParameters(gym, gymId);
+        List<String> queryParameters = gymQueryParameters.getGymAsList(gym, gymId);
         changeTableData(UPDATE_QUERY, queryParameters);
     }
 
     @Override
     public void delete(int gymId){
-        changeTableData(DELETE_QUERY, gymQueryParameters.getQueryParameters(gymId));
+        changeTableData(DELETE_QUERY, gymQueryParameters.getGymIdAsList(gymId));
     }
 
     @Override
@@ -56,7 +56,7 @@ class GymFromDataBaseJDBC implements GymRepository {
 
     @Override
     public String[] getGymDataById(int gymId){
-        List<String> listOfGyms = getGymDataFromQuery(SELECT_ONE_QUERY, gymQueryParameters.getQueryParameters(gymId));
+        List<String> listOfGyms = getGymDataFromQuery(SELECT_ONE_QUERY, gymQueryParameters.getGymIdAsList(gymId));
         if (listOfGyms.isEmpty()) {
             return null;
         }
