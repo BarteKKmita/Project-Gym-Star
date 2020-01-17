@@ -17,9 +17,8 @@ public class GymQueryParameters {
     }
 
     List<String> getGymAsList(Gym gym){
-        String[] gymDataArray = {gym.getGymId(), gym.getGymName(), gym.getStreet(), gym.getCity(), gym.getBuildingNumber()};
         List<String> gymData = new ArrayList<>();
-        Collections.addAll(gymData, gymDataArray);
+        Collections.addAll(gymData, gym.toStringArray());
         return gymData;
     }
 
