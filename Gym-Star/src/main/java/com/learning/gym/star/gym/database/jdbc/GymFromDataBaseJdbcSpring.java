@@ -59,7 +59,7 @@ class GymFromDataBaseJdbcSpring implements GymRepository {
     @Override
     public String[] getGymDataById(int id){
         //Lambda expression copied from tutorial code. I don't understand whole core of it yet.
-        String[] output = jdbcTemplate.queryForObject(SELECT_ONE_QUERY, new Object[] {id}, (resultSet, i) -> {
+        String[] output = jdbcTemplate.queryForObject(SELECT_ONE_QUERY, new Object[]{id}, (resultSet, i) -> {
             return this.getDataFromQuery(resultSet).split(" ");
         });
         return output;

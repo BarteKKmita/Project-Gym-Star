@@ -24,7 +24,7 @@ public class GymFrame {
     private String buildingNumber;
 
     public String[] toStringArray(){
-        return new String[] {gymId, gymName, street, city, buildingNumber};
+        return new String[]{gymId, gymName, street, city, buildingNumber};
     }
 }
 
