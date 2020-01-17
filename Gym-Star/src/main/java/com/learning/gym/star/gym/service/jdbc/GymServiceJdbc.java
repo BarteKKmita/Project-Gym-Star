@@ -1,6 +1,5 @@
 package com.learning.gym.star.gym.service.jdbc;
 
-import com.learning.gym.star.gym.Gym;
 import com.learning.gym.star.gym.controller.GymFrame;
 import com.learning.gym.star.gym.database.jdbc.GymRepository;
 import com.learning.gym.star.gym.service.GymSerializer;
@@ -30,8 +29,8 @@ public class GymServiceJdbc {
         return gymRepository.add(gymSerializer.getGymFromGymFrame(gym));
     }
 
-    public void updateGym(Gym gym, int gymId){
-        gymRepository.update(gym, gymId);
+    public void updateGym(GymFrame gym, int gymId){
+        gymRepository.update(gymSerializer.getGymFromGymFrame(gym), gymId);
     }
 
     public GymFrame getGymById(int gymId){
