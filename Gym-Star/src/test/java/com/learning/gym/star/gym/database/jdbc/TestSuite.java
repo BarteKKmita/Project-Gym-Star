@@ -1,5 +1,6 @@
 package com.learning.gym.star.gym.database.jdbc;
 
+import com.learning.gym.star.gym.controller.jpa.GymControllerJpaIntegrationTest;
 import com.wix.mysql.EmbeddedMysql;
 import com.wix.mysql.config.Charset;
 import com.wix.mysql.config.MysqldConfig;
@@ -17,7 +18,8 @@ import static com.wix.mysql.distribution.Version.v5_7_19;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        GymFromDataBaseJdbcSpringTest.class
+        GymFromDataBaseJdbcSpringTest.class,
+        GymControllerJpaIntegrationTest.class
 })
 public class TestSuite {
     private static EmbeddedMysql embeddedMysql;
