@@ -49,12 +49,17 @@ public class GymSerializer {
     }
 
     public GymFrame buildGymFrameForController(String[] gymAsStringArray){
+        int gymIdIndex = 0;
+        int gymNameIndex = 1;
+        int gymStreetIndex = 2;
+        int gymCityIndex = 3;
+        int gymBuildingNumberIndex = 4;
         return GymFrame.builder()
-                .gymId(gymAsStringArray[0])
-                .gymName(gymAsStringArray[1])
-                .street(gymAsStringArray[2])
-                .city(gymAsStringArray[3])
-                .buildingNumber(gymAsStringArray[4])
+                .gymId(gymAsStringArray[gymIdIndex])
+                .gymName(gymAsStringArray[gymNameIndex])
+                .street(gymAsStringArray[gymStreetIndex])
+                .city(gymAsStringArray[gymCityIndex])
+                .buildingNumber(gymAsStringArray[gymBuildingNumberIndex])
                 .build();
     }
 
