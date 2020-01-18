@@ -24,4 +24,8 @@ public class CardioTrainingService {
     public void doCardioTraining(int cardioId){
         repository.updateTrainingCounter(String.valueOf(cardioId));
     }
+
+    public void resetCardioStatistics(int cardioId){
+        repository.resetCardioStatistics(String.valueOf(cardioId));
+    }
 }

@@ -22,4 +22,9 @@ public class CardioTrainingController {
     void doCardioTraining(@PathVariable("id") int cardioId){
         service.doCardioTraining(cardioId);
     }
+
+    @PutMapping("reset/{id}")
+    void resetCardioStatistics(@PathVariable("id") int cardioId){
+        service.resetCardioStatistics(cardioId);
+    }
 }

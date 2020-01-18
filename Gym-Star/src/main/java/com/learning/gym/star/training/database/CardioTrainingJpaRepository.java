@@ -13,4 +13,9 @@ public interface CardioTrainingJpaRepository extends JpaRepository<CardioTrainin
     @Modifying
     @Query("UPDATE CardioTrainingDB c SET c.trainingCount=c.trainingCount+1 WHERE c.cardio_Id = :id")
     void updateTrainingCounter(@Param("id") String id);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE CardioTrainingDB c SET c.trainingCount=0 WHERE c.cardio_Id = :id")
+    void resetCardioStatistics(@Param("id") String id);
 }
