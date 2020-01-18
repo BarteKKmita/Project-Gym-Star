@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 
 @Service("CardioTrainingService")
 @NoArgsConstructor
-public class CardioTrainingService {
+public class CardioTrainingServiceDB {
     @Autowired
     CardioTrainingJpaRepository repository;
 
-    public CardioTrainingService(CardioTrainingJpaRepository repository){
+    public CardioTrainingServiceDB(CardioTrainingJpaRepository repository){
         this.repository = repository;
     }
 
