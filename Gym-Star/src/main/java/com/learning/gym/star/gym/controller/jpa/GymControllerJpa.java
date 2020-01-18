@@ -13,12 +13,15 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
+import java.time.format.FormatStyle;
 import java.util.NoSuchElementException;
+
+import static java.time.format.DateTimeFormatter.ofLocalizedDateTime;
 
 @RequestMapping("api/jpa/gym")
 @RestController
 public class GymControllerJpa {
-
     private final GymServiceJpa gymService;
 
     public GymControllerJpa(GymServiceJpa gymService){
@@ -29,14 +32,14 @@ public class GymControllerJpa {
     public ResponseEntity addGym(@Valid @NotNull @RequestBody GymFrame gymFrame){
         String gymId = gymService.addGym(gymFrame);
         if (gymId.isEmpty()) {
-            return new ResponseEntity("Specified gym id already exists ", HttpStatus.CONFLICT);
+            return new ResponseEntity("Specified gym id already exists ", getResponseDateAndTime(), HttpStatus.CONFLICT);
         }
-        return new ResponseEntity("Your gym id: " + gymId, HttpStatus.CREATED);
+        return new ResponseEntity("Your gym id: " + gymId, getResponseDateAndTime(), HttpStatus.CREATED);
     }
 
     @GetMapping(path = {"/all"})
     public ResponseEntity getAllGyms(){
-        return new ResponseEntity<>(gymService.getAllGyms(), HttpStatus.OK);
+        return new ResponseEntity(gymService.getAllGyms(), getResponseDateAndTime(), HttpStatus.OK);
     }
 
     @GetMapping(path = "{id}")
@@ -44,6 +47,7 @@ public class GymControllerJpa {
         GymFrame gymFrame = gymService.getGymById(gymId);
         MultiValueMap<String, String> header = new HttpHeaders();
         header.add("Content-type", "application/json");
+        header.addAll(getResponseDateAndTime());
         if (gymFrame != null) {
             return new ResponseEntity<>(gymFrame, header, HttpStatus.OK);
         } else {
@@ -82,6 +86,10 @@ public class GymControllerJpa {
     public ResponseEntity handleNoSuchRecordInDatabase(){
         return new ResponseEntity<>("Record not found", HttpStatus.NOT_FOUND);
     }
+
+    private MultiValueMap<String, String> getResponseDateAndTime(){
+        MultiValueMap<String, String> headers = new HttpHeaders();
+        headers.set("date", LocalDateTime.now().format(ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.MEDIUM)));
+        return headers;
+    }
 }
-
-
