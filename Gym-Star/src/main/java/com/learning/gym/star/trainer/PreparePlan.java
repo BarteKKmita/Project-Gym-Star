@@ -1,8 +1,8 @@
 package com.learning.gym.star.trainer;
 
-import com.learning.gym.star.training.PowerTraining;
 import com.learning.gym.star.training.TrainingType;
 import com.learning.gym.star.training.cardio.CardioTraining;
+import com.learning.gym.star.training.power.PowerTraining;
 
 import java.util.LinkedList;
 import java.util.Queue;
