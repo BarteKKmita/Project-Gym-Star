@@ -3,8 +3,6 @@ package com.learning.gym.star.training.cardio;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 @Builder
 @NoArgsConstructor
@@ -18,10 +16,8 @@ public class CardioTrainingDB {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cardio_id")
-    @NotNull
-    private String cardio_Id;
+    private String cardioId;
 
     @Column(name = "training_count ")
-    @NotEmpty
-    private Integer trainingCount;
+    private int trainingCount;
 }

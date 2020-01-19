@@ -1,9 +1,9 @@
 package com.learning.gym.star.trainer;
 
 import com.learning.gym.star.sportsmanbuilder.gender.Gender;
-import com.learning.gym.star.training.CardioTraining;
-import com.learning.gym.star.training.PowerTraining;
 import com.learning.gym.star.training.TrainingType;
+import com.learning.gym.star.training.cardio.CardioTraining;
+import com.learning.gym.star.training.power.PowerTraining;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

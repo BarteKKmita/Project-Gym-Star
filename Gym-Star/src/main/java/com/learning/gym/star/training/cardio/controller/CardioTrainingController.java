@@ -1,15 +1,17 @@
 package com.learning.gym.star.training.cardio.controller;
 
-import com.learning.gym.star.training.cardio.service.CardioTrainingServiceDB;
+import com.learning.gym.star.training.cardio.service.CardioTrainingService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController()
 @RequestMapping("/api/cardio")
 public class CardioTrainingController {
 
-    CardioTrainingServiceDB service;
+    private CardioTrainingService service;
 
-    public CardioTrainingController(CardioTrainingServiceDB service){
+    public CardioTrainingController(CardioTrainingService service){
         this.service = service;
     }
 
@@ -23,8 +25,14 @@ public class CardioTrainingController {
         service.doCardioTraining(cardioId);
     }
 
-    @PutMapping("reset/{id}")
+    @PutMapping("/reset/{id}")
     void resetCardioStatistics(@PathVariable("id") int cardioId){
         service.resetCardioStatistics(cardioId);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity createNewCardioStatistics(){
+        String cardioStatisticsId = service.createNewCardioStatistics();
+        return new ResponseEntity(cardioStatisticsId, HttpStatus.CREATED);
     }
 }

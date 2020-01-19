@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 
 @Service("CardioTrainingService")
 @NoArgsConstructor
-public class CardioTrainingServiceDB {
+public class CardioTrainingService {
     @Autowired
-    CardioTrainingJpaRepository repository;
+    private CardioTrainingJpaRepository repository;
 
-    public CardioTrainingServiceDB(CardioTrainingJpaRepository repository){
+    public CardioTrainingService(CardioTrainingJpaRepository repository){
         this.repository = repository;
     }
 
@@ -27,5 +27,9 @@ public class CardioTrainingServiceDB {
 
     public void resetCardioStatistics(int cardioId){
         repository.resetCardioStatistics(String.valueOf(cardioId));
+    }
+
+    public String createNewCardioStatistics(){
+        return repository.saveAndFlush(new CardioTrainingDB()).getCardioId();
     }
 }
