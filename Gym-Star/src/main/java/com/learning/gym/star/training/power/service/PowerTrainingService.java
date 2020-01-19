@@ -5,6 +5,8 @@ import com.learning.gym.star.training.power.database.PowerTrainingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+
 @Service("power training service")
 public class PowerTrainingService {
     @Autowired
@@ -20,11 +22,19 @@ public class PowerTrainingService {
     }
 
     public void doPowerTraining(int powerId){
-        repository.updateTrainingCounter(String.valueOf(powerId));
+        if (repository.existsById(String.valueOf(powerId))) {
+            repository.updateTrainingCounter(String.valueOf(powerId));
+        } else {
+            throw new NoSuchElementException();
+        }
     }
 
     public void resetPowerStatistics(int powerId){
-        repository.resetPowerStatistics(String.valueOf(powerId));
+        if (repository.existsById(String.valueOf(powerId))) {
+            repository.resetPowerStatistics(String.valueOf(powerId));
+        } else {
+            throw new NoSuchElementException();
+        }
     }
 
     public String createNewPowerStatistics(){

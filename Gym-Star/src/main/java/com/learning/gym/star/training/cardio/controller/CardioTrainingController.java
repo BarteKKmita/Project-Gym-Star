@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.NoSuchElementException;
+
 @RestController()
 @RequestMapping("/api/cardio")
 public class CardioTrainingController {
@@ -22,6 +24,7 @@ public class CardioTrainingController {
 
     @PutMapping("/train/{id}")
     void doCardioTraining(@PathVariable("id") int cardioId){
+
         service.doCardioTraining(cardioId);
     }
 
@@ -35,4 +38,10 @@ public class CardioTrainingController {
         String cardioStatisticsId = service.createNewCardioStatistics();
         return new ResponseEntity(cardioStatisticsId, HttpStatus.CREATED);
     }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity handleNoSuchRecordInDatabase(){
+        return new ResponseEntity("There is no such cardio statistics in database.", HttpStatus.NOT_FOUND);
+    }
+
 }

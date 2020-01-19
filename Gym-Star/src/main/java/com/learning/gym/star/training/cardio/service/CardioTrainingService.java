@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+
 @Service("CardioTrainingService")
 @NoArgsConstructor
 public class CardioTrainingService {
@@ -22,11 +24,19 @@ public class CardioTrainingService {
     }
 
     public void doCardioTraining(int cardioId){
-        repository.updateTrainingCounter(String.valueOf(cardioId));
+        if (repository.existsById(String.valueOf(cardioId))) {
+            repository.updateTrainingCounter(String.valueOf(cardioId));
+        } else {
+            throw new NoSuchElementException();
+        }
     }
 
     public void resetCardioStatistics(int cardioId){
-        repository.resetCardioStatistics(String.valueOf(cardioId));
+        if (repository.existsById(String.valueOf(cardioId))) {
+            repository.resetCardioStatistics(String.valueOf(cardioId));
+        } else {
+            throw new NoSuchElementException();
+        }
     }
 
     public String createNewCardioStatistics(){

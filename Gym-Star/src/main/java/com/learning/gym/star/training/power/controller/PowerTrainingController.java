@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.NoSuchElementException;
+
 @RestController()
 @RequestMapping("api/power")
 public class PowerTrainingController {
@@ -35,5 +37,10 @@ public class PowerTrainingController {
     public ResponseEntity createNewStatistics(){
         String statisticsId = service.createNewPowerStatistics();
         return new ResponseEntity(statisticsId, HttpStatus.CREATED);
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity handleNoSuchRecordInDatabase(){
+        return new ResponseEntity("There is no such power statistics in database.", HttpStatus.NOT_FOUND);
     }
 }
