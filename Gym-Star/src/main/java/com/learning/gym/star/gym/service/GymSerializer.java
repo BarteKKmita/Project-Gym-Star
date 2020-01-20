@@ -21,15 +21,13 @@ public class GymSerializer {
         try {
             gymAsJson = objectMapper.writeValueAsString(gymFrame);
         } catch (JsonProcessingException e) {
-            logger.error("Serialization of gym failure.");
-            e.printStackTrace();
+            logger.error("Serialization of gym failure.", e);
         }
         Gym databaseGym = null;
         try {
             databaseGym = objectMapper.readValue(gymAsJson, Gym.class);
         } catch (JsonProcessingException e) {
-            logger.error("Deserialization of gym failure.");
-            e.printStackTrace();
+            logger.error("Deserialization of gym failure.", e);
         }
         return databaseGym;
     }
@@ -40,13 +38,13 @@ public class GymSerializer {
             gymAsJson = objectMapper.writeValueAsString(databaseGym);
 
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error("Serialization of gym failure.", e);
         }
         GymFrame gymFrame = null;
         try {
             gymFrame = objectMapper.readValue(gymAsJson, GymFrame.class);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error("Deserialization of gym failure.", e);
         }
         return gymFrame;
     }
@@ -61,14 +59,14 @@ public class GymSerializer {
                 .build();
     }
 
-    public List <GymFrame> buildGymListForController(List <Gym> gymsFromDatabase){
-        List <GymFrame> gymListForController = new ArrayList <>();
+    public List<GymFrame> buildGymListForController(List<Gym> gymsFromDatabase){
+        List<GymFrame> gymListForController = new ArrayList<>();
         gymsFromDatabase.forEach(gym -> gymListForController.add(buildGymFrameForController(gym.toStringArray())));
         return gymListForController;
     }
 
-    public List <GymFrame> buildGymForControllerFromStringList(List <String> gymsFromDatabase){
-        List <GymFrame> gymListForController = new ArrayList <>();
+    public List<GymFrame> buildGymForControllerFromStringList(List<String> gymsFromDatabase){
+        List<GymFrame> gymListForController = new ArrayList<>();
         gymsFromDatabase.forEach(gym -> gymListForController.add(buildGymFrameForController(gym.split(" "))));
         return gymListForController;
     }
