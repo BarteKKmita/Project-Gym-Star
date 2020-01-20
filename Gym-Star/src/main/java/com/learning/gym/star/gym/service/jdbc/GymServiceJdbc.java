@@ -29,23 +29,23 @@ public class GymServiceJdbc {
     }
 
     public String addGym(GymFrame gym){
-        logger.debug("Adding gym: {}", gym);
+        logger.debug("Adding gym: {}. {}", gym, this.getClass());
         return gymRepository.add(gymSerializer.getGymFromGymFrame(gym));
     }
 
     public void updateGym(Gym gym, int gymId){
-        logger.debug("Updating gym: {} with id: {}", gym, gymId);
+        logger.debug("Updating gym: {} with id: {}. {}", gym, gymId, this.getClass());
         gymRepository.update(gym, gymId);
     }
 
     public GymFrame getGymById(int gymId){
-        logger.debug("Getting gym with id {}", gymId);
+        logger.debug("Getting gym with id {}. {}", gymId, this.getClass());
         String[] gymAsStringArray = gymRepository.getGymDataById(gymId);
         return gymSerializer.buildGymFrameForController(gymAsStringArray);
     }
 
     public void deleteGymById(int gymId){
-        logger.debug("Updating gym with id: {}", gymId);
+        logger.debug("Updating gym with id: {}. {}", gymId, this.getClass());
         gymRepository.delete(gymId);
     }
 }

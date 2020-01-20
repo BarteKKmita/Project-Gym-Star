@@ -29,10 +29,10 @@ public class GymControllerJpa {
 
     @PostMapping
     public ResponseEntity addGym(@Valid @NotNull @RequestBody GymFrame gymFrame){
-        logger.info("Attempting to add gym to database.");
+        logger.info("Attempting to add gym to database. {}", this.getClass());
         String gymId = gymService.addGym(gymFrame);
         if (gymId.isEmpty()) {
-            logger.error("Gym with given id: {} already exists", gymFrame.getGymId());
+            logger.error("Gym with given id: {} already exists. {}", gymFrame.getGymId(), this.getClass());
             return new ResponseEntity("Specified gym id already exists ", HttpStatus.CONFLICT);
         }
         return new ResponseEntity("Your gym id: " + gymId, HttpStatus.CREATED);
@@ -40,20 +40,20 @@ public class GymControllerJpa {
 
     @GetMapping(path = {"/all"})
     public ResponseEntity getAllGyms(){
-        logger.info("Attempting to get all available gyms.");
+        logger.info("Attempting to get all available gyms. {}", this.getClass());
         return new ResponseEntity<>(gymService.getAllGyms(), HttpStatus.OK);
     }
 
     @GetMapping(path = "{id}")
     public ResponseEntity getGymById(@PathVariable("id") int gymId){
-        logger.info("Attempting to get gym by id.");
+        logger.info("Attempting to get gym by id. {}", this.getClass());
         GymFrame gymFrame = gymService.getGymById(gymId);
         MultiValueMap<String, String> header = new HttpHeaders();
         header.add("Content-type", "application/json");
         if (gymFrame != null) {
             return new ResponseEntity<>(gymFrame, header, HttpStatus.OK);
         } else {
-            logger.error("Gym id passed by user does not exist");
+            logger.error("Gym id passed by user does not exist. {}", this.getClass());
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
@@ -61,14 +61,14 @@ public class GymControllerJpa {
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateGym(@Valid @RequestBody GymFrame gymFrame){
-        logger.info("Attempting to update gym.");
+        logger.info("Attempting to update gym. {}", this.getClass());
         gymService.updateGym(gymFrame);
     }
 
     @DeleteMapping(path = "{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteGymById(@PathVariable("id") String gymId){
-        logger.info("Attempting to delete gym.");
+        logger.info("Attempting to delete gym. {}", this.getClass());
         gymService.deleteGymById(gymId);
     }
 

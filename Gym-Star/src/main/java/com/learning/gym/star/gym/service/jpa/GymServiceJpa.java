@@ -28,13 +28,13 @@ public class GymServiceJpa {
     }
 
     public GymFrame getGymById(int gymId){
-        logger.debug("Getting gym with id: {}", gymId);
+        logger.debug("Getting gym with id: {}. {}", gymId, this.getClass());
         Gym databaseGym = gymRepository.findById(Integer.toString(gymId)).orElseThrow();
         return gymSerializer.getGymFrameFromGym(databaseGym);
     }
 
     public String addGym(GymFrame gym){
-        logger.debug("Adding gym: {}", gym);
+        logger.debug("Adding gym: {}. {}", gym, this.getClass());
         if (gym.getGymId() != null) {
             return "";
         }
@@ -42,16 +42,16 @@ public class GymServiceJpa {
     }
 
     public void updateGym(GymFrame gymFrame){
-        logger.debug("Updating gym with gym id {}", gymFrame.getGymId());
+        logger.debug("Updating gym with gym id {}. {}", gymFrame.getGymId(), this.getClass());
         if (gymFrame.getGymId() == null) {
-            logger.error("Updating gym requires specifying id");
+            logger.error("Updating gym requires specifying id. {}", this.getClass());
             throw new org.springframework.dao.IncorrectUpdateSemanticsDataAccessException("Gym id cannot be null");
         }
         gymRepository.saveAndFlush(gymSerializer.getGymFromGymFrame(gymFrame));
     }
 
     public void deleteGymById(String gymId){
-        logger.debug("Deleting gym with id: {}", gymId);
+        logger.debug("Deleting gym with id: {}. {}", gymId, this.getClass());
         gymRepository.deleteById(gymId);
     }
 }
