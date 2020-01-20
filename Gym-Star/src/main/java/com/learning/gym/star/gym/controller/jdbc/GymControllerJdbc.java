@@ -1,6 +1,6 @@
 package com.learning.gym.star.gym.controller.jdbc;
 
-import com.learning.gym.star.gym.controller.GymFrame;
+import com.learning.gym.star.gym.controller.GymDTO;
 import com.learning.gym.star.gym.service.jdbc.GymServiceJdbc;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -31,13 +31,13 @@ public class GymControllerJdbc {
     }
 
     @PostMapping
-    public ResponseEntity addGym(@RequestBody GymFrame gymFrame){
-        return new ResponseEntity("Your gym id: " + gymService.addGym(gymFrame), HttpStatus.CREATED);
+    public ResponseEntity addGym(@RequestBody GymDTO gymDTO){
+        return new ResponseEntity("Your gym id: " + gymService.addGym(gymDTO), HttpStatus.CREATED);
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateGym(@Valid @NotNull @RequestBody GymFrame gym){
+    public void updateGym(@Valid @NotNull @RequestBody GymDTO gym){
         int gymId = Integer.parseInt(gym.getGymId());
         gymService.updateGym(gym, gymId);
     }

@@ -1,6 +1,6 @@
 package com.learning.gym.star.gym.controller.jpa;
 
-import com.learning.gym.star.gym.controller.GymFrame;
+import com.learning.gym.star.gym.controller.GymDTO;
 import com.learning.gym.star.gym.service.jpa.GymServiceJpa;
 import org.hibernate.exception.GenericJDBCException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -29,8 +29,8 @@ public class GymControllerJpa {
     }
 
     @PostMapping
-    public ResponseEntity addGym(@Valid @NotNull @RequestBody GymFrame gymFrame){
-        String gymId = gymService.addGym(gymFrame);
+    public ResponseEntity addGym(@Valid @NotNull @RequestBody GymDTO gymDTO){
+        String gymId = gymService.addGym(gymDTO);
         if (gymId.isEmpty()) {
             return new ResponseEntity("Specified gym id already exists ", getResponseDateAndTime(), HttpStatus.CONFLICT);
         }
@@ -44,12 +44,12 @@ public class GymControllerJpa {
 
     @GetMapping(path = "{id}")
     public ResponseEntity getGymById(@PathVariable("id") int gymId){
-        GymFrame gymFrame = gymService.getGymById(gymId);
+        GymDTO gymDTO = gymService.getGymById(gymId);
         MultiValueMap<String, String> header = new HttpHeaders();
         header.add("Content-type", "application/json");
         header.addAll(getResponseDateAndTime());
-        if (gymFrame != null) {
-            return new ResponseEntity<>(gymFrame, header, HttpStatus.OK);
+        if (gymDTO != null) {
+            return new ResponseEntity<>(gymDTO, header, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
@@ -57,8 +57,8 @@ public class GymControllerJpa {
 
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateGym(@Valid @RequestBody GymFrame gymFrame){
-        gymService.updateGym(gymFrame);
+    public void updateGym(@Valid @RequestBody GymDTO gymDTO){
+        gymService.updateGym(gymDTO);
     }
 
     @DeleteMapping(path = "{id}")

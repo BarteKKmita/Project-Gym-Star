@@ -1,7 +1,7 @@
 package com.learning.gym.star.gym.service.jpa;
 
 import com.learning.gym.star.gym.Gym;
-import com.learning.gym.star.gym.controller.GymFrame;
+import com.learning.gym.star.gym.controller.GymDTO;
 import com.learning.gym.star.gym.database.jpa.GymJpaRepository;
 import com.learning.gym.star.gym.service.GymSerializer;
 import lombok.NoArgsConstructor;
@@ -22,27 +22,27 @@ public class GymServiceJpa {
         this.gymSerializer = gymSerializer;
     }
 
-    public List<GymFrame> getAllGyms(){
-        return gymSerializer.buildGymListForController(gymRepository.findAll());
+    public List<GymDTO> getAllGyms(){
+        return gymSerializer.buildGymDTOListFromGymList(gymRepository.findAll());
     }
 
-    public GymFrame getGymById(int gymId){
+    public GymDTO getGymById(int gymId){
         Gym databaseGym = gymRepository.findById(Integer.toString(gymId)).orElseThrow();
-        return gymSerializer.getGymFrameFromGym(databaseGym);
+        return gymSerializer.getGymDTOFromGym(databaseGym);
     }
 
-    public String addGym(GymFrame gym){
+    public String addGym(GymDTO gym){
         if (gym.getGymId() != null) {
             return "";
         }
-        return gymRepository.saveAndFlush(gymSerializer.getGymFromGymFrame(gym)).getGymId();
+        return gymRepository.saveAndFlush(gymSerializer.getGymFromGymGTO(gym)).getGymId();
     }
 
-    public void updateGym(GymFrame gymFrame){
-        if (gymFrame.getGymId() == null) {
+    public void updateGym(GymDTO gymDTO){
+        if (gymDTO.getGymId() == null) {
             throw new org.springframework.dao.IncorrectUpdateSemanticsDataAccessException("Gym id cannot be null");
         }
-        gymRepository.saveAndFlush(gymSerializer.getGymFromGymFrame(gymFrame));
+        gymRepository.saveAndFlush(gymSerializer.getGymFromGymGTO(gymDTO));
     }
 
     public void deleteGymById(String gymId){

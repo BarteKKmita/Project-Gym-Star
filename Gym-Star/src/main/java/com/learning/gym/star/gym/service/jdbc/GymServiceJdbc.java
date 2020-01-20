@@ -1,6 +1,6 @@
 package com.learning.gym.star.gym.service.jdbc;
 
-import com.learning.gym.star.gym.controller.GymFrame;
+import com.learning.gym.star.gym.controller.GymDTO;
 import com.learning.gym.star.gym.database.jdbc.GymRepository;
 import com.learning.gym.star.gym.service.GymSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,21 +21,21 @@ public class GymServiceJdbc {
         this.gymSerializer = gymSerializer;
     }
 
-    public List<GymFrame> getAllGyms(){
-        return gymSerializer.buildGymForControllerFromStringList(gymRepository.getGymData());
+    public List<GymDTO> getAllGyms(){
+        return gymSerializer.buildGymDTOFromGymAsStringList(gymRepository.getGymData());
     }
 
-    public String addGym(GymFrame gym){
-        return gymRepository.add(gymSerializer.getGymFromGymFrame(gym));
+    public String addGym(GymDTO gym){
+        return gymRepository.add(gymSerializer.getGymFromGymGTO(gym));
     }
 
-    public void updateGym(GymFrame gym, int gymId){
-        gymRepository.update(gymSerializer.getGymFromGymFrame(gym), gymId);
+    public void updateGym(GymDTO gym, int gymId){
+        gymRepository.update(gymSerializer.getGymFromGymGTO(gym), gymId);
     }
 
-    public GymFrame getGymById(int gymId){
+    public GymDTO getGymById(int gymId){
         String[] gymAsStringArray = gymRepository.getGymDataById(gymId);
-        return gymSerializer.buildGymFrameForController(gymAsStringArray);
+        return gymSerializer.buildGymDTO(gymAsStringArray);
     }
 
     public void deleteGymById(int gymId){
