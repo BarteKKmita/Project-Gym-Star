@@ -1,5 +1,6 @@
 package com.learning.gym.star.training.cardio;
 
+import com.learning.gym.star.statistics.statisticsdb.StatisticsDB;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,4 +21,7 @@ public class CardioTrainingDB {
 
     @Column(name = "training_count ")
     private int trainingCount;
+
+    @OneToOne(mappedBy = "cardioTrainingDB")
+    private StatisticsDB statisticsDB;
 }

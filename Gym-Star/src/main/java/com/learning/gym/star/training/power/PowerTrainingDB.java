@@ -1,5 +1,6 @@
 package com.learning.gym.star.training.power;
 
+import com.learning.gym.star.statistics.statisticsdb.StatisticsDB;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -16,4 +17,7 @@ public class PowerTrainingDB {
 
     @Column(name = "training_count ")
     private int trainingCount;
+
+    @OneToOne(mappedBy = "powerTrainingDB")
+    private StatisticsDB statisticsDB;
 }
