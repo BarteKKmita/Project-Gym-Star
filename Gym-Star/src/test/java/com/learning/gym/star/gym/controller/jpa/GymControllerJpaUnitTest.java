@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -23,45 +24,32 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class GymControllerJpaUnitTest {
 
-    private GymFrame testGymFrame = GymFrame.builder()
-            .gymName("TestGym")
-            .buildingNumber("100")
-            .street("Krakowska")
-            .city("Kraków")
-            .build();
-    private GymFrame testGymFrameWithId = GymFrame.builder()
-            .gymName("TestGym")
-            .buildingNumber("100")
-            .street("Krakowska")
-            .city("Kraków")
-            .gymId("1")
-            .build();
+    private GymFrame testGymFrame = getTestGym();
+    private GymFrame testGymFrameWithId = getTestGymWithId("1");
 
     @InjectMocks
-    GymControllerJpa controller;
+    private GymControllerJpa controller;
     @Mock
-    GymServiceJpa gymService;
+    private GymServiceJpa gymService;
 
     @Test
     public void shouldAddGym(){
         //Given
         String gymID = "1";
         String message = "Your gym id: 1";
-        int httpCreated = 201;
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
         when(gymService.addGym(any(GymFrame.class))).thenReturn(gymID);
         //When
         ResponseEntity responseEntity = controller.addGym(testGymFrame);
         //Then
-        assertEquals(httpCreated, responseEntity.getStatusCodeValue());
+        assertEquals(HttpStatus.CREATED.value(), responseEntity.getStatusCodeValue());
         assertEquals(message, responseEntity.getBody());
     }
 
     @Test
     public void shouldReturnConflictWhenAddingExistingGym(){
         //Given
-        int httpStatusConflict = 409;
         String message = "Specified gym id already exists ";
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
@@ -69,14 +57,13 @@ class GymControllerJpaUnitTest {
         //When
         ResponseEntity responseEntity = controller.addGym(testGymFrame);
         //Then
-        assertEquals(httpStatusConflict, responseEntity.getStatusCodeValue());
+        assertEquals(HttpStatus.CONFLICT.value(), responseEntity.getStatusCodeValue());
         assertEquals(message, responseEntity.getBody());
     }
 
     @Test
     public void shouldGetAllGyms(){
         //Given
-        int httpStatusOk = 200;
         int gymListSize = 1;
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
@@ -85,7 +72,7 @@ class GymControllerJpaUnitTest {
         ResponseEntity responseEntity = controller.getAllGyms();
         List<GymFrame> gymList = (List<GymFrame>) responseEntity.getBody();
         //Then
-        assertEquals(httpStatusOk, responseEntity.getStatusCodeValue());
+        assertEquals(HttpStatus.OK.value(), responseEntity.getStatusCodeValue());
         assertEquals(gymListSize, gymList.size());
     }
 
@@ -93,7 +80,6 @@ class GymControllerJpaUnitTest {
     @Test
     public void shouldGetGymById(){
         //Given
-        int httpStatusOk = 200;
         int gymId = 1;
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
@@ -102,14 +88,13 @@ class GymControllerJpaUnitTest {
         ResponseEntity responseEntity = controller.getGymById(gymId);
         GymFrame outputGym = (GymFrame) responseEntity.getBody();
         //Then
-        assertEquals(httpStatusOk, responseEntity.getStatusCodeValue());
+        assertEquals(HttpStatus.OK.value(), responseEntity.getStatusCodeValue());
         assertEquals(testGymFrameWithId, outputGym);
     }
 
     @Test
     public void shouldReturnNotFoundStatusWhenGettingNotExistingGym(){
         //Given
-        int httpStatusNotFound = 404;
         int gymId = 2;
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
@@ -117,7 +102,7 @@ class GymControllerJpaUnitTest {
         //When
         ResponseEntity responseEntity = controller.getGymById(gymId);
         //Then
-        assertEquals(httpStatusNotFound, responseEntity.getStatusCodeValue());
+        assertEquals(HttpStatus.NOT_FOUND.value(), responseEntity.getStatusCodeValue());
         assertTrue(responseEntity.getHeaders().isEmpty());
     }
 
@@ -125,5 +110,24 @@ class GymControllerJpaUnitTest {
         List<GymFrame> gymList = new ArrayList<>();
         gymList.add(testGymFrameWithId);
         return gymList;
+    }
+
+    private GymFrame getTestGymWithId(String gymId){
+        return GymFrame.builder()
+                .gymName("TestGym")
+                .buildingNumber("100")
+                .street("Krakowska")
+                .city("Kraków")
+                .gymId(gymId)
+                .build();
+    }
+
+    private GymFrame getTestGym(){
+        return GymFrame.builder()
+                .gymName("TestGym")
+                .buildingNumber("100")
+                .street("Krakowska")
+                .city("Kraków")
+                .build();
     }
 }
