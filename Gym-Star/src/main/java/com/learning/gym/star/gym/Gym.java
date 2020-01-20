@@ -15,7 +15,7 @@ import javax.validation.constraints.NotEmpty;
 @Getter
 @Entity
 @Table(name = "Gym")
-public class Gym{
+public class Gym {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,6 +46,6 @@ public class Gym{
     private String auxiliary;
 
     public String[] toStringArray(){
-        return new String[]{gymId, gymName, street, city, buildingNumber};
+        return new String[] {gymId, gymName, street, city, buildingNumber};
     }
 }

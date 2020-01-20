@@ -4,29 +4,30 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.learning.gym.star.gym.Gym;
 import com.learning.gym.star.gym.controller.GymFrame;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-public class GymSerializer{
+public class GymSerializer {
     private static ObjectMapper objectMapper = new ObjectMapper();
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public Gym getGymFromGymFrame(GymFrame gymFrame){
         String gymAsJson = "";
         try {
             gymAsJson = objectMapper.writeValueAsString(gymFrame);
-        } catch(JsonProcessingException e) {
-            System.out.println("Serialization of gym failure.");
-            e.printStackTrace();
+        } catch (JsonProcessingException e) {
+            logger.error("Serialization of gym failure.", e);
         }
         Gym databaseGym = null;
         try {
             databaseGym = objectMapper.readValue(gymAsJson, Gym.class);
-        } catch(JsonProcessingException e) {
-            System.out.println("Deserialization of gym failure.");
-            e.printStackTrace();
+        } catch (JsonProcessingException e) {
+            logger.error("Deserialization of gym failure.", e);
         }
         return databaseGym;
     }
@@ -36,14 +37,14 @@ public class GymSerializer{
         try {
             gymAsJson = objectMapper.writeValueAsString(databaseGym);
 
-        } catch(JsonProcessingException e) {
-            e.printStackTrace();
+        } catch (JsonProcessingException e) {
+            logger.error("Serialization of gym failure.", e);
         }
         GymFrame gymFrame = null;
         try {
             gymFrame = objectMapper.readValue(gymAsJson, GymFrame.class);
-        } catch(JsonProcessingException e) {
-            e.printStackTrace();
+        } catch (JsonProcessingException e) {
+            logger.error("Deserialization of gym failure.", e);
         }
         return gymFrame;
     }
@@ -58,14 +59,14 @@ public class GymSerializer{
                 .build();
     }
 
-    public List <GymFrame> buildGymListForController(List <Gym> gymsFromDatabase){
-        List <GymFrame> gymListForController = new ArrayList <>();
+    public List<GymFrame> buildGymListForController(List<Gym> gymsFromDatabase){
+        List<GymFrame> gymListForController = new ArrayList<>();
         gymsFromDatabase.forEach(gym -> gymListForController.add(buildGymFrameForController(gym.toStringArray())));
         return gymListForController;
     }
 
-    public List <GymFrame> buildGymForControllerFromStringList(List <String> gymsFromDatabase){
-        List <GymFrame> gymListForController = new ArrayList <>();
+    public List<GymFrame> buildGymForControllerFromStringList(List<String> gymsFromDatabase){
+        List<GymFrame> gymListForController = new ArrayList<>();
         gymsFromDatabase.forEach(gym -> gymListForController.add(buildGymFrameForController(gym.split(" "))));
         return gymListForController;
     }
