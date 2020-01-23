@@ -1,5 +1,6 @@
 package com.learning.gym.star.training.cardio;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.learning.gym.star.statistics.statisticsdb.StatisticsDB;
 import lombok.*;
 
@@ -23,5 +24,6 @@ public class CardioTrainingDB {
     private int trainingCount;
 
     @OneToOne(mappedBy = "cardioTrainingDB")
+    @JsonBackReference
     private StatisticsDB statisticsDB;
 }

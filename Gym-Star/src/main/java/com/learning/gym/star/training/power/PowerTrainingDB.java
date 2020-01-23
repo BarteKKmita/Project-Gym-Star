@@ -1,10 +1,15 @@
 package com.learning.gym.star.training.power;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.learning.gym.star.statistics.statisticsdb.StatisticsDB;
-import lombok.Getter;
+import lombok.*;
 
 import javax.persistence.*;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 @Getter
 @Entity
 @Table(name = "powertraining")
@@ -19,5 +24,6 @@ public class PowerTrainingDB {
     private int trainingCount;
 
     @OneToOne(mappedBy = "powerTrainingDB")
+    @JsonBackReference
     private StatisticsDB statisticsDB;
 }
