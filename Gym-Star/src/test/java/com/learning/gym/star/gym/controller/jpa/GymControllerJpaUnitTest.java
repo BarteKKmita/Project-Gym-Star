@@ -15,6 +15,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -24,8 +25,8 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class GymControllerJpaUnitTest {
 
-    private GymFrame testGymFrame = getTestGym();
-    private GymFrame testGymFrameWithId = getTestGymWithId("1");
+    private GymFrame testGymFrame = getTestGymWithId(Optional.empty());
+    private GymFrame testGymFrameWithId = getTestGymWithId(Optional.of("1"));
 
     @InjectMocks
     private GymControllerJpa controller;
@@ -112,22 +113,13 @@ class GymControllerJpaUnitTest {
         return gymList;
     }
 
-    private GymFrame getTestGymWithId(String gymId){
+    private GymFrame getTestGymWithId(Optional<String> gymId){
         return GymFrame.builder()
                 .gymName("TestGym")
                 .buildingNumber("100")
                 .street("Krakowska")
                 .city("Kraków")
-                .gymId(gymId)
-                .build();
-    }
-
-    private GymFrame getTestGym(){
-        return GymFrame.builder()
-                .gymName("TestGym")
-                .buildingNumber("100")
-                .street("Krakowska")
-                .city("Kraków")
+                .gymId(gymId.orElse(null))
                 .build();
     }
 }
