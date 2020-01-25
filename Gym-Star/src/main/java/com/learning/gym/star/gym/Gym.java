@@ -41,10 +41,10 @@ public class Gym {
     @NotEmpty
     private String buildingNumber;
 
-    @ManyToMany(mappedBy = "gymList")
+    @ManyToMany(mappedBy = "gym")
     private List<TrainerDB> trainers;
 
-    //This field was created to simulate some property not passed to database.
+    //This field was created to simulate some property not passed to database for learning reason.
     @Transient
     @JsonIgnore
     @ApiModelProperty(hidden = true)
