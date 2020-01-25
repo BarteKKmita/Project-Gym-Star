@@ -26,13 +26,10 @@ public class TrainerDB {
     @NotEmpty
     @Column(name = "cost")
     private int cost;
-//
-//    @OneToMany
-//    private SportsMan sportsMan;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany()
     @JoinTable(name = "trainersatgym",
-            joinColumns = @JoinColumn(referencedColumnName = "trainer_pesel"),
-            inverseJoinColumns = @JoinColumn(referencedColumnName = "gym_id"))
-    private List<Gym> gymList;
+            joinColumns = @JoinColumn(name = "trainer_pesel"),
+            inverseJoinColumns = @JoinColumn(name = "gym_id"))
+    private List<Gym> gym;
 }
