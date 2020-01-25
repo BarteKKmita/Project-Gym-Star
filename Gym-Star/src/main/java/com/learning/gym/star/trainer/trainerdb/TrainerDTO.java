@@ -1,22 +1,21 @@
 package com.learning.gym.star.trainer.trainerdb;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Getter
-@Builder
 public class TrainerDTO implements Serializable {
 
-    @NotEmpty
-    private long pesel;
+    @NotNull(message = "Please enter pesel number.")
+    private Long pesel;
 
     @NotEmpty
     private String name;
@@ -24,7 +23,7 @@ public class TrainerDTO implements Serializable {
     @NotEmpty
     private String surname;
 
-    @NotEmpty
-    private int cost;
+    @NotNull
+    private Integer cost;
 
 }
