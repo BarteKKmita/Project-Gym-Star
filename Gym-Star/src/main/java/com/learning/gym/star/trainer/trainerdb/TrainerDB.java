@@ -1,20 +1,28 @@
 package com.learning.gym.star.trainer.trainerdb;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.learning.gym.star.gym.Gym;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Getter
 @Entity
 @Table(name = "trainers")
 public class TrainerDB implements Serializable {
 
     @Id
-    @NotEmpty
+    @NotNull
     @Column(name = "trainer_pesel")
-    private long pesel;
+    private Long pesel;
 
     @NotEmpty
     @Column(name = "trainer_name")
@@ -24,11 +32,12 @@ public class TrainerDB implements Serializable {
     @Column(name = "trainer_surname")
     private String surname;
 
-    @NotEmpty
+    @NotNull
     @Column(name = "cost")
-    private int cost;
+    private Integer cost;
 
-    @Transient
+    @Getter(AccessLevel.NONE)
+    @JsonIgnore
     @ManyToMany()
     @JoinTable(name = "trainersatgym",
             joinColumns = @JoinColumn(name = "trainer_pesel"),
