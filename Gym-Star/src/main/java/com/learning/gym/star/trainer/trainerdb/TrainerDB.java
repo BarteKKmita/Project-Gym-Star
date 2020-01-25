@@ -4,11 +4,12 @@ import com.learning.gym.star.gym.Gym;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "trainers")
-public class TrainerDB {
+public class TrainerDB implements Serializable {
 
     @Id
     @NotEmpty
@@ -27,6 +28,7 @@ public class TrainerDB {
     @Column(name = "cost")
     private int cost;
 
+    @Transient
     @ManyToMany()
     @JoinTable(name = "trainersatgym",
             joinColumns = @JoinColumn(name = "trainer_pesel"),
