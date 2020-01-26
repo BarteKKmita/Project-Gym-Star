@@ -3,6 +3,8 @@ package com.learning.gym.star.gym.controller.jpa;
 import com.learning.gym.star.gym.controller.GymDTO;
 import com.learning.gym.star.gym.service.jpa.GymServiceJpa;
 import org.hibernate.exception.GenericJDBCException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectUpdateSemanticsDataAccessException;
 import org.springframework.http.HttpHeaders;
@@ -22,6 +24,7 @@ import static java.time.format.DateTimeFormatter.ofLocalizedDateTime;
 @RequestMapping("api/jpa/gym")
 @RestController
 public class GymControllerJpa {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     private final GymServiceJpa gymService;
 
     public GymControllerJpa(GymServiceJpa gymService){
@@ -30,20 +33,24 @@ public class GymControllerJpa {
 
     @PostMapping
     public ResponseEntity addGym(@Valid @NotNull @RequestBody GymDTO gymDTO){
+        logger.info("Attempting to add gym to database. {}", this.getClass());
         String gymId = gymService.addGym(gymDTO);
         if (gymId.isEmpty()) {
-            return new ResponseEntity("Specified gym id already exists ", getResponseDateAndTime(), HttpStatus.CONFLICT);
+            logger.error("Gym with given id: {} already exists. {}", gymDTO.getGymId(), this.getClass());
+            return new ResponseEntity<>("Specified gym id already exists ", getResponseDateAndTime(), HttpStatus.CONFLICT);
         }
-        return new ResponseEntity("Your gym id: " + gymId, getResponseDateAndTime(), HttpStatus.CREATED);
+        return new ResponseEntity<>("Your gym id: " + gymId, getResponseDateAndTime(), HttpStatus.CREATED);
     }
 
     @GetMapping(path = {"/all"})
     public ResponseEntity getAllGyms(){
-        return new ResponseEntity(gymService.getAllGyms(), getResponseDateAndTime(), HttpStatus.OK);
+        logger.info("Attempting to get all available gyms. {}", this.getClass());
+        return new ResponseEntity<>(gymService.getAllGyms(), getResponseDateAndTime(), HttpStatus.OK);
     }
 
     @GetMapping(path = "{id}")
     public ResponseEntity getGymById(@PathVariable("id") int gymId){
+        logger.info("Attempting to get gym by id. {}", this.getClass());
         GymDTO gymDTO = gymService.getGymById(gymId);
         MultiValueMap<String, String> header = new HttpHeaders();
         header.add("Content-type", "application/json");
@@ -51,6 +58,7 @@ public class GymControllerJpa {
         if (gymDTO != null) {
             return new ResponseEntity<>(gymDTO, header, HttpStatus.OK);
         } else {
+            logger.error("Gym id passed by user does not exist. {}", this.getClass());
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
@@ -58,12 +66,14 @@ public class GymControllerJpa {
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateGym(@Valid @RequestBody GymDTO gymDTO){
+        logger.info("Attempting to update gym. {}", this.getClass());
         gymService.updateGym(gymDTO);
     }
 
     @DeleteMapping(path = "{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteGymById(@PathVariable("id") String gymId){
+        logger.info("Attempting to delete gym. {}", this.getClass());
         gymService.deleteGymById(gymId);
     }
 
