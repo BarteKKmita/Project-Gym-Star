@@ -28,11 +28,12 @@ public class DataStatisticsHandlerTest {
         SportsManBuilder sportsManBuilder = new MaleSportsMan("Test", "SportsMan");
         SportsManDirector director = new SportsManDirector(sportsManBuilder);
         director.setConcreteSportsMan(new UserInputForTests("Mariusz", "Gawryś"));
-        sportsMan = director.getConcreteSportsMan();;
+        sportsMan = director.getConcreteSportsMan();
+        ;
     }
 
     @Test
-    void shouldThrowIOExceptionWhenCallingNotExistingFile () {
+    void shouldThrowIOExceptionWhenCallingNotExistingFile(){
         //Given
         DateStatisticsHandler dateStatisticsHandler = new DateStatisticsHandler();
         String path = "data\\FileNotExisting";
@@ -41,7 +42,7 @@ public class DataStatisticsHandlerTest {
     }
 
     @Test
-    void shouldReturnStringWithDataTypeWhenCallingExistingFile () {
+    void shouldReturnStringWithDataTypeWhenCallingExistingFile(){
         //Given
         DateStatisticsHandler dateStatisticsHandler = new DateStatisticsHandler();
         String PATH = "data\\StatisticsReaderTest.txt";
@@ -49,7 +50,7 @@ public class DataStatisticsHandlerTest {
         String trainerSurname = "Gawryś";
         int trainerCost = 30;
         //When
-        sportsMan.withMyTrainer(new Trainer(trainerName, trainerSurname,trainerCost));
+        sportsMan.withMyTrainer(new Trainer(trainerName, trainerSurname, trainerCost));
         sportsMan.train();
         try {
             String[] methodOutput = dateStatisticsHandler.readDateAndTimeStatistics(PATH).split(" ");
@@ -64,7 +65,7 @@ public class DataStatisticsHandlerTest {
     }
 
     @Test
-    void shouldBeAddedLineInFileWhenCallingExistingFile () {
+    void shouldBeAddedLineInFileWhenCallingExistingFile(){
         //Given
         DateStatisticsHandler dateStatisticsHandler = new DateStatisticsHandler();
         String path = "data\\StatisticsReaderTest.txt";
@@ -88,7 +89,7 @@ public class DataStatisticsHandlerTest {
     }
 
     @Test
-    void shouldBeAdded2LinesWhenCallingNotExistingFile () {
+    void shouldBeAdded2LinesWhenCallingNotExistingFile(){
         //Given
         DateStatisticsHandler dateStatisticsHandler = new DateStatisticsHandler();
         String path = "data\\NotExistingFileYet.txt";
