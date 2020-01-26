@@ -26,7 +26,7 @@ class JdbcPropertiesReader {
         return getDatabaseProperties(URL);
     }
 
-    public String getUsername(){
+    String getUsername(){
         return getDatabaseProperties(USERNAME);
     }
 
@@ -43,6 +43,7 @@ class JdbcPropertiesReader {
         } catch (IOException ex) {
             logger.error("File cannot be opened or not exists");
             ex.printStackTrace();
+            System.exit(1);
         }
         return readProperty;
     }

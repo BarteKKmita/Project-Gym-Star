@@ -1,7 +1,6 @@
 package com.learning.gym.star.gym.service.jdbc;
 
-import com.learning.gym.star.gym.Gym;
-import com.learning.gym.star.gym.controller.GymFrame;
+import com.learning.gym.star.gym.controller.GymDTO;
 import com.learning.gym.star.gym.database.jdbc.GymRepository;
 import com.learning.gym.star.gym.service.GymSerializer;
 import org.slf4j.Logger;
@@ -14,6 +13,7 @@ import java.util.List;
 
 @Service("GymServiceJdbc")
 public class GymServiceJdbc {
+
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private GymRepository gymRepository;
     private GymSerializer gymSerializer;
@@ -24,24 +24,24 @@ public class GymServiceJdbc {
         this.gymSerializer = gymSerializer;
     }
 
-    public List<GymFrame> getAllGyms(){
-        return gymSerializer.buildGymForControllerFromStringList(gymRepository.getGymData());
+    public List<GymDTO> getAllGyms(){
+        return gymSerializer.buildGymDTOFromGymAsStringList(gymRepository.getGymData());
     }
 
-    public String addGym(GymFrame gym){
+    public String addGym(GymDTO gym){
         logger.debug("Adding gym: {}. {}", gym, this.getClass());
-        return gymRepository.add(gymSerializer.getGymFromGymFrame(gym));
+        return gymRepository.add(gymSerializer.getGymFromGymGTO(gym));
     }
 
-    public void updateGym(Gym gym, int gymId){
+    public void updateGym(GymDTO gym, int gymId){
         logger.debug("Updating gym: {} with id: {}. {}", gym, gymId, this.getClass());
-        gymRepository.update(gym, gymId);
+        gymRepository.update(gymSerializer.getGymFromGymGTO(gym), gymId);
     }
 
-    public GymFrame getGymById(int gymId){
+    public GymDTO getGymById(int gymId){
         logger.debug("Getting gym with id {}. {}", gymId, this.getClass());
         String[] gymAsStringArray = gymRepository.getGymDataById(gymId);
-        return gymSerializer.buildGymFrameForController(gymAsStringArray);
+        return gymSerializer.buildGymDTO(gymAsStringArray);
     }
 
     public void deleteGymById(int gymId){

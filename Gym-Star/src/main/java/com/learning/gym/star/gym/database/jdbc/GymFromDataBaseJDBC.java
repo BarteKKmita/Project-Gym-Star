@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Repository("database access JDBC")
 class GymFromDataBaseJDBC implements GymRepository {
 
     private final static Logger logger = LogManager.getLogger(GymFromDataBaseJDBC.class.getName());
@@ -34,65 +33,63 @@ class GymFromDataBaseJDBC implements GymRepository {
 
     @Override
     public String add(Gym gym){
-        List <String> queryParameters = gymQueryParameters.getQueryParameters(gym);
+        List<String> queryParameters = gymQueryParameters.getGymAsList(gym);
         changeTableData(ADD_QUERY, queryParameters);
         return gym.getGymId();
     }
 
     @Override
     public void update(Gym gym, int gymId){
-        List <String> queryParameters = gymQueryParameters.getQueryParameters(gym, gymId);
+        List<String> queryParameters = gymQueryParameters.getGymAsList(gym, gymId);
         changeTableData(UPDATE_QUERY, queryParameters);
     }
 
     @Override
     public void delete(int gymId){
-        changeTableData(DELETE_QUERY, gymQueryParameters.getQueryParameters(gymId));
+        changeTableData(DELETE_QUERY, gymQueryParameters.getGymIdAsList(gymId));
     }
 
     @Override
-    public List <String> getGymData(){
+    public List<String> getGymData(){
         return getGymDataFromQuery(SELECT_ALL_QUERY);
     }
 
     @Override
     public String[] getGymDataById(int gymId){
-        List <String> idAsString = new ArrayList <>();
-        idAsString.add(Integer.toString(gymId));
-        List <String> listOfGyms = getGymDataFromQuery(SELECT_ONE_QUERY, idAsString);
+        List<String> listOfGyms = getGymDataFromQuery(SELECT_ONE_QUERY, gymQueryParameters.getGymIdAsList(gymId));
         if (listOfGyms.isEmpty()) {
             return null;
         }
         return listOfGyms.get(0).split(" ");
     }
 
-    private List <String> getGymDataFromQuery(String sqlQuery, List <String> queryParameters){
-        List <String> listOfGyms = new ArrayList <>();
+    private List<String> getGymDataFromQuery(String sqlQuery, List<String> queryParameters){
+        List<String> listOfGyms = new ArrayList<>();
         try (ResultSet resultSet = jdbcConnector.prepareStatement(sqlQuery, queryParameters).executeQuery()) {
             listOfGyms = getGymsFromDataBaseResponse(resultSet);
         } catch (SQLException e) {
-            logger.fatal("Data base connection failure. Check ip address, login and password");
+            logger.error("Data base connection failure. Check ip address, login and password");
             e.printStackTrace();
         }
         return listOfGyms;
     }
 
-    private List <String> getGymDataFromQuery(String sqlQuery){
-        return getGymDataFromQuery(sqlQuery, new ArrayList <>());
+    private List<String> getGymDataFromQuery(String sqlQuery){
+        return getGymDataFromQuery(sqlQuery, new ArrayList<>());
     }
 
-    private void changeTableData(String sqlQuery, List <String> queryParameters){
+    private void changeTableData(String sqlQuery, List<String> queryParameters){
         try (PreparedStatement statement = jdbcConnector.prepareStatement(sqlQuery, queryParameters)) {
             statement.execute();
         } catch (SQLException e) {
-            logger.fatal("Data base connection or query failure. Check configuration, login, password and query syntax");
+            logger.error("Data base connection or query failure. Check configuration, login, password and query syntax");
             e.printStackTrace();
         }
     }
 
     //TODO
-    private List <String> getGymsFromDataBaseResponse(ResultSet resultSet) throws SQLException{
-        List <String> dataFromDataBase = new ArrayList <>();
+    private List<String> getGymsFromDataBaseResponse(ResultSet resultSet) throws SQLException{
+        List<String> dataFromDataBase = new ArrayList<>();
         while (resultSet.next()) {
             String gym_id = resultSet.getString("gym_id");
             String gym_name = resultSet.getString("gym_name");

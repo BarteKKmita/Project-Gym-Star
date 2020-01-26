@@ -1,6 +1,6 @@
 package com.learning.gym.star.gym.controller.jpa;
 
-import com.learning.gym.star.gym.controller.GymFrame;
+import com.learning.gym.star.gym.controller.GymDTO;
 import com.learning.gym.star.gym.service.jpa.GymServiceJpa;
 import org.hibernate.exception.GenericJDBCException;
 import org.slf4j.Logger;
@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
+import java.time.format.FormatStyle;
 import java.util.NoSuchElementException;
+
+import static java.time.format.DateTimeFormatter.ofLocalizedDateTime;
 
 @RequestMapping("api/jpa/gym")
 @RestController
@@ -28,30 +32,31 @@ public class GymControllerJpa {
     }
 
     @PostMapping
-    public ResponseEntity addGym(@Valid @NotNull @RequestBody GymFrame gymFrame){
+    public ResponseEntity addGym(@Valid @NotNull @RequestBody GymDTO gymDTO){
         logger.info("Attempting to add gym to database. {}", this.getClass());
-        String gymId = gymService.addGym(gymFrame);
+        String gymId = gymService.addGym(gymDTO);
         if (gymId.isEmpty()) {
-            logger.error("Gym with given id: {} already exists. {}", gymFrame.getGymId(), this.getClass());
-            return new ResponseEntity("Specified gym id already exists ", HttpStatus.CONFLICT);
+            logger.error("Gym with given id: {} already exists. {}", gymDTO.getGymId(), this.getClass());
+            return new ResponseEntity<>("Specified gym id already exists ", getResponseDateAndTime(), HttpStatus.CONFLICT);
         }
-        return new ResponseEntity("Your gym id: " + gymId, HttpStatus.CREATED);
+        return new ResponseEntity<>("Your gym id: " + gymId, getResponseDateAndTime(), HttpStatus.CREATED);
     }
 
     @GetMapping(path = {"/all"})
     public ResponseEntity getAllGyms(){
         logger.info("Attempting to get all available gyms. {}", this.getClass());
-        return new ResponseEntity<>(gymService.getAllGyms(), HttpStatus.OK);
+        return new ResponseEntity<>(gymService.getAllGyms(), getResponseDateAndTime(), HttpStatus.OK);
     }
 
     @GetMapping(path = "{id}")
     public ResponseEntity getGymById(@PathVariable("id") int gymId){
         logger.info("Attempting to get gym by id. {}", this.getClass());
-        GymFrame gymFrame = gymService.getGymById(gymId);
+        GymDTO gymDTO = gymService.getGymById(gymId);
         MultiValueMap<String, String> header = new HttpHeaders();
         header.add("Content-type", "application/json");
-        if (gymFrame != null) {
-            return new ResponseEntity<>(gymFrame, header, HttpStatus.OK);
+        header.addAll(getResponseDateAndTime());
+        if (gymDTO != null) {
+            return new ResponseEntity<>(gymDTO, header, HttpStatus.OK);
         } else {
             logger.error("Gym id passed by user does not exist. {}", this.getClass());
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -60,9 +65,9 @@ public class GymControllerJpa {
 
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateGym(@Valid @RequestBody GymFrame gymFrame){
+    public void updateGym(@Valid @RequestBody GymDTO gymDTO){
         logger.info("Attempting to update gym. {}", this.getClass());
-        gymService.updateGym(gymFrame);
+        gymService.updateGym(gymDTO);
     }
 
     @DeleteMapping(path = "{id}")
@@ -90,5 +95,11 @@ public class GymControllerJpa {
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity handleNoSuchRecordInDatabase(){
         return new ResponseEntity<>("Record not found", HttpStatus.NOT_FOUND);
+    }
+
+    private MultiValueMap<String, String> getResponseDateAndTime(){
+        MultiValueMap<String, String> headers = new HttpHeaders();
+        headers.set("date", LocalDateTime.now().format(ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.MEDIUM)));
+        return headers;
     }
 }
