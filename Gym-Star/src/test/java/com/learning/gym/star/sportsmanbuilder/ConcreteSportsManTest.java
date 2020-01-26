@@ -24,13 +24,13 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class ConcreteSportsManTest {
     private ConcreteSportsMan sportsMan;
-    private Queue <TrainingType> mockedListOfTraining;
+    private Queue<TrainingType> mockedListOfTraining;
     @Mock
     Trainer trainer;
 
     //kiedy mock'uje za pomocą adnotacji typ interfejsu to dostaje nulla a potem nullPointException przy wywołaniu
     @BeforeEach
-    void setUp () {
+    void setUp(){
         mockedListOfTraining = mock(LinkedList.class);
         sportsMan = new ConcreteSportsMan("Bartek", "Surname", GenderChoose.M, trainer, mockedListOfTraining, "data\\Bartek", mock(TrainingStatistics.class));
     }
@@ -42,7 +42,7 @@ public class ConcreteSportsManTest {
     // Widzę problem i muszę pomyśleć nad rozwiązaniem.
     //TODO
     @Test
-    void shouldSelectTrainerWeronikaFromList () {
+    void shouldSelectTrainerWeronikaFromList(){
         //Given
         String expectedName = "Weronika";
         String expectedSurname = "Kosmowska";
@@ -54,7 +54,7 @@ public class ConcreteSportsManTest {
     }
 
     @Test
-    void shouldPrintTrainingMessages () {
+    void shouldPrintTrainingMessages(){
         //Given
         PrintStream out = mock(PrintStream.class);
         System.setOut(out);
@@ -66,7 +66,7 @@ public class ConcreteSportsManTest {
     }
 
     @Test
-    void shouldPrintNoTrainingsAvailableWhenEmptyList () {
+    void shouldPrintNoTrainingsAvailableWhenEmptyList(){
         //Given
         PrintStream out = mock(PrintStream.class);
         System.setOut(out);
@@ -78,7 +78,7 @@ public class ConcreteSportsManTest {
     }
 
     @Test
-    void shouldReturn82WhenSeed40showClosestGym () {
+    void shouldReturn82WhenSeed40showClosestGym(){
         //Given
         int seed = 40;
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -90,7 +90,7 @@ public class ConcreteSportsManTest {
     }
 
     @Test
-    void shouldPrintItsBadWhenCallingNullTrainingPlan () {
+    void shouldPrintItsBadWhenCallingNullTrainingPlan(){
         //Given
         sportsMan = new ConcreteSportsMan("Bartek", "Surname", GenderChoose.M, mock(Trainer.class), null, "data\\Bartek", mock(TrainingStatistics.class));
         PrintStream out = mock(PrintStream.class);
@@ -102,7 +102,7 @@ public class ConcreteSportsManTest {
     }
 
     @Test
-    void shouldChooseOtherTrainingPlan () {
+    void shouldChooseOtherTrainingPlan(){
         //Given
         int trainingDays = 3;
         int expectedTrainingDays = 2;
@@ -113,8 +113,8 @@ public class ConcreteSportsManTest {
         assertEquals(expectedTrainingDays, sportsMan.getTrainings().size());
     }
 
-    private LinkedList <TrainingType> getTrainingTypes () {
-        LinkedList <TrainingType> trainingTypes = new LinkedList <>();
+    private LinkedList<TrainingType> getTrainingTypes(){
+        LinkedList<TrainingType> trainingTypes = new LinkedList<>();
         trainingTypes.add(new PowerTraining());
         trainingTypes.add(new CardioTraining());
         return trainingTypes;

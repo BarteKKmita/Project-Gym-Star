@@ -13,8 +13,8 @@ import java.sql.SQLIntegrityConstraintViolationException;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(EmptyResultDataAccessException.class)
-    public ResponseEntity handleContentNotAllowedException(){
-        return new ResponseEntity<>("FileNotFound", HttpStatus.CONFLICT);
+    public ResponseEntity handleAccessingNotExistingRecord(){
+        return new ResponseEntity<>("FileNotFound", HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)

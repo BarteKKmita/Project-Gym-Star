@@ -10,21 +10,21 @@ import java.util.List;
  */
 
 public class GymDataHandler implements GymRepository {
-    private final List <String> gymData;
+    private final List<String> gymData;
 
     public GymDataHandler(){
-        gymData = new ArrayList <>();
+        gymData = new ArrayList<>();
         generateGymData();
     }
 
     private void generateGymData(){
-        for (int i = 0; i < 90; i++) {
+        for(int i = 0; i < 90; i++) {
             gymData.add(String.valueOf(i));
         }
     }
 
     @Override
-    public List <String> getGymData(){
+    public List<String> getGymData(){
         return gymData;
     }
 
