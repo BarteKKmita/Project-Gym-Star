@@ -18,23 +18,23 @@ FOREIGN KEY (cardio_id) REFERENCES CardioTraining(cardio_id)
 
 CREATE TABLE Gym (
 gym_id INT PRIMARY KEY AUTO_INCREMENT,
-gym_name VARCHAR(80) NOT NULL,
-street VARCHAR (80) NOT NULL,
-city VARCHAR(30) NOT NULL,
+gym_name NVARCHAR(80) NOT NULL,
+street NVARCHAR (80) NOT NULL,
+city NVARCHAR(30) NOT NULL,
 building_number INT NOT NULL
 );
 
 CREATE TABLE Trainer (
 trainer_pesel INT PRIMARY KEY,
-trainer_name VARCHAR(30) NOT NULL,
-trainer_surname VARCHAR (80) NOT NULL,
+trainer_name NVARCHAR(30) NOT NULL,
+trainer_surname NVARCHAR (80) NOT NULL,
 cost INT NOT NULL
 );
 
 CREATE TABLE SportsMen (
 sportsman_pesel INT PRIMARY KEY,
-sportsman_name VARCHAR(30) NOT NULL,
-sportsman_surname VARCHAR (80) NOT NULL,
+sportsman_name NVARCHAR(30) NOT NULL,
+sportsman_surname NVARCHAR (80) NOT NULL,
 gender ENUM ('F','M',"N/A") NOT NULL,
 trainer_pesel INT,
 statistics_id INT,
