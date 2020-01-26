@@ -1,6 +1,6 @@
 package com.learning.gym.star.trainer;
 
-import com.learning.gym.star.sportsman.Gender;
+import com.learning.gym.star.sportsmanbuilder.gender.Gender;
 import com.learning.gym.star.training.CardioTraining;
 import com.learning.gym.star.training.PowerTraining;
 import com.learning.gym.star.training.TrainingType;
@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Queue;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PlanTest {
 
@@ -17,7 +17,7 @@ class PlanTest {
     private Plan plan;
 
     @BeforeEach
-    void init(){
+    void setUp(){
          plan = new Plan();
          trainingDays = 4;
     }

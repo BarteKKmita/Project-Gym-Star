@@ -1,0 +1,63 @@
+CREATE TABLE PowerTraining (
+power_id INT PRIMARY KEY AUTO_INCREMENT,
+training_count INT DEFAULT 0
+);
+
+CREATE TABLE CardioTraining (
+cardio_id INT PRIMARY KEY AUTO_INCREMENT,
+training_count INT DEFAULT 0
+);
+
+CREATE TABLE Statistics (
+statistics_id INT PRIMARY KEY AUTO_INCREMENT,
+power_id INT,
+cardio_id INT,
+FOREIGN KEY (power_id) REFERENCES PowerTraining(power_id),
+FOREIGN KEY (cardio_id) REFERENCES CardioTraining(cardio_id)
+);
+
+CREATE TABLE Gym (
+gym_id INT PRIMARY KEY AUTO_INCREMENT,
+gym_name VARCHAR(80) NOT NULL,
+street VARCHAR (80) NOT NULL,
+city VARCHAR(30) NOT NULL,
+building_number INT NOT NULL
+);
+
+CREATE TABLE Trainer (
+trainer_pesel INT PRIMARY KEY,
+trainer_name VARCHAR(30) NOT NULL,
+trainer_surname VARCHAR (80) NOT NULL,
+cost INT NOT NULL
+);
+
+CREATE TABLE SportsMen (
+sportsman_pesel INT PRIMARY KEY,
+sportsman_name VARCHAR(30) NOT NULL,
+sportsman_surname VARCHAR (80) NOT NULL,
+gender ENUM ('F','M',"N/A") NOT NULL,
+trainer_pesel INT,
+statistics_id INT,
+FOREIGN KEY (trainer_pesel)  REFERENCES Trainer(trainer_pesel),
+FOREIGN KEY (statistics_id) REFERENCES Statistics(statistics_id)
+);
+
+ALTER TABLE SportsMen
+ADD COLUMN gym_id INT;
+
+ALTER TABLE SportsMen
+ADD FOREIGN KEY (gym_id) REFERENCES Gym(gym_id);
+
+ALTER TABLE Trainer
+ADD COLUMN gym_id INT;
+
+ALTER TABLE Trainer
+ADD FOREIGN KEY (gym_id) REFERENCES Gym(gym_id);
+
+CREATE TABLE SportsMenTrainingTimeStatistics (
+statistics_id INT PRIMARY KEY AUTO_INCREMENT,
+date DATE NOT NULL,
+time TIME NOT NULL,
+sportsmanstats_id int NOT NULL,
+FOREIGN KEY (sportsmanstats_id) REFERENCES Statistics(statistics_id)
+);

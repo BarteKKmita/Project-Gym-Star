@@ -1,15 +1,13 @@
 package com.learning.gym.star.statistics;
 
-import com.learning.gym.star.sportsman.ConcreteSportsMan;
-import com.learning.gym.star.sportsman.GenderChoose;
-import com.learning.gym.star.sportsman.SportsMan;
-import com.learning.gym.star.sportsman.userinput.UserInputForTests;
-
+import com.learning.gym.star.sportsmanbuilder.ConcreteSportsMan;
+import com.learning.gym.star.sportsmanbuilder.MaleSportsMan;
+import com.learning.gym.star.sportsmanbuilder.SportsManBuilder;
+import com.learning.gym.star.sportsmanbuilder.SportsManDirector;
+import com.learning.gym.star.sportsmanbuilder.userinput.UserInputForTests;
+import com.learning.gym.star.trainer.Trainer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,17 +17,23 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class DataStatisticsHandlerTest {
 
-    private SportsMan sportsMan;
+    private ConcreteSportsMan sportsMan;
 
     @BeforeEach
-    void initListOfTrainers () {
-        sportsMan = new ConcreteSportsMan("Test", "SportsMan", GenderChoose.M);
+    void setUp(){
+        SportsManBuilder sportsManBuilder = new MaleSportsMan("Test", "SportsMan");
+        SportsManDirector director = new SportsManDirector(sportsManBuilder);
+        director.setConcreteSportsMan(new UserInputForTests("Mariusz", "Gawryś"));
+        sportsMan = director.getConcreteSportsMan();
+        ;
     }
 
     @Test
-    void shouldThrowIOExceptionWhenCallingNotExistingFile () {
+    void shouldThrowIOExceptionWhenCallingNotExistingFile(){
         //Given
         DateStatisticsHandler dateStatisticsHandler = new DateStatisticsHandler();
         String path = "data\\FileNotExisting";
@@ -38,16 +42,15 @@ public class DataStatisticsHandlerTest {
     }
 
     @Test
-    void shouldReturnStringWithDataTypeWhenCallingExistingFile () {
+    void shouldReturnStringWithDataTypeWhenCallingExistingFile(){
         //Given
         DateStatisticsHandler dateStatisticsHandler = new DateStatisticsHandler();
         String PATH = "data\\StatisticsReaderTest.txt";
         String trainerName = "Mariusz";
         String trainerSurname = "Gawryś";
-        int trainingDays = 3;
+        int trainerCost = 30;
         //When
-        sportsMan.chooseTrainer(new UserInputForTests(trainerName, trainerSurname));
-        sportsMan.getTrainingPlan(trainingDays);
+        sportsMan.withMyTrainer(new Trainer(trainerName, trainerSurname, trainerCost));
         sportsMan.train();
         try {
             String[] methodOutput = dateStatisticsHandler.readDateAndTimeStatistics(PATH).split(" ");
@@ -62,7 +65,7 @@ public class DataStatisticsHandlerTest {
     }
 
     @Test
-    void shouldBeAddedLineInFileWhenCallingExistingFile () {
+    void shouldBeAddedLineInFileWhenCallingExistingFile(){
         //Given
         DateStatisticsHandler dateStatisticsHandler = new DateStatisticsHandler();
         String path = "data\\StatisticsReaderTest.txt";
@@ -86,7 +89,7 @@ public class DataStatisticsHandlerTest {
     }
 
     @Test
-    void shouldBeAdded2LinesWhenCallingNotExistingFile () {
+    void shouldBeAdded2LinesWhenCallingNotExistingFile(){
         //Given
         DateStatisticsHandler dateStatisticsHandler = new DateStatisticsHandler();
         String path = "data\\NotExistingFileYet.txt";

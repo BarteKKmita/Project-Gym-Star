@@ -1,15 +1,14 @@
 package com.learning.gym.star.sportsmanbuilder;
 
-import com.learning.gym.star.sportsman.userinput.UserInputForTests;
+import com.learning.gym.star.sportsmanbuilder.userinput.UserInputForTests;
 import com.learning.gym.star.trainer.Trainer;
 import com.learning.gym.star.training.TrainingType;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Queue;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
@@ -18,12 +17,12 @@ class SportsManTest {
     private SportsMan sportsMan;
 
     @BeforeEach
-    void init () {
+    void setUp(){
         sportsMan = new MaleSportsMan(mock(ConcreteSportsMan.class));
     }
 
     @Test
-    void shouldReturnSpecifiedTrainer () {
+    void shouldReturnSpecifiedTrainer(){
         //Given
         String expectedName = "Mariusz";
         String expectedSurname = "Gawryś";
@@ -34,12 +33,12 @@ class SportsManTest {
     }
 
     @Test
-    void shouldReturnTrainingPlan () {
+    void shouldReturnTrainingPlan(){
         //Given
         Trainer trainer = spy(Trainer.class);
         int trainingDays = 3;
         //When
-        Queue <TrainingType> trainings = sportsMan.trainingPlanBuilder(trainer, mock(ConcreteSportsMan.class), 3);
+        Queue<TrainingType> trainings = sportsMan.trainingPlanBuilder(trainer, mock(ConcreteSportsMan.class), 3);
         //Then
         assertEquals(trainingDays, trainings.size());
     }

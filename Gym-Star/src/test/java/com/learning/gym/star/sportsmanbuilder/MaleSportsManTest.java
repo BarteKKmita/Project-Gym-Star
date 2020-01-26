@@ -1,12 +1,14 @@
 package com.learning.gym.star.sportsmanbuilder;
 
-import com.learning.gym.star.sportsman.GenderChoose;
-import com.learning.gym.star.sportsman.userinput.UserInputForTests;
+import com.learning.gym.star.sportsmanbuilder.gender.GenderChoose;
+import com.learning.gym.star.sportsmanbuilder.userinput.UserInputForTests;
 import com.learning.gym.star.statistics.TrainingStatistics;
 import com.learning.gym.star.trainer.Trainer;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+
 import java.util.LinkedList;
+
 import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -17,7 +19,7 @@ class MaleSportsManTest {
     private ConcreteSportsMan sportsMan;
 
     @Test
-    void shouldReturnChosenTrainer () {
+    void shouldReturnChosenTrainer(){
         //Given
         sportsMan = new ConcreteSportsMan("Name", "Surname", GenderChoose.M, mock(Trainer.class), mock(LinkedList.class), "data\\Test", mock(TrainingStatistics.class));
         String expectedName = "Mariusz";
@@ -32,11 +34,11 @@ class MaleSportsManTest {
     }
 
     @Test
-    void shouldReturnTrainingPlan () {
+    void shouldReturnTrainingPlan(){
         //Given
         //Zostawienie mock trainer.class daje null point exception
         sportsMan = new ConcreteSportsMan("Name", "Surname", GenderChoose.M, spy(Trainer.class), mock(LinkedList.class), "data\\Test", mock(TrainingStatistics.class));
-        int trainingDays= 3;
+        int trainingDays = 3;
         int expectedListSize = 3;
         MaleSportsMan maleSportsMan = new MaleSportsMan(sportsMan);
         //When
