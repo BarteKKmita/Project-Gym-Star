@@ -1,5 +1,6 @@
 package com.learning.gym.star.training.power;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Entity

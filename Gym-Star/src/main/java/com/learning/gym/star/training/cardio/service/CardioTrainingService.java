@@ -3,7 +3,6 @@ package com.learning.gym.star.training.cardio.service;
 import com.learning.gym.star.training.cardio.CardioTrainingDB;
 import com.learning.gym.star.training.cardio.database.CardioTrainingJpaRepository;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
@@ -11,7 +10,7 @@ import java.util.NoSuchElementException;
 @Service("CardioTrainingService")
 @NoArgsConstructor
 public class CardioTrainingService {
-    @Autowired
+
     private CardioTrainingJpaRepository repository;
 
     public CardioTrainingService(CardioTrainingJpaRepository repository){
