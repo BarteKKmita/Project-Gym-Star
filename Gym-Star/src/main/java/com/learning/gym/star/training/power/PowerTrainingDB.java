@@ -2,14 +2,16 @@ package com.learning.gym.star.training.power;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.learning.gym.star.statistics.statisticsdb.StatisticsDB;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@NoArgsConstructor
 @Getter
 @Entity
 @Table(name = "powertraining")

@@ -22,7 +22,7 @@ class SportsManTest {
     }
 
     @Test
-    void shouldReturnSpecifiedTrainer () {
+    void shouldReturnSpecifiedTrainer(){
         //Given
         String expectedName = "Mariusz";
         String expectedSurname = "Gawryś";
@@ -33,12 +33,12 @@ class SportsManTest {
     }
 
     @Test
-    void shouldReturnTrainingPlan () {
+    void shouldReturnTrainingPlan(){
         //Given
         Trainer trainer = spy(Trainer.class);
         int trainingDays = 3;
         //When
-        Queue <TrainingType> trainings = sportsMan.trainingPlanBuilder(trainer, mock(ConcreteSportsMan.class), 3);
+        Queue<TrainingType> trainings = sportsMan.trainingPlanBuilder(trainer, mock(ConcreteSportsMan.class), 3);
         //Then
         assertEquals(trainingDays, trainings.size());
     }

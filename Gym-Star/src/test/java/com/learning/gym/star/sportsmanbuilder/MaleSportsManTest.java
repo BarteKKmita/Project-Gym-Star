@@ -19,7 +19,7 @@ class MaleSportsManTest {
     private ConcreteSportsMan sportsMan;
 
     @Test
-    void shouldReturnChosenTrainer () {
+    void shouldReturnChosenTrainer(){
         //Given
         sportsMan = new ConcreteSportsMan("Name", "Surname", GenderChoose.M, mock(Trainer.class), mock(LinkedList.class), "data\\Test", mock(TrainingStatistics.class));
         String expectedName = "Mariusz";
@@ -34,11 +34,11 @@ class MaleSportsManTest {
     }
 
     @Test
-    void shouldReturnTrainingPlan () {
+    void shouldReturnTrainingPlan(){
         //Given
         //Zostawienie mock trainer.class daje null point exception
         sportsMan = new ConcreteSportsMan("Name", "Surname", GenderChoose.M, spy(Trainer.class), mock(LinkedList.class), "data\\Test", mock(TrainingStatistics.class));
-        int trainingDays= 3;
+        int trainingDays = 3;
         int expectedListSize = 3;
         MaleSportsMan maleSportsMan = new MaleSportsMan(sportsMan);
         //When
