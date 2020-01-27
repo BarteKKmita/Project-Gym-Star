@@ -5,10 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.NoSuchElementException;
+
 @RestController
 @RequestMapping("/api/statistics")
 public class StatisticsController {
-
     private StatisticsService service;
 
     public StatisticsController(StatisticsService service){
@@ -26,7 +27,12 @@ public class StatisticsController {
     }
 
     @PostMapping("/create")
-    int createNewStatistics(){
-        return service.createNewStatistics();
+    public ResponseEntity createNewStatistics(){
+        return new ResponseEntity<>(service.createNewStatistics(), HttpStatus.CREATED);
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity handleNoSuchRecordInDatabase(){
+        return new ResponseEntity<>("There is no such statistics in database.", HttpStatus.NOT_FOUND);
     }
 }
