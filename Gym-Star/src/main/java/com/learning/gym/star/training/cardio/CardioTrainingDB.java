@@ -1,13 +1,13 @@
 package com.learning.gym.star.training.cardio;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
-@ToString
 @Getter
 @Entity
 @Table(name = "cardiotraining")
