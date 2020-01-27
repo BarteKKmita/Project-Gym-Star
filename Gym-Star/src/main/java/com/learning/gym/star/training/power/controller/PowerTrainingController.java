@@ -36,7 +36,7 @@ public class PowerTrainingController {
 
     @PostMapping("/create")
     public ResponseEntity createNewStatistics(){
-        return new ResponseEntity<>(service.createNewPowerStatistics(), HttpStatus.CREATED);
+        return new ResponseEntity<>("Your gym id nr : " + service.createNewPowerStatistics(), HttpStatus.CREATED);
     }
 
     @ExceptionHandler(NoSuchElementException.class)

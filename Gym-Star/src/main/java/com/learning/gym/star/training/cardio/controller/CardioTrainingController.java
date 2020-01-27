@@ -35,7 +35,7 @@ public class CardioTrainingController {
 
     @PostMapping("/create")
     public ResponseEntity createNewCardioStatistics(){
-        return new ResponseEntity<>(service.createNewCardioStatistics(), HttpStatus.CREATED);
+        return new ResponseEntity<>("Your gym id nr : " + service.createNewCardioStatistics(), HttpStatus.CREATED);
     }
 
     @ExceptionHandler(NoSuchElementException.class)
