@@ -1,9 +1,13 @@
 package com.learning.gym.star.training.power;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@Builder
+@NoArgsConstructor
 @Getter
 @Entity
 @Table(name = "powertraining")
