@@ -7,6 +7,10 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
+/*
+Validation will be added in the future.
+ */
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,5 +29,4 @@ public class TrainerDTO implements Serializable {
 
     @NotNull
     private Integer cost;
-
 }
