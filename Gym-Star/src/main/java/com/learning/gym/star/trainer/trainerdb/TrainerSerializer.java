@@ -2,29 +2,30 @@ package com.learning.gym.star.trainer.trainerdb;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 
-/*
-This class will use Gson as soon as I will handle with dependency conflict.
-Logger will be added after pull request.
- */
 @Configuration
-public class GsonTrainerSerializer {
+public class TrainerSerializer {
     private static ObjectMapper objectMapper = new ObjectMapper();
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public TrainerDTO getTrainerDTOFromTrainer(TrainerDB trainer){
         String trainerJson = "";
         try {
             trainerJson = objectMapper.writeValueAsString(trainer);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error("Serialization of Trainer failure.", e);
+            logger.debug("Trainer data. {}", trainer);
         }
 
         TrainerDTO trainerDTO = null;
         try {
             trainerDTO = objectMapper.readValue(trainerJson, TrainerDTO.class);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error("Deserialization of Trainer failure.", e);
+            logger.debug("Trainer data. {}", trainer);
         }
         return trainerDTO;
     }
@@ -34,14 +35,16 @@ public class GsonTrainerSerializer {
         try {
             trainerJson = objectMapper.writeValueAsString(trainer);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error("Serialization of TrainerDTO failure.", e);
+            logger.debug("TrainerDTO data. {}", trainer);
         }
 
         TrainerDB trainerDB = null;
         try {
             trainerDB = objectMapper.readValue(trainerJson, TrainerDB.class);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error("Deserialization of TrainerDTO failure.", e);
+            logger.debug("TrainerDTO data. {}", trainer);
         }
         return trainerDB;
     }

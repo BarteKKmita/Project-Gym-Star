@@ -1,7 +1,7 @@
 package com.learning.gym.star.trainer.trainerdb.service;
 
-import com.learning.gym.star.trainer.trainerdb.GsonTrainerSerializer;
 import com.learning.gym.star.trainer.trainerdb.TrainerDTO;
+import com.learning.gym.star.trainer.trainerdb.TrainerSerializer;
 import com.learning.gym.star.trainer.trainerdb.database.TrainerRepository;
 import org.springframework.stereotype.Service;
 
@@ -10,12 +10,10 @@ import java.util.List;
 
 @Service("trainer service")
 public class TrainerService {
-
     private TrainerRepository repository;
+    private TrainerSerializer serializer;
 
-    private GsonTrainerSerializer serializer;
-
-    public TrainerService(TrainerRepository repository, GsonTrainerSerializer serializer){
+    public TrainerService(TrainerRepository repository, TrainerSerializer serializer){
         this.repository = repository;
         this.serializer = serializer;
     }
