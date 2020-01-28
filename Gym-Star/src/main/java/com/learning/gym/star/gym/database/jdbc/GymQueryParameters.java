@@ -10,21 +10,20 @@ import java.util.List;
 @Configuration
 public class GymQueryParameters {
 
-    List <String> getQueryParameters(int gymId){
-        List <String> queryParameters = new ArrayList <>();
+    List<String> getGymIdAsList(int gymId){
+        List<String> queryParameters = new ArrayList<>();
         queryParameters.add(Integer.toString(gymId));
         return queryParameters;
     }
 
-    List <String> getQueryParameters(Gym gym){
-        String[] gymDataArray = {gym.getGymId(), gym.getGymName(), gym.getStreet(), gym.getCity(), gym.getBuildingNumber()};
-        List <String> gymData = new ArrayList <>();
-        Collections.addAll(gymData, gymDataArray);
+    List<String> getGymAsList(Gym gym){
+        List<String> gymData = new ArrayList<>();
+        Collections.addAll(gymData, gym.toStringArray());
         return gymData;
     }
 
-    List <String> getQueryParameters(Gym gym, int gymId){
-        List <String> gymData = getQueryParameters(gym);
+    List<String> getGymAsList(Gym gym, int gymId){
+        List<String> gymData = getGymAsList(gym);
         String gymIdAsString = Integer.toString(gymId);
         gymData.add(gymIdAsString);
         return gymData;

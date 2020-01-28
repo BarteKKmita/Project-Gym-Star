@@ -51,6 +51,6 @@ public class Gym {
     private String auxiliary;
 
     public String[] toStringArray(){
-        return new String[] {gymId, gymName, street, city, buildingNumber};
+        return new String[]{gymId, gymName, street, city, buildingNumber};
     }
 }

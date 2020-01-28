@@ -22,9 +22,9 @@ public class JdbcConnector {
         this(new JdbcPropertiesReader());
     }
 
-    PreparedStatement prepareStatement(String sqlQuery, List <String> queryParameters) throws SQLException{
+    PreparedStatement prepareStatement(String sqlQuery, List<String> queryParameters) throws SQLException{
         PreparedStatement statement = prepareQuery(sqlQuery);
-        for (int i = 0; i < queryParameters.size(); i++) {
+        for(int i = 0; i < queryParameters.size(); i++) {
             statement.setString(i + 1, queryParameters.get(i));
         }
         return statement;
