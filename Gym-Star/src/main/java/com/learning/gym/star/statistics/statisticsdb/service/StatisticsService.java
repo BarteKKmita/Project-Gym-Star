@@ -10,7 +10,6 @@ import java.util.List;
 
 @Service("statistics service")
 public class StatisticsService {
-
     private StatisticsRepository repository;
 
     public StatisticsService(StatisticsRepository repository){

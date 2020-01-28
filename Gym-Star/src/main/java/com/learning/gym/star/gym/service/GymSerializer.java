@@ -3,7 +3,9 @@ package com.learning.gym.star.gym.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.learning.gym.star.gym.Gym;
-import com.learning.gym.star.gym.controller.GymFrame;
+import com.learning.gym.star.gym.controller.GymDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
@@ -12,61 +14,65 @@ import java.util.List;
 @Configuration
 public class GymSerializer {
     private static ObjectMapper objectMapper = new ObjectMapper();
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public Gym getGymFromGymFrame(GymFrame gymFrame){
+    public Gym getGymFromGymGTO(GymDTO gymDTO){
         String gymAsJson = "";
         try {
-            gymAsJson = objectMapper.writeValueAsString(gymFrame);
+            gymAsJson = objectMapper.writeValueAsString(gymDTO);
         } catch (JsonProcessingException e) {
-            System.out.println("Serialization of gym failure.");
-            e.printStackTrace();
+            logger.error("Serialization of gym failure.", e);
         }
         Gym databaseGym = null;
         try {
             databaseGym = objectMapper.readValue(gymAsJson, Gym.class);
         } catch (JsonProcessingException e) {
-            System.out.println("Deserialization of gym failure.");
-            e.printStackTrace();
+            logger.error("Deserialization of gym failure.", e);
         }
         return databaseGym;
     }
 
-    public GymFrame getGymFrameFromGym(Gym databaseGym){
+    public GymDTO getGymDTOFromGym(Gym databaseGym){
         String gymAsJson = "";
         try {
             gymAsJson = objectMapper.writeValueAsString(databaseGym);
 
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error("Serialization of gym failure.", e);
         }
-        GymFrame gymFrame = null;
+        GymDTO gymDTO = null;
         try {
-            gymFrame = objectMapper.readValue(gymAsJson, GymFrame.class);
+            gymDTO = objectMapper.readValue(gymAsJson, GymDTO.class);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error("Deserialization of gym failure.", e);
         }
-        return gymFrame;
+        return gymDTO;
     }
 
-    public GymFrame buildGymFrameForController(String[] gymAsStringArray){
-        return GymFrame.builder()
-                .gymId(gymAsStringArray[0])
-                .gymName(gymAsStringArray[1])
-                .street(gymAsStringArray[2])
-                .city(gymAsStringArray[3])
-                .buildingNumber(gymAsStringArray[4])
+    public GymDTO buildGymDTO(String[] gymAsStringArray){
+        int gymIdIndex = 0;
+        int gymNameIndex = 1;
+        int gymStreetIndex = 2;
+        int gymCityIndex = 3;
+        int gymBuildingNumberIndex = 4;
+        return GymDTO.builder()
+                .gymId(gymAsStringArray[gymIdIndex])
+                .gymName(gymAsStringArray[gymNameIndex])
+                .street(gymAsStringArray[gymStreetIndex])
+                .city(gymAsStringArray[gymCityIndex])
+                .buildingNumber(gymAsStringArray[gymBuildingNumberIndex])
                 .build();
     }
 
-    public List <GymFrame> buildGymListForController(List <Gym> gymsFromDatabase){
-        List <GymFrame> gymListForController = new ArrayList <>();
-        gymsFromDatabase.forEach(gym -> gymListForController.add(buildGymFrameForController(gym.toStringArray())));
+    public List<GymDTO> buildGymDTOListFromGymList(List<Gym> gymsFromDatabase){
+        List<GymDTO> gymListForController = new ArrayList<>();
+        gymsFromDatabase.forEach(gym -> gymListForController.add(buildGymDTO(gym.toStringArray())));
         return gymListForController;
     }
 
-    public List <GymFrame> buildGymForControllerFromStringList(List <String> gymsFromDatabase){
-        List <GymFrame> gymListForController = new ArrayList <>();
-        gymsFromDatabase.forEach(gym -> gymListForController.add(buildGymFrameForController(gym.split(" "))));
+    public List<GymDTO> buildGymDTOFromGymAsStringList(List<String> gymsFromDatabase){
+        List<GymDTO> gymListForController = new ArrayList<>();
+        gymsFromDatabase.forEach(gym -> gymListForController.add(buildGymDTO(gym.split(" "))));
         return gymListForController;
     }
 }

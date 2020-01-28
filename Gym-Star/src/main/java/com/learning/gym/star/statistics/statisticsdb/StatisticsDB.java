@@ -3,14 +3,16 @@ package com.learning.gym.star.statistics.statisticsdb;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.learning.gym.star.training.cardio.CardioTrainingDB;
 import com.learning.gym.star.training.power.PowerTrainingDB;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Getter
 @Entity
 @Table(name = "statistics")
@@ -28,6 +30,5 @@ public class StatisticsDB {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "power_id")
-    @JsonManagedReference
     private PowerTrainingDB powerTrainingDB;
 }

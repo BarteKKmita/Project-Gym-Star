@@ -164,7 +164,7 @@ class GymFromDataBaseJDBCTest {
         int expectedDataLength = 2;
         //When
         gymFromDataBaseJDBC.delete(gymIdToDelete);
-        List <String> gymData = gymFromDataBaseJDBC.getGymData();
+        List<String> gymData = gymFromDataBaseJDBC.getGymData();
         //Then
         assertEquals(expectedDataLength, gymData.size());
     }
@@ -176,7 +176,7 @@ class GymFromDataBaseJDBCTest {
         int expectedDataLength = 2;
         //When
         gymFromDataBaseJDBC.delete(gymIdToDelete);
-        List <String> gymData = gymFromDataBaseJDBC.getGymData();
+        List<String> gymData = gymFromDataBaseJDBC.getGymData();
         //Then
         assertEquals(expectedDataLength, gymData.size());
     }

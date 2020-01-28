@@ -2,22 +2,20 @@ package com.learning.gym.star.training.power.service;
 
 import com.learning.gym.star.training.power.PowerTrainingDB;
 import com.learning.gym.star.training.power.database.PowerTrainingRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
 
 @Service("power training service")
 public class PowerTrainingService {
-    @Autowired
     private PowerTrainingRepository repository;
 
     public PowerTrainingService(PowerTrainingRepository repository){
         this.repository = repository;
     }
 
-    public int getPowerTrainingCount(int powerId){
-        PowerTrainingDB powerTrainingDB = repository.findById(String.valueOf(powerId)).orElseThrow();
+    public int getPowerTrainingCount(int powerTrainingId){
+        PowerTrainingDB powerTrainingDB = repository.findById(String.valueOf(powerTrainingId)).orElseThrow();
         return powerTrainingDB.getTrainingCount();
     }
 
