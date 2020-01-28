@@ -3,6 +3,8 @@ package com.learning.gym.star.trainer.trainerdb.service;
 import com.learning.gym.star.trainer.trainerdb.TrainerDTO;
 import com.learning.gym.star.trainer.trainerdb.TrainerSerializer;
 import com.learning.gym.star.trainer.trainerdb.database.TrainerRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import java.util.List;
 
 @Service("trainer service")
 public class TrainerService {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     private TrainerRepository repository;
     private TrainerSerializer serializer;
 
@@ -19,6 +22,7 @@ public class TrainerService {
     }
 
     public void addTrainer(TrainerDTO trainer){
+        logger.debug("Adding trainer to database. {}", trainer);
         repository.saveAndFlush(serializer.getTrainerDBFromTrainerDTO(trainer));
     }
 
