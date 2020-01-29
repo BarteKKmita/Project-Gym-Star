@@ -22,7 +22,7 @@ public class SportsmanService {
         if (repository.findById(sportsman.getSportsmanPesel()).isPresent()) {
             throw new EntityExistsException();
         } else {
-            repository.saveAndFlush(serializer.getSportsmanDBFromSportsmanDTO(sportsman));
+            repository.saveAndFlush(serializer.buildSportsmanFromSportsmanDTO(sportsman));
         }
     }
 }

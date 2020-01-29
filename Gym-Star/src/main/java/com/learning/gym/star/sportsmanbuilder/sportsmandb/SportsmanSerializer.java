@@ -2,6 +2,9 @@ package com.learning.gym.star.sportsmanbuilder.sportsmandb;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.learning.gym.star.statistics.statisticsdb.StatisticsDB;
+import com.learning.gym.star.training.cardio.CardioTrainingDB;
+import com.learning.gym.star.training.power.PowerTrainingDB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
@@ -29,21 +32,13 @@ public class SportsmanSerializer {
         return sportsmanDTO;
     }
 
-    public SportsmanDB getSportsmanDBFromSportsmanDTO(SportsmanDTO sportsman){
-        String sportsmanDTOJson = "";
-        try {
-            sportsmanDTOJson = objectMapper.writeValueAsString(sportsman);
-        } catch (JsonProcessingException e) {
-            logger.error("Serialization of SportsmanDTO failure.", e);
-            logger.debug("SportsmanDTO data. {}", sportsman);
-        }
-        SportsmanDB sportsmanDB = null;
-        try {
-            sportsmanDB = objectMapper.readValue(sportsmanDTOJson, SportsmanDB.class);
-        } catch (JsonProcessingException e) {
-            logger.error("Deserialization of SportsmanDTO failure.", e);
-            logger.debug("SportsmanDTO data. {}", sportsman);
-        }
-        return sportsmanDB;
+    public SportsmanDB buildSportsmanFromSportsmanDTO(SportsmanDTO sportsman){
+        return SportsmanDB.builder()
+                .sportsmanPesel(sportsman.getSportsmanPesel())
+                .name(sportsman.getName())
+                .surname(sportsman.getSurname())
+                .gender(sportsman.getGender())
+                .statistics(new StatisticsDB(null, new CardioTrainingDB(), new PowerTrainingDB()))
+                .build();
     }
 }
