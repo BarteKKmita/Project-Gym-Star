@@ -3,6 +3,7 @@ package com.learning.gym.star.sportsmanbuilder.sportsmandb;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.learning.gym.star.gym.Gym;
 import com.learning.gym.star.sportsmanbuilder.gender.GenderChoose;
 import com.learning.gym.star.statistics.statisticsdb.StatisticsDB;
 import com.learning.gym.star.trainer.trainerdb.TrainerDB;
@@ -20,7 +21,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "sportsmen")
 public class SportsmanDB {
-
     @Id
     @Column(name = "sportsman_pesel")
     private Long sportsmanPesel;
@@ -49,4 +49,9 @@ public class SportsmanDB {
     @JoinColumn(
             name = "statistics_id", referencedColumnName = "statistics_id")
     private StatisticsDB statistics;
+
+    @JsonIgnore
+    @OneToOne()
+    @JoinColumn(name = "gym_id")
+    private Gym gym;
 }
