@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Builder
 @NoArgsConstructor
@@ -23,11 +24,13 @@ public class StatisticsDB {
     @Column(name = "statistics_id")
     private String statisticsId;
 
+    @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cardio_id")
     @JsonManagedReference
     private CardioTrainingDB cardioTrainingDB;
 
+    @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "power_id")
     private PowerTrainingDB powerTrainingDB;

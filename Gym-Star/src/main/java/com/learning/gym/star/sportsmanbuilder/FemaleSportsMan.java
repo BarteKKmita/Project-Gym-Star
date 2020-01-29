@@ -13,7 +13,7 @@ public class FemaleSportsMan extends SportsMan implements SportsManBuilder {
 
     public FemaleSportsMan ( String name, String surname ) {
         sportsMan = new ConcreteSportsMan(name, surname);
-        sportsMan = sportsMan.withGender(GenderChoose.W);
+        sportsMan = sportsMan.withGender(GenderChoose.F);
     }
 
     @Override
