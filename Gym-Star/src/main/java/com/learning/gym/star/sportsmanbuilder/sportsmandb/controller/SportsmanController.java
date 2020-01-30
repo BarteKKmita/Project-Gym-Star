@@ -23,6 +23,11 @@ public class SportsmanController {
         service.addSportsman(sportsman);
     }
 
+    @GetMapping("/dateandtime")
+    public ResponseEntity getSportsmanDateAndTimeStats(Long sportsmanPesel){
+        return new ResponseEntity<>(service.getSportsmanStatistics(sportsmanPesel), HttpStatus.OK);
+    }
+
     @ExceptionHandler(EntityExistsException.class)
     public ResponseEntity handleNoSuchRecordInDatabase(){
         return new ResponseEntity<>("Sportsman with given pesel number already exists.", HttpStatus.CONFLICT);
