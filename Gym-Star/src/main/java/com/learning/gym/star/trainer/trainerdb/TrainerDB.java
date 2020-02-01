@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Entity
-@Table(name = "trainers")
+@Table(name = "trainer")
 public class TrainerDB implements Serializable {
 
     @Id
