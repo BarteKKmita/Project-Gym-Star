@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class SportsmanSerializer {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+public final class SportsmanSerializer {
+    private static final Logger logger = LoggerFactory.getLogger(SportsmanSerializer.class);
     private static ObjectMapper objectMapper = new ObjectMapper();
 
     public SportsmanDTO getSportsmanDTOFromSportsman(SportsmanDB sportsman){
