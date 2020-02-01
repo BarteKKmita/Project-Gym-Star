@@ -43,19 +43,8 @@ public class SportsmanService {
     }
 
     @Transactional
-    public List getSportsmanStatistics(Long sportsmanPesel){
+    public List<TrainingDateStatisticsDB> getSportsmanStatistics(Long sportsmanPesel){
         SportsmanDB sportsman = repository.findById(sportsmanPesel).orElseThrow();
-        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("getsportsmanstats")
-                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
-                .setParameter(1, Integer.valueOf(sportsman.getStatistics().getStatisticsId()));
-        storedProcedureQuery.execute();
-        return storedProcedureQuery.getResultList();
-    }
-
-    @Transactional
-    public List<TrainingDateStatisticsDB> getSportsmanStatistics2(Long sportsmanPesel){
-        SportsmanDB sportsman = repository.findById(sportsmanPesel).orElseThrow();
-        logger.warn("Jestem Jestem");
         StoredProcedureQuery getsportsmanstats1 = entityManager.createNamedStoredProcedureQuery("sportsmanStats")
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                 .setParameter(1, 7);
