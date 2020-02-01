@@ -24,8 +24,26 @@ public class SportsmanController {
     }
 
     @GetMapping("/dateandtime")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity getSportsmanDateAndTimeStats(Long sportsmanPesel){
         return new ResponseEntity<>(service.getSportsmanStatistics(sportsmanPesel), HttpStatus.OK);
+    }
+
+    @GetMapping("/dateandtime2")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity getSportsmanDateAndTimeStats2(Long sportsmanPesel){
+        return new ResponseEntity<>(service.getSportsmanStatistics(sportsmanPesel), HttpStatus.OK);
+    }
+
+    @PutMapping("/gettrainer")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void chooseTrainer(Long sportsmanPesel, Long trainerPesel){
+        service.chooseTrainer(sportsmanPesel, trainerPesel);
+    }
+
+    @GetMapping("/mytrainer")
+    public ResponseEntity getMyTrainer(Long sportsmanPesel){
+        return new ResponseEntity<>(service.getMyTrainerData(sportsmanPesel), HttpStatus.OK);
     }
 
     @ExceptionHandler(EntityExistsException.class)

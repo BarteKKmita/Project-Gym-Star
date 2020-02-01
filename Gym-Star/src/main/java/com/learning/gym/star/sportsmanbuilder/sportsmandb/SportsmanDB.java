@@ -17,6 +17,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@With
 @Getter
 @Entity
 @Table(name = "sportsmen")
