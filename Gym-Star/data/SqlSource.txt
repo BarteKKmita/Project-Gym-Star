@@ -78,3 +78,19 @@ ALTER TABLE sportsmen MODFIY sportsman_pesel BIGINT;
 
 ALTER TABLE Trainer
 ADD FOREIGN KEY (sportsman) REFERENCES SportsMen(sportsman_pesel);
+
+DELIMITER //
+CREATE PROCEDURE getsportsmanstats (sportsmanStatsId INT)
+BEGIN
+SELECT statistics_id, date, time FROM SportsMenTrainingTimeStatistics
+WHERE sportsmanstats_id=sportsmanStatsId;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE trainCardio (statsId INT, cardiosportsmanID INT)
+BEGIN
+UPDATE cardioTraining SET training_count=training_count+1 WHERE cardio_id = cardiosportsmanID;
+INSERT INTO SportsMenTrainingTimeStatistics VALUES(NULL,curdate(),curtime(), statsId);
+END //
+DELIMITER ;
