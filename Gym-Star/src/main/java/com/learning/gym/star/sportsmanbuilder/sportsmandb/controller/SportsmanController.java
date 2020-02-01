@@ -46,6 +46,11 @@ public class SportsmanController {
         return new ResponseEntity<>(service.getMyTrainerData(sportsmanPesel), HttpStatus.OK);
     }
 
+    @PutMapping("/trainCardio")
+    public boolean trainCardio(Long sportsmanPesel){
+        return service.trainCardio(sportsmanPesel);
+    }
+
     @ExceptionHandler(EntityExistsException.class)
     public ResponseEntity handleNoSuchRecordInDatabase(){
         return new ResponseEntity<>("Sportsman with given pesel number already exists.", HttpStatus.CONFLICT);

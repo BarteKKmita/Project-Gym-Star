@@ -4,6 +4,7 @@ import com.learning.gym.star.sportsmanbuilder.sportsmandb.SportsmanDB;
 import com.learning.gym.star.sportsmanbuilder.sportsmandb.SportsmanDTO;
 import com.learning.gym.star.sportsmanbuilder.sportsmandb.SportsmanSerializer;
 import com.learning.gym.star.sportsmanbuilder.sportsmandb.database.SportsmanRepository;
+import com.learning.gym.star.statistics.statisticsdb.StatisticsDB;
 import com.learning.gym.star.statistics.timedb.TrainingDateStatisticsDB;
 import com.learning.gym.star.trainer.trainerdb.TrainerDB;
 import com.learning.gym.star.trainer.trainerdb.TrainerDTO;
@@ -67,5 +68,19 @@ public class SportsmanService {
         SportsmanDB sportsmanDB = repository.findById(sportsmanPesel).orElseThrow();
         TrainerSerializer serializer = new TrainerSerializer();
         return serializer.getTrainerDTOFromTrainer(sportsmanDB.getTrainer());
+    }
+
+    @Transactional
+    public boolean trainCardio(Long sportsmanPesel){
+        SportsmanDB sportsmanDB = repository.findById(sportsmanPesel).orElseThrow();
+        StatisticsDB statistics = sportsmanDB.getStatistics();
+        Integer statsId = Integer.valueOf(statistics.getStatisticsId());
+        Integer cardioId = Integer.valueOf(statistics.getCardioTrainingDB().getCardioId());
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("trainCardio")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN)
+                .setParameter(1, statsId)
+                .setParameter(2, cardioId);
+        return storedProcedureQuery.execute();
     }
 }
