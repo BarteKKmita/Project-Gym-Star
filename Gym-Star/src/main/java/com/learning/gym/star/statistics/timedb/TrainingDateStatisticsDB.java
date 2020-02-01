@@ -18,9 +18,9 @@ import java.time.LocalTime;
 @Entity
 @Table(name = "sportsmentrainingtimestatistics")
 @NamedStoredProcedureQuery(
-        name = "getsportsmanstats",
-        procedureName = "CALL getsportsmanstats()",
-        resultClasses = TrainingDateStatisticsDB.class)
+        name = "sportsmanStats",
+        procedureName = "getsportsmanstats",
+        resultClasses = {TrainingDateStatisticsDB.class})
 
 public class TrainingDateStatisticsDB {
 

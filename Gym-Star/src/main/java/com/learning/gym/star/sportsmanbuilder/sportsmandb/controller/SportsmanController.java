@@ -32,7 +32,7 @@ public class SportsmanController {
     @GetMapping("/dateandtime2")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity getSportsmanDateAndTimeStats2(Long sportsmanPesel){
-        return new ResponseEntity<>(service.getSportsmanStatistics(sportsmanPesel), HttpStatus.OK);
+        return new ResponseEntity<>(service.getSportsmanStatistics2(sportsmanPesel), HttpStatus.OK);
     }
 
     @PutMapping("/gettrainer")

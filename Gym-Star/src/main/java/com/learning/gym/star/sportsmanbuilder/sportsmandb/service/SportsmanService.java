@@ -9,6 +9,8 @@ import com.learning.gym.star.statistics.timedb.TrainingDateStatisticsDB;
 import com.learning.gym.star.trainer.trainerdb.TrainerDB;
 import com.learning.gym.star.trainer.trainerdb.TrainerDTO;
 import com.learning.gym.star.trainer.trainerdb.TrainerSerializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +23,7 @@ import java.util.List;
 
 @Service("sportsman service rest template")
 public class SportsmanService {
-    private static final String dateTimeStatsQuery = "SELECT * FROM SportsMenTrainingTimeStatistics WHERE sportsmanstats_id=";
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     private EntityManager entityManager;
     private SportsmanRepository repository;
     private SportsmanSerializer serializer;
@@ -46,13 +48,18 @@ public class SportsmanService {
         StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("getsportsmanstats")
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                 .setParameter(1, Integer.valueOf(sportsman.getStatistics().getStatisticsId()));
+        storedProcedureQuery.execute();
         return storedProcedureQuery.getResultList();
     }
 
     @Transactional
     public List<TrainingDateStatisticsDB> getSportsmanStatistics2(Long sportsmanPesel){
         SportsmanDB sportsman = repository.findById(sportsmanPesel).orElseThrow();
-        StoredProcedureQuery getsportsmanstats1 = entityManager.createNamedStoredProcedureQuery("getsportsmanstats");
+        logger.warn("Jestem Jestem");
+        StoredProcedureQuery getsportsmanstats1 = entityManager.createNamedStoredProcedureQuery("sportsmanStats")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .setParameter(1, 7);
+        getsportsmanstats1.execute();
         List<TrainingDateStatisticsDB> getsportsmanstats = getsportsmanstats1.getResultList();
         return getsportsmanstats;
     }
