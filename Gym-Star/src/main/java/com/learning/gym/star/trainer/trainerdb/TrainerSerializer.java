@@ -4,12 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
-@Configuration
-public class TrainerSerializer {
+@Component
+public final class TrainerSerializer {
     private static ObjectMapper objectMapper = new ObjectMapper();
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final Logger logger = LoggerFactory.getLogger(TrainerSerializer.class);
 
     public TrainerDTO getTrainerDTOFromTrainer(TrainerDB trainer){
         String trainerJson = "";
