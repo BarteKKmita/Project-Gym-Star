@@ -19,7 +19,6 @@ public class TrainerSerializer {
             logger.error("Serialization of Trainer failure.", e);
             logger.debug("Trainer data. {}", trainer);
         }
-
         TrainerDTO trainerDTO = null;
         try {
             trainerDTO = objectMapper.readValue(trainerJson, TrainerDTO.class);
@@ -38,7 +37,6 @@ public class TrainerSerializer {
             logger.error("Serialization of TrainerDTO failure.", e);
             logger.debug("TrainerDTO data. {}", trainer);
         }
-
         TrainerDB trainerDB = null;
         try {
             trainerDB = objectMapper.readValue(trainerJson, TrainerDB.class);

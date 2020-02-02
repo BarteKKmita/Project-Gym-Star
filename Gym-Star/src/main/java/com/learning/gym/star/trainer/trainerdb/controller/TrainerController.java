@@ -30,4 +30,10 @@ public class TrainerController {
         logger.info("Attempting to get all trainers to database. {}", this.getClass().getName());
         return new ResponseEntity<>(service.getAllTrainers(), HttpStatus.OK);
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity handleEmptyResult(){
+        return new ResponseEntity<>("Entered not suitable trainer data", HttpStatus.BAD_REQUEST);
+    }
+
 }
