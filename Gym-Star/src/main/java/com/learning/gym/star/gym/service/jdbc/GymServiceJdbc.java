@@ -1,5 +1,6 @@
 package com.learning.gym.star.gym.service.jdbc;
 
+import com.learning.gym.star.gym.Gym;
 import com.learning.gym.star.gym.controller.GymDTO;
 import com.learning.gym.star.gym.database.jdbc.GymRepository;
 import com.learning.gym.star.gym.service.GymSerializer;
@@ -30,12 +31,22 @@ public class GymServiceJdbc {
 
     public String addGym(GymDTO gym){
         logger.debug("Adding gym: {}. {}", gym, this.getClass());
-        return gymRepository.add(gymSerializer.getGymFromGymGTO(gym));
+        Gym gymDB = gymSerializer.getGymFromGymGTO(gym);
+        if (gymDB == null) {
+            throw new IllegalArgumentException();
+        } else {
+            return gymRepository.add(gymDB);
+        }
     }
 
     public void updateGym(GymDTO gym, int gymId){
         logger.debug("Updating gym: {} with id: {}. {}", gym, gymId, this.getClass());
-        gymRepository.update(gymSerializer.getGymFromGymGTO(gym), gymId);
+        Gym gymDB = gymSerializer.getGymFromGymGTO(gym);
+        if (gymDB == null) {
+            throw new IllegalArgumentException();
+        } else {
+            gymRepository.update(gymDB, gymId);
+        }
     }
 
     public GymDTO getGymById(int gymId){

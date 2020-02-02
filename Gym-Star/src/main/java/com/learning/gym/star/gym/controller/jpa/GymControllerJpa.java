@@ -77,6 +77,11 @@ public class GymControllerJpa {
         gymService.deleteGymById(gymId);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity handleWrongGymDTO(){
+        return new ResponseEntity<>("Entered wrong gym data", HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(EmptyResultDataAccessException.class)
     public ResponseEntity handleEmptyResult(){
         return new ResponseEntity<>("Record not found", HttpStatus.NOT_FOUND);

@@ -35,12 +35,17 @@ public class GymServiceJpa {
         return gymSerializer.getGymDTOFromGym(databaseGym);
     }
 
-    public String addGym(GymDTO gym){
-        logger.debug("Adding gym: {}. {}", gym, this.getClass());
-        if (gym.getGymId() != null) {
+    public String addGym(GymDTO gymDTO){
+        logger.debug("Adding gym: {}. {}", gymDTO, this.getClass());
+        if (gymDTO.getGymId() != null) {
             return "";
         }
-        return gymRepository.saveAndFlush(gymSerializer.getGymFromGymGTO(gym)).getGymId();
+        Gym gymDB = gymSerializer.getGymFromGymGTO(gymDTO);
+        if (gymDB == null) {
+            logger.error("Entered wrong gym data: {}", gymDTO);
+            throw new IllegalArgumentException();
+        }
+        return gymRepository.saveAndFlush(gymDB).getGymId();
     }
 
     public void updateGym(GymDTO gymDTO){
@@ -49,7 +54,13 @@ public class GymServiceJpa {
             logger.error("Updating gym requires specifying id. {}", this.getClass());
             throw new org.springframework.dao.IncorrectUpdateSemanticsDataAccessException("Gym id cannot be null");
         }
-        gymRepository.saveAndFlush(gymSerializer.getGymFromGymGTO(gymDTO));
+        Gym gymDB = gymSerializer.getGymFromGymGTO(gymDTO);
+        if (gymDB == null) {
+            logger.error("Entered wrong gym data: {}", gymDTO);
+            throw new IllegalArgumentException();
+        } else {
+            gymRepository.saveAndFlush(gymDB);
+        }
     }
 
     public void deleteGymById(String gymId){

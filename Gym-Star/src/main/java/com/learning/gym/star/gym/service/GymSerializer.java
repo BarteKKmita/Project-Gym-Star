@@ -6,15 +6,15 @@ import com.learning.gym.star.gym.Gym;
 import com.learning.gym.star.gym.controller.GymDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Configuration
-public class GymSerializer {
+@Component
+public final class GymSerializer {
     private static ObjectMapper objectMapper = new ObjectMapper();
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final Logger logger = LoggerFactory.getLogger(GymSerializer.class);
 
     public Gym getGymFromGymGTO(GymDTO gymDTO){
         String gymAsJson = "";
