@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityExistsException;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/sportsman")
@@ -53,8 +54,19 @@ public class SportsmanController {
         return service.trainCardio(sportsmanPesel);
     }
 
+    @PutMapping("/trainPower")
+    public boolean trainPower(Long sportsmanPesel){
+        logger.info("Attempting to do power training.");
+        return service.trainCardio(sportsmanPesel);
+    }
+
     @ExceptionHandler(EntityExistsException.class)
-    public ResponseEntity handleNoSuchRecordInDatabase(){
+    public ResponseEntity handleExistingRecordInDatabase(){
         return new ResponseEntity<>("Sportsman with given pesel number already exists.", HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity handleNoSuchRecordInDatabase(){
+        return new ResponseEntity<>("Sportsman with given pesel does not exists.", HttpStatus.NOT_FOUND);
     }
 }
