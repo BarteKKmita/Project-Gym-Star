@@ -34,7 +34,7 @@ public final class SportsmanSerializer {
 
     public SportsmanDB buildSportsmanFromSportsmanDTO(SportsmanDTO sportsman){
         return SportsmanDB.builder()
-                .sportsmanPesel(sportsman.getSportsmanPesel())
+                .sportsmanPesel((Long.valueOf(sportsman.getSportsmanPesel().toString())))
                 .name(sportsman.getName())
                 .surname(sportsman.getSurname())
                 .gender(sportsman.getGender())

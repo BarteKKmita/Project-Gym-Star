@@ -33,36 +33,36 @@ public class SportsmanController {
         service.addSportsman(sportsman);
     }
 
-    @GetMapping("/dateandtime")
+    @GetMapping("/{pesel}/dateandtime")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity getSportsmanDateAndTimeStats2(Long sportsmanPesel){
+    public ResponseEntity getSportsmanDateAndTimeStats(@PathVariable("pesel") CharSequence sportsmanPesel){
         logger.info("Attempting to get sportsman date and time statistics.");
         return new ResponseEntity<>(service.getSportsmanStatistics(sportsmanPesel), HttpStatus.OK);
     }
 
-    @PutMapping("/gettrainer")
+    @PutMapping("/{pesel}/gettrainer")
     @ResponseStatus(HttpStatus.CREATED)
-    public void chooseTrainer(Long sportsmanPesel, Long trainerPesel){
+    public void chooseTrainer(@PathVariable("pesel") CharSequence sportsmanPesel, @RequestBody CharSequence trainerPesel){
         logger.info("Attempting to choose trainer.");
         service.chooseTrainer(sportsmanPesel, trainerPesel);
     }
 
     @GetMapping("/mytrainer")
-    public ResponseEntity getMyTrainer(Long sportsmanPesel){
+    public ResponseEntity getMyTrainer(@RequestBody CharSequence sportsmanPesel){
         logger.info("Attempting to display sportsman's.");
         return new ResponseEntity<>(service.getMyTrainerData(sportsmanPesel), HttpStatus.OK);
     }
 
     @PutMapping("/trainCardio")
     @ResponseStatus(HttpStatus.OK)
-    public void trainCardio(Long sportsmanPesel){
+    public void trainCardio(@RequestBody CharSequence sportsmanPesel){
         logger.info("Attempting to do cardio training.");
         service.trainCardio(sportsmanPesel);
     }
 
     @PutMapping("/trainPower")
     @ResponseStatus(HttpStatus.OK)
-    public void trainPower(Long sportsmanPesel){
+    public void trainPower(@RequestBody CharSequence sportsmanPesel){
         logger.info("Attempting to do power training.");
         service.trainPower(sportsmanPesel);
     }

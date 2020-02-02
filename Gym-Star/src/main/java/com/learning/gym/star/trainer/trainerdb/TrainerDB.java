@@ -3,7 +3,6 @@ package com.learning.gym.star.trainer.trainerdb;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.learning.gym.star.gym.Gym;
 import lombok.*;
-import org.hibernate.validator.constraints.pl.PESEL;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -21,9 +20,8 @@ import java.util.List;
 public class TrainerDB implements Serializable {
 
     @Id
-    @PESEL
     @Column(name = "trainer_pesel")
-    private CharSequence pesel;
+    private Long pesel;
 
     @NotEmpty
     @Column(name = "trainer_name")

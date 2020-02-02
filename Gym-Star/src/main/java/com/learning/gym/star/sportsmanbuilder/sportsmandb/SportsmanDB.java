@@ -8,7 +8,6 @@ import com.learning.gym.star.sportsmanbuilder.gender.GenderChoose;
 import com.learning.gym.star.statistics.statisticsdb.StatisticsDB;
 import com.learning.gym.star.trainer.trainerdb.TrainerDB;
 import lombok.*;
-import org.hibernate.validator.constraints.pl.PESEL;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -24,9 +23,8 @@ import javax.validation.constraints.NotNull;
 @Table(name = "sportsmen")
 public class SportsmanDB {
     @Id
-    @PESEL
     @Column(name = "sportsman_pesel")
-    private CharSequence sportsmanPesel;
+    private Long sportsmanPesel;
 
     @Column(name = "sportsman_name")
     @NotEmpty
