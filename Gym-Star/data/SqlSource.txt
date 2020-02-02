@@ -79,6 +79,13 @@ ALTER TABLE sportsmen MODFIY sportsman_pesel BIGINT;
 ALTER TABLE Trainer
 ADD FOREIGN KEY (sportsman) REFERENCES SportsMen(sportsman_pesel);
 
+CREATE TABLE trainersatgym (
+trainer_pesel BIGINT,
+gym_id INT,
+PRIMARY KEY(trainer_pesel, gym_id),
+FOREIGN KEY (trainer_pesel) REFERENCES trainer(trainer_pesel) ON DELETE CASCADE,
+FOREIGN KEY (gym_id) REFERENCES gym(gym_id) ON DELETE CASCADE);
+
 DELIMITER //
 CREATE PROCEDURE getsportsmanstats (sportsmanStatsId INT)
 BEGIN
