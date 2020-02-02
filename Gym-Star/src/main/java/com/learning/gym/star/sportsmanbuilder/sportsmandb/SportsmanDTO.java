@@ -12,15 +12,15 @@ import javax.validation.constraints.NotNull;
 @ToString
 @Getter
 public class SportsmanDTO {
-    @NotNull
+    @NotNull(message = "Please enter pesel number.")
     private Long sportsmanPesel;
 
-    @NotEmpty
+    @NotEmpty(message = "Sportsman has to have name")
     private String name;
 
-    @NotEmpty
+    @NotEmpty(message = "Sportsman has to have surname")
     private String surname;
 
-    @NotNull
+    @NotNull(message = "Please specify sportsman gender")
     private GenderChoose gender;
 }
