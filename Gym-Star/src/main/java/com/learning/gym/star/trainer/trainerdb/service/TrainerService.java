@@ -28,7 +28,12 @@ public class TrainerService {
 
     public List<TrainerDTO> getAllTrainers(){
         List<TrainerDTO> trainerList = new ArrayList<>();
-        repository.findAll().forEach(trainerDB -> trainerList.add(serializer.getTrainerDTOFromTrainer(trainerDB)));
+        repository.findAll().forEach(trainerDB -> {
+            TrainerDTO trainerDTO = serializer.getTrainerDTOFromTrainer(trainerDB);
+            if (trainerDTO != null) {
+                trainerList.add(trainerDTO);
+            }
+        });
         return trainerList;
     }
 }
