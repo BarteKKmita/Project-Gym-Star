@@ -21,12 +21,12 @@ public class TrainerDTO implements Serializable {
     @NotNull(message = "Please enter pesel number.")
     private Long pesel;
 
-    @NotEmpty
+    @NotEmpty(message = "Trainer has to have name")
     private String name;
 
-    @NotEmpty
+    @NotEmpty(message = "Trainer has to have surname")
     private String surname;
 
-    @NotNull
+    @NotNull(message = "Please specify cost per hour of training")
     private Integer cost;
 }
