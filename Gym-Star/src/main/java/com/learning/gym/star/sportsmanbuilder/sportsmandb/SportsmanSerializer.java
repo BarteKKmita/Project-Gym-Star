@@ -7,9 +7,9 @@ import com.learning.gym.star.training.cardio.CardioTrainingDB;
 import com.learning.gym.star.training.power.PowerTrainingDB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
-@Configuration
+@Component
 public final class SportsmanSerializer {
     private static final Logger logger = LoggerFactory.getLogger(SportsmanSerializer.class);
     private static ObjectMapper objectMapper = new ObjectMapper();
