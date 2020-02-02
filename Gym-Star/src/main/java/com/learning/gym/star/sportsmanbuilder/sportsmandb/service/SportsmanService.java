@@ -19,9 +19,9 @@ import java.util.List;
 @Service("sportsman service rest template")
 @Transactional
 public class SportsmanService {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
     private static final SportsmanSerializer serializer = new SportsmanSerializer();
     private static final TrainerSerializer trainerSerializer = new TrainerSerializer();
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     private SportsmanRepository repository;
     private SportsmanDatabaseOperations databaseOperations;
 
@@ -52,12 +52,20 @@ public class SportsmanService {
     }
 
     public TrainerDTO getMyTrainerData(Long sportsmanPesel){
+        logger.debug("Getting personal trainer data. Sportsman pesel: {}", sportsmanPesel);
         SportsmanDB sportsman = repository.findById(sportsmanPesel).orElseThrow();
         return trainerSerializer.getTrainerDTOFromTrainer(sportsman.getTrainer());
     }
 
     public boolean trainCardio(Long sportsmanPesel){
+        logger.debug("Doing cardio training. Sportsman pesel: {}", sportsmanPesel);
         SportsmanDB sportsmanDB = repository.findById(sportsmanPesel).orElseThrow();
         return databaseOperations.trainCardio(sportsmanDB);
+    }
+
+    public boolean trainPower(Long sportsmanPesel){
+        logger.debug("Doing power training. Sportsman pesel: {}", sportsmanPesel);
+        SportsmanDB sportsmanDB = repository.findById(sportsmanPesel).orElseThrow();
+        return databaseOperations.trainPower(sportsmanDB);
     }
 }
