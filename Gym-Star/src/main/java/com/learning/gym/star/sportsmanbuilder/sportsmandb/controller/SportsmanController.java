@@ -49,15 +49,17 @@ public class SportsmanController {
     }
 
     @PutMapping("/trainCardio")
-    public boolean trainCardio(Long sportsmanPesel){
+    @ResponseStatus(HttpStatus.OK)
+    public void trainCardio(Long sportsmanPesel){
         logger.info("Attempting to do cardio training.");
-        return service.trainCardio(sportsmanPesel);
+        service.trainCardio(sportsmanPesel);
     }
 
     @PutMapping("/trainPower")
-    public boolean trainPower(Long sportsmanPesel){
+    @ResponseStatus(HttpStatus.OK)
+    public void trainPower(Long sportsmanPesel){
         logger.info("Attempting to do power training.");
-        return service.trainCardio(sportsmanPesel);
+        service.trainPower(sportsmanPesel);
     }
 
     @ExceptionHandler(EntityExistsException.class)
