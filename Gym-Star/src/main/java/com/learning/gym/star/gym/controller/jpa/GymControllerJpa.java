@@ -14,7 +14,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.time.format.FormatStyle;
 import java.util.NoSuchElementException;
@@ -32,7 +31,7 @@ public class GymControllerJpa {
     }
 
     @PostMapping
-    public ResponseEntity addGym(@Valid @NotNull @RequestBody GymDTO gymDTO){
+    public ResponseEntity addGym(@Valid @RequestBody GymDTO gymDTO){
         logger.info("Attempting to add gym to database. {}", this.getClass());
         String gymId = gymService.addGym(gymDTO);
         if (gymId.isEmpty()) {
@@ -72,9 +71,9 @@ public class GymControllerJpa {
 
     @DeleteMapping(path = "{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteGymById(@PathVariable("id") String gymId){
+    public void deleteGymById(@PathVariable("id") int gymId){
         logger.info("Attempting to delete gym. {}", this.getClass());
-        gymService.deleteGymById(gymId);
+        gymService.deleteGymById(String.valueOf(gymId));
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
