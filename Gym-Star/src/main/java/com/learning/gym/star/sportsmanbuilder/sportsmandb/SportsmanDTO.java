@@ -1,6 +1,6 @@
 package com.learning.gym.star.sportsmanbuilder.sportsmandb;
 
-import com.learning.gym.star.sportsmanbuilder.gender.GenderChoose;
+import com.learning.gym.star.sportsmanbuilder.gender.validation.GenderValidationCheck;
 import lombok.*;
 import org.hibernate.validator.constraints.pl.PESEL;
 
@@ -27,7 +27,7 @@ public class SportsmanDTO {
     @NotEmpty(message = "Sportsman has to have surname")
     private String surname;
 
-
+    @GenderValidationCheck()
     @NotNull(message = "Please specify sportsman gender")
-    private GenderChoose gender;
+    private String gender;
 }

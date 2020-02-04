@@ -2,6 +2,7 @@ package com.learning.gym.star.sportsmanbuilder.sportsmandb;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.learning.gym.star.sportsmanbuilder.gender.GenderChoose;
 import com.learning.gym.star.statistics.statisticsdb.StatisticsDB;
 import com.learning.gym.star.training.cardio.CardioTrainingDB;
 import com.learning.gym.star.training.power.PowerTrainingDB;
@@ -37,7 +38,7 @@ public final class SportsmanSerializer {
                 .sportsmanPesel((Long.valueOf(sportsman.getSportsmanPesel().toString())))
                 .name(sportsman.getName())
                 .surname(sportsman.getSurname())
-                .gender(sportsman.getGender())
+                .gender(GenderChoose.valueOf(sportsman.getGender()))
                 .statistics(new StatisticsDB(null, new CardioTrainingDB(), new PowerTrainingDB()))
                 .build();
     }
