@@ -23,10 +23,10 @@ public class PowerTrainingServiceUnitTest {
     private Optional<PowerTrainingDB> testPowerTraining = Optional.of(mock(PowerTrainingDB.class));
 
     @InjectMocks
-    PowerTrainingService service;
+    private PowerTrainingService service;
 
     @Mock
-    PowerTrainingRepository repository;
+    private PowerTrainingRepository repository;
 
     @Test
     public void getPowerTrainingCount(){
