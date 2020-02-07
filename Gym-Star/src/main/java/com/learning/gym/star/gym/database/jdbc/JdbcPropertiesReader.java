@@ -22,6 +22,10 @@ class JdbcPropertiesReader {
         pathToFile = "src/main/resources/application2.properties";
     }
 
+    public JdbcPropertiesReader(String pathToFile){
+        this.pathToFile = pathToFile;
+    }
+
     String getURL(){
         return getDatabaseProperties(URL);
     }
