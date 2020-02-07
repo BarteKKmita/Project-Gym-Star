@@ -23,10 +23,10 @@ public class CardioTrainingServiceUnitTest {
     private Optional<CardioTrainingDB> testCardioTraining = Optional.of(mock(CardioTrainingDB.class));
 
     @InjectMocks
-    CardioTrainingService service;
+    private CardioTrainingService service;
 
     @Mock
-    CardioTrainingJpaRepository repository;
+    private CardioTrainingJpaRepository repository;
 
     @Test
     public void getCardioTrainingCount(){
