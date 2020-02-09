@@ -20,9 +20,9 @@ import static org.mockito.Mockito.when;
 class PowerTrainingControllerTest {
 
     @InjectMocks
-    PowerTrainingController controller;
+    private PowerTrainingController controller;
     @Mock
-    PowerTrainingService service;
+    private PowerTrainingService service;
 
     @Test
     void getPowerTrainingCount(){
