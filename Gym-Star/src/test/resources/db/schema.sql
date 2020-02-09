@@ -1,19 +1,100 @@
+
+CREATE TABLE PowerTraining (
+power_id INT PRIMARY KEY AUTO_INCREMENT,
+training_count INT DEFAULT 0
+);
+
+CREATE TABLE CardioTraining (
+cardio_id INT PRIMARY KEY AUTO_INCREMENT,
+training_count INT DEFAULT 0
+);
+
+CREATE TABLE Statistics (
+statistics_id INT PRIMARY KEY AUTO_INCREMENT,
+power_id INT,
+cardio_id INT,
+FOREIGN KEY (power_id) REFERENCES PowerTraining(power_id),
+FOREIGN KEY (cardio_id) REFERENCES CardioTraining(cardio_id)
+);
+
 CREATE TABLE Gym (
 gym_id INT PRIMARY KEY AUTO_INCREMENT,
-gym_name VARCHAR(80) NOT NULL CHECK (DATALENGTH(gym_name) > 0),
-street VARCHAR (80) NOT NULL CHECK (DATALENGTH(street) > ''),
-city VARCHAR(30) NOT NULL,
+gym_name NVARCHAR(80) NOT NULL,
+street NVARCHAR (80) NOT NULL,
+city NVARCHAR(30) NOT NULL,
 building_number INT NOT NULL
 );
 
-DELIMITER $$
-CREATE TRIGGER notempty BEFORE INSERT ON Gym
-     FOR EACH ROW BEGIN
-     IF NEW.gym_name = '' OR  NEW.street = '' OR NEW.city = ''
-     THEN signal sqlstate '45000';
-     END IF;
-     END$$
- DELIMITER ;
+CREATE TABLE Trainer (
+trainer_pesel BIGINT PRIMARY KEY,
+trainer_name NVARCHAR(30) NOT NULL,
+trainer_surname NVARCHAR (80) NOT NULL,
+cost INT NOT NULL
+);
+
+CREATE TABLE SportsMen (
+sportsman_pesel BIGINT PRIMARY KEY,
+sportsman_name NVARCHAR(30) NOT NULL,
+sportsman_surname NVARCHAR (80) NOT NULL,
+gender ENUM ('F','M',"N/A") NOT NULL,
+trainer_pesel BIGINT,
+statistics_id INT,
+FOREIGN KEY (trainer_pesel)  REFERENCES Trainer(trainer_pesel),
+FOREIGN KEY (statistics_id) REFERENCES Statistics(statistics_id)
+);
+
+ALTER TABLE SportsMen
+ADD COLUMN gym_id INT;
+
+ALTER TABLE SportsMen
+ADD FOREIGN KEY (gym_id) REFERENCES Gym(gym_id);
+
+ALTER TABLE Trainer
+ADD COLUMN gym_id INT;
+
+ALTER TABLE Trainer
+ADD FOREIGN KEY (gym_id) REFERENCES Gym(gym_id);
+
+CREATE TABLE SportsMenTrainingTimeStatistics (
+statistics_id INT PRIMARY KEY AUTO_INCREMENT,
+date DATE NOT NULL,
+time TIME NOT NULL,
+sportsmanstats_id int NOT NULL,
+FOREIGN KEY (sportsmanstats_id) REFERENCES Statistics(statistics_id)
+);
+
+ALTER TABLE SportsMen
+ADD FOREIGN KEY (trainer_pesel) REFERENCES trainer(trainer_pesel);
+
+ALTER TABLE Trainer
+ADD COLUMN sportsman BIGINT;
+
+ALTER TABLE Trainer
+ADD FOREIGN KEY (sportsman) REFERENCES SportsMen(sportsman_pesel);
+
+CREATE TABLE trainersatgym (
+trainer_pesel BIGINT,
+gym_id INT,
+PRIMARY KEY(trainer_pesel, gym_id),
+FOREIGN KEY (trainer_pesel) REFERENCES trainer(trainer_pesel) ON DELETE CASCADE,
+FOREIGN KEY (gym_id) REFERENCES gym(gym_id) ON DELETE CASCADE);
+
+DELIMITER //
+CREATE PROCEDURE getsportsmanstats (sportsmanStatsId INT)
+BEGIN
+SELECT statistics_id, date, time FROM SportsMenTrainingTimeStatistics
+WHERE sportsmanstats_id=sportsmanStatsId;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE trainCardio (statsId INT, cardiosportsmanID INT)
+BEGIN
+UPDATE cardioTraining SET training_count=training_count+1 WHERE cardio_id = cardiosportsmanID;
+INSERT INTO SportsMenTrainingTimeStatistics VALUES(NULL,curdate(),curtime(), statsId);
+END //
+DELIMITER ;
 
 INSERT INTO gym Values ('1','pierwsza', 'sezamkowa','rudy', 102);
 INSERT INTO gym Values ('2','druga', 'sezamkowa','kraków', 102);
+INSERT INTO cardiotraining values (1,0);

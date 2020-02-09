@@ -5,6 +5,7 @@ import com.learning.gym.star.training.cardio.database.CardioTrainingJpaRepositor
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
@@ -15,6 +16,7 @@ public class CardioTrainingService {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private CardioTrainingJpaRepository repository;
 
+    @Autowired
     public CardioTrainingService(CardioTrainingJpaRepository repository){
         this.repository = repository;
     }
