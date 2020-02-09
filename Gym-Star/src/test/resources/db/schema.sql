@@ -98,3 +98,4 @@ DELIMITER ;
 INSERT INTO gym Values ('1','pierwsza', 'sezamkowa','rudy', 102);
 INSERT INTO gym Values ('2','druga', 'sezamkowa','kraków', 102);
 INSERT INTO cardiotraining values (1,0);
+INSERT INTO powertraining values (1,5);
