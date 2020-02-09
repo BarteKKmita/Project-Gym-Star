@@ -11,7 +11,6 @@ import java.util.NoSuchElementException;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -28,8 +27,7 @@ public class CardioControllerIntegrationTest {
         //Given
         int cardioId = 1;
         //Then
-        mockMvc.perform(get("/api/cardio/" + cardioId)
-                .contentType("application/json"))
+        mockMvc.perform(get("/api/cardio/" + cardioId))
                 .andExpect(status().isOk());
     }
 
@@ -74,19 +72,6 @@ public class CardioControllerIntegrationTest {
     public void shouldReturnStatusOKWhenCreatingNewCardioStats() throws Exception{
         //Then
         mockMvc.perform(post("/api/cardio/create/"))
-                .andExpect(status().isCreated());
-    }
-
-    @Test
-    public void shouldReturnResponseBodyWhenCreatingNewCardioStats() throws Exception{
-        //Given
-        String cardioId = "1";
-        String responseBody = "Your gym id nr : " + cardioId;
-        when(service.createNewCardioStatistics()).thenReturn(cardioId);
-        //Then
-        mockMvc.perform(post("/api/cardio/create/")
-                .contentType("application/json")
-                .content(responseBody))
                 .andExpect(status().isCreated());
     }
 }

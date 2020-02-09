@@ -11,7 +11,6 @@ import java.util.NoSuchElementException;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -74,19 +73,6 @@ public class PowerControllerIntegrationTest {
     public void shouldReturnStatusOKWhenCreatingNewPowerStats() throws Exception{
         //Then
         mockMvc.perform(post("/api/power/create/"))
-                .andExpect(status().isCreated());
-    }
-
-    @Test
-    public void shouldReturnResponseBodyWhenCreatingNewPowerStats() throws Exception{
-        //Given
-        String powerId = "1";
-        String responseBody = "Your gym id nr : " + powerId;
-        when(service.createNewPowerStatistics()).thenReturn(powerId);
-        //Then
-        mockMvc.perform(post("/api/power/create/")
-                .contentType("application/json")
-                .content(responseBody))
                 .andExpect(status().isCreated());
     }
 }
