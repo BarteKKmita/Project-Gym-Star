@@ -20,7 +20,6 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class CardioTrainingControllerUnitTest {
-
     @InjectMocks
     private CardioTrainingController controller;
     @Mock
