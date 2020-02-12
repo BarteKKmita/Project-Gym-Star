@@ -11,8 +11,8 @@ import java.util.NoSuchElementException;
 
 @RestController()
 @RequestMapping("/api/cardio")
-public class CardioTrainingController {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+public final class CardioTrainingController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CardioTrainingController.class);
     private CardioTrainingService service;
 
     public CardioTrainingController(CardioTrainingService service){
@@ -21,27 +21,27 @@ public class CardioTrainingController {
 
     @GetMapping("{id}")
     public ResponseEntity getCardioTrainingCount(@PathVariable("id") int cardioId){
-        logger.info("Attempting to get cardio training count");
+        LOGGER.info("Attempting to get cardio training count");
         return new ResponseEntity<>(service.getCardioTrainingCount(cardioId), HttpStatus.OK);
     }
 
     @PutMapping("/train/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void doCardioTraining(@PathVariable("id") int cardioId){
-        logger.info("Attempting to increment cardio training count");
+        LOGGER.info("Attempting to increment cardio training count");
         service.doCardioTraining(cardioId);
     }
 
     @PutMapping("/reset/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void resetCardioStatistics(@PathVariable("id") int cardioId){
-        logger.info("Attempting to reset cardio training count");
+        LOGGER.info("Attempting to reset cardio training count");
         service.resetCardioStatistics(cardioId);
     }
 
     @PostMapping("/create")
     public ResponseEntity createNewCardioStatistics(){
-        logger.info("Attempting to create new cardio training");
+        LOGGER.info("Attempting to create new cardio training");
         return new ResponseEntity<>("Your gym id nr : " + service.createNewCardioStatistics(), HttpStatus.CREATED);
     }
 

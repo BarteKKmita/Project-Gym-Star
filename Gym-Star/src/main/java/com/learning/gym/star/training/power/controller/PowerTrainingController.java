@@ -11,8 +11,8 @@ import java.util.NoSuchElementException;
 
 @RestController()
 @RequestMapping("api/power")
-public class PowerTrainingController {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+public final class PowerTrainingController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PowerTrainingController.class);
     private PowerTrainingService service;
 
     public PowerTrainingController(PowerTrainingService service){
@@ -21,27 +21,27 @@ public class PowerTrainingController {
 
     @GetMapping("{id}")
     public ResponseEntity getPowerTrainingCount(@PathVariable("id") int powerId){
-        logger.info("Attempting to get power training count");
+        LOGGER.info("Attempting to get power training count");
         return new ResponseEntity<>(service.getPowerTrainingCount(powerId), HttpStatus.OK);
     }
 
     @PutMapping("/train/{id}")
     @ResponseStatus(HttpStatus.OK)
     void doPowerTraining(@PathVariable("id") int powerId){
-        logger.info("Attempting to increment power training count");
+        LOGGER.info("Attempting to increment power training count");
         service.doPowerTraining(powerId);
     }
 
     @PutMapping("/reset/{id}")
     @ResponseStatus(HttpStatus.OK)
     void resetPowerStatistics(@PathVariable("id") int powerId){
-        logger.info("Attempting to reset power training count");
+        LOGGER.info("Attempting to reset power training count");
         service.resetPowerStatistics(powerId);
     }
 
     @PostMapping("/create")
     public ResponseEntity createNewStatistics(){
-        logger.info("Attempting to create new power training");
+        LOGGER.info("Attempting to create new power training");
         return new ResponseEntity<>("Your gym id nr : " + service.createNewPowerStatistics(), HttpStatus.CREATED);
     }
 

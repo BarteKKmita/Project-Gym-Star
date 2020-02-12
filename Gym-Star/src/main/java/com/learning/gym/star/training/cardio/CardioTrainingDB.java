@@ -20,6 +20,6 @@ public class CardioTrainingDB {
     @Column(name = "cardio_id")
     private String cardioId;
 
-    @Column(name = "training_count ")
+    @Column(name = "training_count")
     private int trainingCount;
 }

@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
 
-@Service("power training service")
-public class PowerTrainingService {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+@Service("PowerTrainingService")
+public final class PowerTrainingService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PowerTrainingService.class);
     private PowerTrainingRepository repository;
 
     public PowerTrainingService(PowerTrainingRepository repository){
@@ -18,13 +18,13 @@ public class PowerTrainingService {
     }
 
     public int getPowerTrainingCount(int powerTrainingId){
-        logger.debug("Attempting to get power training count for power id: {}", powerTrainingId);
+        LOGGER.debug("Attempting to get power training count for power id: {}", powerTrainingId);
         PowerTrainingDB powerTrainingDB = repository.findById(String.valueOf(powerTrainingId)).orElseThrow();
         return powerTrainingDB.getTrainingCount();
     }
 
     public void doPowerTraining(int powerTrainingId){
-        logger.debug("Attempting to increment power training count for power id: {}", powerTrainingId);
+        LOGGER.debug("Attempting to increment power training count for power id: {}", powerTrainingId);
         if (repository.existsById(String.valueOf(powerTrainingId))) {
             repository.updateTrainingCounter(String.valueOf(powerTrainingId));
         } else {
@@ -33,7 +33,7 @@ public class PowerTrainingService {
     }
 
     public void resetPowerStatistics(int powerTrainingId){
-        logger.debug("Attempting to reset power training count for power id: {}", powerTrainingId);
+        LOGGER.debug("Attempting to reset power training count for power id: {}", powerTrainingId);
         if (repository.existsById(String.valueOf(powerTrainingId))) {
             repository.resetPowerStatistics(String.valueOf(powerTrainingId));
         } else {
@@ -42,7 +42,7 @@ public class PowerTrainingService {
     }
 
     public String createNewPowerStatistics(){
-        logger.debug("Saving new power training");
+        LOGGER.debug("Saving new power training");
         return repository.saveAndFlush(new PowerTrainingDB()).getPowerId();
     }
 }
