@@ -22,21 +22,21 @@ public final class CardioTrainingController {
     @GetMapping("{id}")
     public ResponseEntity getCardioTrainingCount(@PathVariable("id") int cardioId){
         LOGGER.info("Attempting to get cardio training count");
-        return new ResponseEntity<>(service.getCardioTrainingCount(cardioId), HttpStatus.OK);
+        return new ResponseEntity<>(service.getCardioTrainingCount(String.valueOf(cardioId)), HttpStatus.OK);
     }
 
     @PutMapping("/train/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void doCardioTraining(@PathVariable("id") int cardioId){
         LOGGER.info("Attempting to increment cardio training count");
-        service.doCardioTraining(cardioId);
+        service.doCardioTraining(String.valueOf(cardioId));
     }
 
     @PutMapping("/reset/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void resetCardioStatistics(@PathVariable("id") int cardioId){
         LOGGER.info("Attempting to reset cardio training count");
-        service.resetCardioStatistics(cardioId);
+        service.resetCardioStatistics(String.valueOf(cardioId));
     }
 
     @PostMapping("/create")
@@ -46,7 +46,7 @@ public final class CardioTrainingController {
     }
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity handleNoSuchRecordInDatabase(){
-        return new ResponseEntity<>("There is no such cardio statistics in database.", HttpStatus.NOT_FOUND);
+    public ResponseEntity handleNoSuchRecordInDatabase(NoSuchElementException exception){
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 }

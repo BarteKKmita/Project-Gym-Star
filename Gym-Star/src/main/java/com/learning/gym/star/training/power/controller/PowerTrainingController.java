@@ -22,21 +22,21 @@ public final class PowerTrainingController {
     @GetMapping("{id}")
     public ResponseEntity getPowerTrainingCount(@PathVariable("id") int powerId){
         LOGGER.info("Attempting to get power training count");
-        return new ResponseEntity<>(service.getPowerTrainingCount(powerId), HttpStatus.OK);
+        return new ResponseEntity<>(service.getPowerTrainingCount(String.valueOf(powerId)), HttpStatus.OK);
     }
 
     @PutMapping("/train/{id}")
     @ResponseStatus(HttpStatus.OK)
     void doPowerTraining(@PathVariable("id") int powerId){
         LOGGER.info("Attempting to increment power training count");
-        service.doPowerTraining(powerId);
+        service.doPowerTraining(String.valueOf(powerId));
     }
 
     @PutMapping("/reset/{id}")
     @ResponseStatus(HttpStatus.OK)
     void resetPowerStatistics(@PathVariable("id") int powerId){
         LOGGER.info("Attempting to reset power training count");
-        service.resetPowerStatistics(powerId);
+        service.resetPowerStatistics(String.valueOf(powerId));
     }
 
     @PostMapping("/create")
@@ -46,7 +46,7 @@ public final class PowerTrainingController {
     }
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity handleNoSuchRecordInDatabase(){
-        return new ResponseEntity<>("There is no such power statistics in database.", HttpStatus.NOT_FOUND);
+    public ResponseEntity handleNoSuchRecordInDatabase(NoSuchElementException exception){
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 }
