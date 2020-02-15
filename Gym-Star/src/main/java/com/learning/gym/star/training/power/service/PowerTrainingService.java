@@ -19,7 +19,8 @@ public final class PowerTrainingService {
 
     public int getPowerTrainingCount(String powerTrainingId){
         LOGGER.debug("Attempting to get power training count for power id: {}", powerTrainingId);
-        PowerTrainingDB powerTrainingDB = repository.findById(powerTrainingId).orElseThrow(() -> handleNoStatisticsFound(powerTrainingId));
+        PowerTrainingDB powerTrainingDB = repository.findById(powerTrainingId)
+                .orElseThrow(() -> handleNoStatisticsFound(powerTrainingId));
         return powerTrainingDB.getTrainingCount();
     }
 
@@ -28,7 +29,7 @@ public final class PowerTrainingService {
         if (repository.existsById(powerTrainingId)) {
             repository.updateTrainingCounter(powerTrainingId);
         } else {
-            throw handleNoStatisticsFound(powerTrainingId);
+            handleNoStatisticsFound(powerTrainingId);
         }
     }
 
@@ -37,7 +38,7 @@ public final class PowerTrainingService {
         if (repository.existsById(powerTrainingId)) {
             repository.resetPowerStatistics(powerTrainingId);
         } else {
-            throw handleNoStatisticsFound(powerTrainingId);
+            handleNoStatisticsFound(powerTrainingId);
         }
     }
 
@@ -48,6 +49,6 @@ public final class PowerTrainingService {
 
     private NoSuchElementException handleNoStatisticsFound(String powerTrainingId){
         LOGGER.debug("There is no power statistics with id: {}", powerTrainingId);
-        return new NoSuchElementException("There is no power statistics with id: " + powerTrainingId);
+        throw new NoSuchElementException("There is no power statistics with id: " + powerTrainingId);
     }
 }

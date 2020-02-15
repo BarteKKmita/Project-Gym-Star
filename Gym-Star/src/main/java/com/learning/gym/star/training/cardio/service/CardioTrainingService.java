@@ -19,7 +19,8 @@ public final class CardioTrainingService {
 
     public int getCardioTrainingCount(String cardioId){
         LOGGER.debug("Attempting to get cardio training count for cardio id: {}", cardioId);
-        CardioTrainingDB training = repository.findById(cardioId).orElseThrow(() -> handleNoStatisticsFound(cardioId));
+        CardioTrainingDB training = repository.findById(cardioId)
+                .orElseThrow(() -> handleNoStatisticsFound(cardioId));
         return training.getTrainingCount();
     }
 
@@ -28,7 +29,7 @@ public final class CardioTrainingService {
         if (repository.existsById(cardioId)) {
             repository.updateTrainingCounter(cardioId);
         } else {
-            throw handleNoStatisticsFound(cardioId);
+            handleNoStatisticsFound(cardioId);
         }
     }
 
@@ -37,7 +38,7 @@ public final class CardioTrainingService {
         if (repository.existsById(cardioId)) {
             repository.resetCardioStatistics(cardioId);
         } else {
-            throw handleNoStatisticsFound(cardioId);
+            handleNoStatisticsFound(cardioId);
         }
     }
 
@@ -48,6 +49,6 @@ public final class CardioTrainingService {
 
     private NoSuchElementException handleNoStatisticsFound(String cardioId){
         LOGGER.debug("There is no cardio statistics with id: {}", cardioId);
-        return new NoSuchElementException("There is no cardio statistics with id: " + cardioId);
+        throw new NoSuchElementException("There is no cardio statistics with id: " + cardioId);
     }
 }

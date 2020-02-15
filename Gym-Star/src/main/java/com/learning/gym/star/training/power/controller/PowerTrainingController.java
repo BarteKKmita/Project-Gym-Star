@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
 
-@RestController()
+@RestController
 @RequestMapping("api/power")
 public final class PowerTrainingController {
     private static final Logger LOGGER = LoggerFactory.getLogger(PowerTrainingController.class);

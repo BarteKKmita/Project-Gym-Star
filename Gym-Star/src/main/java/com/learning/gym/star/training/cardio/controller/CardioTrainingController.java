@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
 
-@RestController()
+@RestController
 @RequestMapping("/api/cardio")
 public final class CardioTrainingController {
     private static final Logger LOGGER = LoggerFactory.getLogger(CardioTrainingController.class);
