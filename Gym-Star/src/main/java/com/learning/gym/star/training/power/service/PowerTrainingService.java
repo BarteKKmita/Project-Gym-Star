@@ -1,6 +1,6 @@
 package com.learning.gym.star.training.power.service;
 
-import com.learning.gym.star.training.power.PowerTrainingDB;
+import com.learning.gym.star.training.power.PowerTrainingEntity;
 import com.learning.gym.star.training.power.database.PowerTrainingRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +19,9 @@ public final class PowerTrainingService {
 
     public int getPowerTrainingCount(String powerTrainingId){
         LOGGER.debug("Attempting to get power training count for power id: {}", powerTrainingId);
-        PowerTrainingDB powerTrainingDB = repository.findById(powerTrainingId)
+        PowerTrainingEntity powerTraining = repository.findById(powerTrainingId)
                 .orElseThrow(() -> handleNoStatisticsFound(powerTrainingId));
-        return powerTrainingDB.getTrainingCount();
+        return powerTraining.getTrainingCount();
     }
 
     public void doPowerTraining(String powerTrainingId){
@@ -44,7 +44,7 @@ public final class PowerTrainingService {
 
     public String createNewPowerStatistics(){
         LOGGER.debug("Saving new power training");
-        return repository.saveAndFlush(new PowerTrainingDB()).getPowerId();
+        return repository.saveAndFlush(new PowerTrainingEntity()).getPowerId();
     }
 
     private NoSuchElementException handleNoStatisticsFound(String powerTrainingId){
