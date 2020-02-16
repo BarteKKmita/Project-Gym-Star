@@ -1,7 +1,7 @@
 package com.learning.gym.star.statistics.timedb.service;
 
-import com.learning.gym.star.statistics.statisticsdb.StatisticsDB;
-import com.learning.gym.star.statistics.timedb.TrainingDateStatisticsDB;
+import com.learning.gym.star.statistics.statisticsdb.StatisticsEntity;
+import com.learning.gym.star.statistics.timedb.TrainingDateStatisticsEntity;
 import com.learning.gym.star.statistics.timedb.database.DateTimeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,25 +13,25 @@ import java.util.List;
 
 @Service("date and time service")
 public class DateTimeService {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-    private DateTimeRepository repository;
+    private static final Logger LOGGER = LoggerFactory.getLogger(DateTimeService.class);
+    private final DateTimeRepository repository;
 
     public DateTimeService(DateTimeRepository repository){
         this.repository = repository;
     }
 
     public void addTrainingDateAndTime(int statisticsId){
-        logger.debug("Attempting to save sportsman's training date and time by his statistics id: {}", statisticsId);
-        TrainingDateStatisticsDB dateTimeStats = TrainingDateStatisticsDB.builder()
+        LOGGER.debug("Attempting to save sportsman's training date and time by his statistics id: {}", statisticsId);
+        TrainingDateStatisticsEntity dateTimeStats = TrainingDateStatisticsEntity.builder()
                 .date(LocalDate.now())
                 .time(LocalTime.now())
-                .sportsmanStatsId(StatisticsDB.builder().statisticsId(String.valueOf(statisticsId)).build())
+                .sportsmanStatsId(StatisticsEntity.builder().statisticsId(String.valueOf(statisticsId)).build())
                 .build();
         repository.saveAndFlush(dateTimeStats);
     }
 
-    public List<TrainingDateStatisticsDB> getSportsManDateAndTimeStatistics(int statisticsId){
-        logger.debug("Attempting to get sportsman's training date and time by his statistics id: {}", statisticsId);
+    public List<TrainingDateStatisticsEntity> getSportsManDateAndTimeStatistics(int statisticsId){
+        LOGGER.debug("Attempting to get sportsman's training date and time by his statistics id: {}", statisticsId);
         return repository.getSportsmanDateAndTimeStats(String.valueOf(statisticsId));
     }
 }
