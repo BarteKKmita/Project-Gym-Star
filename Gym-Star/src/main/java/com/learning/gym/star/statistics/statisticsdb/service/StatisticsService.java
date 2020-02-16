@@ -14,9 +14,9 @@ import java.util.NoSuchElementException;
 
 @Transactional
 @Service("statistics service")
-public final class StatisticsService {
+public class StatisticsService {
     private static final Logger LOGGER = LoggerFactory.getLogger(StatisticsService.class);
-    private final StatisticsRepository repository;
+    private StatisticsRepository repository;
 
     public StatisticsService(StatisticsRepository repository){
         this.repository = repository;
@@ -24,8 +24,8 @@ public final class StatisticsService {
 
     public int createNewStatistics(){
         var stats = StatisticsEntity.builder()
-                .cardioTrainingDB(new CardioTrainingEntity())
-                .powerTrainingDB(new PowerTrainingEntity())
+                .cardioTraining(new CardioTrainingEntity())
+                .powerTraining(new PowerTrainingEntity())
                 .build();
         return Integer.parseInt(repository.saveAndFlush(stats).getStatisticsId());
     }

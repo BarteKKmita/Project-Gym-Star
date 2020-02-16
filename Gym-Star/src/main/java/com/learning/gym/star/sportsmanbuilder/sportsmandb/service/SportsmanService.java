@@ -1,11 +1,11 @@
 package com.learning.gym.star.sportsmanbuilder.sportsmandb.service;
 
-import com.learning.gym.star.sportsmanbuilder.sportsmandb.SportsmanDB;
 import com.learning.gym.star.sportsmanbuilder.sportsmandb.SportsmanDTO;
+import com.learning.gym.star.sportsmanbuilder.sportsmandb.SportsmanEntity;
 import com.learning.gym.star.sportsmanbuilder.sportsmandb.SportsmanSerializer;
 import com.learning.gym.star.sportsmanbuilder.sportsmandb.database.SportsmanDatabaseOperations;
 import com.learning.gym.star.sportsmanbuilder.sportsmandb.database.SportsmanRepository;
-import com.learning.gym.star.statistics.timedb.TrainingDateStatisticsDB;
+import com.learning.gym.star.statistics.timedb.TrainingDateStatisticsEntity;
 import com.learning.gym.star.trainer.trainerdb.TrainerDTO;
 import com.learning.gym.star.trainer.trainerdb.TrainerSerializer;
 import org.slf4j.Logger;
@@ -39,33 +39,33 @@ public class SportsmanService {
         }
     }
 
-    public List<TrainingDateStatisticsDB> getSportsmanStatistics(Long sportsmanPesel){
+    public List<TrainingDateStatisticsEntity> getSportsmanStatistics(Long sportsmanPesel){
         logger.debug("Getting sportsman statistics by sportsman pesel {}", sportsmanPesel);
-        SportsmanDB sportsman = repository.findById(sportsmanPesel).orElseThrow();
+        SportsmanEntity sportsman = repository.findById(sportsmanPesel).orElseThrow();
         return databaseOperations.getTrainingDateTimeStatistics(sportsman);
     }
 
     public void chooseTrainer(Long sportsmanPesel, Long trainerPesel){
         logger.debug("Choosing sportsman's trainer with sportsman pesel {} and trainer pesel {}.", sportsmanPesel, trainerPesel);
-        SportsmanDB sportsman = repository.findById(sportsmanPesel).orElseThrow();
+        SportsmanEntity sportsman = repository.findById(sportsmanPesel).orElseThrow();
         repository.saveAndFlush(databaseOperations.setTrainer(trainerPesel, sportsman));
     }
 
     public TrainerDTO getMyTrainerData(Long sportsmanPesel){
         logger.debug("Getting personal trainer data. Sportsman pesel: {}", sportsmanPesel);
-        SportsmanDB sportsman = repository.findById(sportsmanPesel).orElseThrow();
+        SportsmanEntity sportsman = repository.findById(sportsmanPesel).orElseThrow();
         return trainerSerializer.getTrainerDTOFromTrainer(sportsman.getTrainer());
     }
 
     public void trainCardio(Long sportsmanPesel){
         logger.debug("Doing cardio training. Sportsman pesel: {}", sportsmanPesel);
-        SportsmanDB sportsmanDB = repository.findById(sportsmanPesel).orElseThrow();
-        databaseOperations.trainCardio(sportsmanDB);
+        SportsmanEntity sportsman = repository.findById(sportsmanPesel).orElseThrow();
+        databaseOperations.trainCardio(sportsman);
     }
 
     public void trainPower(Long sportsmanPesel){
         logger.debug("Doing power training. Sportsman pesel: {}", sportsmanPesel);
-        SportsmanDB sportsmanDB = repository.findById(sportsmanPesel).orElseThrow();
-        databaseOperations.trainPower(sportsmanDB);
+        SportsmanEntity sportsman = repository.findById(sportsmanPesel).orElseThrow();
+        databaseOperations.trainPower(sportsman);
     }
 }

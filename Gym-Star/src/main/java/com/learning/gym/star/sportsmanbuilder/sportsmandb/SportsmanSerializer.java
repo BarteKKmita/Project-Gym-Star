@@ -2,9 +2,9 @@ package com.learning.gym.star.sportsmanbuilder.sportsmandb;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.learning.gym.star.statistics.statisticsdb.StatisticsDB;
-import com.learning.gym.star.training.cardio.CardioTrainingDB;
-import com.learning.gym.star.training.power.PowerTrainingDB;
+import com.learning.gym.star.statistics.statisticsdb.StatisticsEntity;
+import com.learning.gym.star.training.cardio.CardioTrainingEntity;
+import com.learning.gym.star.training.power.PowerTrainingEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,7 @@ public final class SportsmanSerializer {
     private static final Logger logger = LoggerFactory.getLogger(SportsmanSerializer.class);
     private static ObjectMapper objectMapper = new ObjectMapper();
 
-    public SportsmanDTO getSportsmanDTOFromSportsman(SportsmanDB sportsman){
+    public SportsmanDTO getSportsmanDTOFromSportsman(SportsmanEntity sportsman){
         String sportsmanJson = "";
         try {
             sportsmanJson = objectMapper.writeValueAsString(sportsman);
@@ -32,13 +32,13 @@ public final class SportsmanSerializer {
         return sportsmanDTO;
     }
 
-    public SportsmanDB buildSportsmanFromSportsmanDTO(SportsmanDTO sportsman){
-        return SportsmanDB.builder()
+    public SportsmanEntity buildSportsmanFromSportsmanDTO(SportsmanDTO sportsman){
+        return SportsmanEntity.builder()
                 .sportsmanPesel(sportsman.getSportsmanPesel())
                 .name(sportsman.getName())
                 .surname(sportsman.getSurname())
                 .gender(sportsman.getGender())
-                .statistics(new StatisticsDB(null, new CardioTrainingDB(), new PowerTrainingDB()))
+                .statistics(new StatisticsEntity(null, new CardioTrainingEntity(), new PowerTrainingEntity()))
                 .build();
     }
 }

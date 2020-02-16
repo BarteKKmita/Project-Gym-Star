@@ -28,10 +28,10 @@ public class StatisticsEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cardio_id")
     @JsonManagedReference
-    private CardioTrainingEntity cardioTrainingDB;
+    private CardioTrainingEntity cardioTraining;
 
     @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "power_id")
-    private PowerTrainingEntity powerTrainingDB;
+    private PowerTrainingEntity powerTraining;
 }

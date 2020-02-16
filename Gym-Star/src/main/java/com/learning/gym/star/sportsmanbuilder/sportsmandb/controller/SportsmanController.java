@@ -13,9 +13,9 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/sportsman")
-public class SportsmanController {
-    private SportsmanService service;
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+public final class SportsmanController {
+    private final SportsmanService service;
+    private static final Logger LOGGER = LoggerFactory.getLogger(SportsmanController.class);
 
     public SportsmanController(SportsmanService service){
         this.service = service;
@@ -24,41 +24,41 @@ public class SportsmanController {
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public void addSportsman(@RequestBody SportsmanDTO sportsman){
-        logger.info("Attempting to add new sportsman.");
+        LOGGER.info("Attempting to add new sportsman.");
         service.addSportsman(sportsman);
     }
 
     @GetMapping("/dateandtime")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity getSportsmanDateAndTimeStats2(Long sportsmanPesel){
-        logger.info("Attempting to get sportsman date and time statistics.");
+        LOGGER.info("Attempting to get sportsman date and time statistics.");
         return new ResponseEntity<>(service.getSportsmanStatistics(sportsmanPesel), HttpStatus.OK);
     }
 
     @PutMapping("/gettrainer")
     @ResponseStatus(HttpStatus.CREATED)
     public void chooseTrainer(Long sportsmanPesel, Long trainerPesel){
-        logger.info("Attempting to choose trainer.");
+        LOGGER.info("Attempting to choose trainer.");
         service.chooseTrainer(sportsmanPesel, trainerPesel);
     }
 
     @GetMapping("/mytrainer")
     public ResponseEntity getMyTrainer(Long sportsmanPesel){
-        logger.info("Attempting to display sportsman's.");
+        LOGGER.info("Attempting to display sportsman's.");
         return new ResponseEntity<>(service.getMyTrainerData(sportsmanPesel), HttpStatus.OK);
     }
 
     @PutMapping("/trainCardio")
     @ResponseStatus(HttpStatus.OK)
     public void trainCardio(Long sportsmanPesel){
-        logger.info("Attempting to do cardio training.");
+        LOGGER.info("Attempting to do cardio training.");
         service.trainCardio(sportsmanPesel);
     }
 
     @PutMapping("/trainPower")
     @ResponseStatus(HttpStatus.OK)
     public void trainPower(Long sportsmanPesel){
-        logger.info("Attempting to do power training.");
+        LOGGER.info("Attempting to do power training.");
         service.trainPower(sportsmanPesel);
     }
 

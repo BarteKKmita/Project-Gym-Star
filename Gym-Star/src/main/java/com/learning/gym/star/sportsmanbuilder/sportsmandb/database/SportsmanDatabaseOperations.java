@@ -1,9 +1,9 @@
 package com.learning.gym.star.sportsmanbuilder.sportsmandb.database;
 
-import com.learning.gym.star.sportsmanbuilder.sportsmandb.SportsmanDB;
-import com.learning.gym.star.statistics.statisticsdb.StatisticsDB;
-import com.learning.gym.star.statistics.timedb.TrainingDateStatisticsDB;
-import com.learning.gym.star.trainer.trainerdb.TrainerDB;
+import com.learning.gym.star.sportsmanbuilder.sportsmandb.SportsmanEntity;
+import com.learning.gym.star.statistics.statisticsdb.StatisticsEntity;
+import com.learning.gym.star.statistics.timedb.TrainingDateStatisticsEntity;
+import com.learning.gym.star.trainer.trainerdb.TrainerEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +25,7 @@ public class SportsmanDatabaseOperations {
     }
 
 
-    public List<TrainingDateStatisticsDB> getTrainingDateTimeStatistics(SportsmanDB sportsman){
+    public List<TrainingDateStatisticsEntity> getTrainingDateTimeStatistics(SportsmanEntity sportsman){
         int firstQueryParameter = 1;
         StoredProcedureQuery sportsmanStats = entityManager.createNamedStoredProcedureQuery(dateTimeStatsProcedure)
                 .registerStoredProcedureParameter(firstQueryParameter, String.class, ParameterMode.IN)
@@ -34,34 +34,34 @@ public class SportsmanDatabaseOperations {
         return sportsmanStats.getResultList();
     }
 
-    public SportsmanDB setTrainer(Long trainerPesel, SportsmanDB sportsman){
+    public SportsmanEntity setTrainer(Long trainerPesel, SportsmanEntity sportsman){
         String parameterName = "pesel";
-        return sportsman.withTrainer(entityManager.createNamedQuery(personalTrainerQuery, TrainerDB.class)
+        return sportsman.withTrainer(entityManager.createNamedQuery(personalTrainerQuery, TrainerEntity.class)
                 .setParameter(parameterName, trainerPesel).getSingleResult());
     }
 
-    public boolean trainCardio(SportsmanDB sportsmanDB){
+    public boolean trainCardio(SportsmanEntity sportsman){
         int firstQueryParameter = 1;
         int secondQueryParameter = 2;
-        StatisticsDB statistics = sportsmanDB.getStatistics();
+        StatisticsEntity statistics = sportsman.getStatistics();
         StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery(trainCardioProcedure)
                 .registerStoredProcedureParameter(firstQueryParameter, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(secondQueryParameter, String.class, ParameterMode.IN)
                 .setParameter(firstQueryParameter, statistics.getStatisticsId())
-                .setParameter(secondQueryParameter, statistics.getCardioTrainingDB().getCardioId());
+                .setParameter(secondQueryParameter, statistics.getCardioTraining().getCardioId());
         return storedProcedureQuery.execute();
     }
 
     //to discuss
-    public boolean trainPower(SportsmanDB sportsmanDB){
+    public boolean trainPower(SportsmanEntity sportsman){
         int firstQueryParameter = 1;
         int secondQueryParameter = 2;
-        StatisticsDB statistics = sportsmanDB.getStatistics();
+        StatisticsEntity statistics = sportsman.getStatistics();
         StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery(trainPowerProcedure)
                 .registerStoredProcedureParameter(firstQueryParameter, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(secondQueryParameter, String.class, ParameterMode.IN)
                 .setParameter(firstQueryParameter, statistics.getStatisticsId())
-                .setParameter(secondQueryParameter, statistics.getPowerTrainingDB().getPowerId());
+                .setParameter(secondQueryParameter, statistics.getPowerTraining().getPowerId());
         return storedProcedureQuery.execute();
     }
 
