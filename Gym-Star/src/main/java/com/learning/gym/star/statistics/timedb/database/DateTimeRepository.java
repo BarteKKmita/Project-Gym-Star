@@ -11,6 +11,6 @@ import java.util.List;
 public interface DateTimeRepository extends JpaRepository<TrainingDateStatisticsEntity, String> {
 
     @Transactional
-    @Query("FROM TrainingDateStatisticsDB t WHERE t.sportsmanStatsId.statisticsId = :id ")
+    @Query("FROM TrainingDateStatisticsEntity t WHERE t.sportsmanStatsId.statisticsId = :id ")
     List<TrainingDateStatisticsEntity> getSportsmanDateAndTimeStats(@Param("id") String statisticsId);
 }

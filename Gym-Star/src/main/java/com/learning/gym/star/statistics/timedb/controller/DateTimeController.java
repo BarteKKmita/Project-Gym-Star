@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController()
-@RequestMapping("/api/date&time")
+@RestController
+@RequestMapping("/api/datetime")
 public class DateTimeController {
     private static final Logger LOGGER = LoggerFactory.getLogger(DateTimeController.class);
     private final DateTimeService service;
