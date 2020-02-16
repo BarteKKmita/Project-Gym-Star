@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/statistics")
-public class StatisticsController {
+public final class StatisticsController {
     private static final Logger LOGGER = LoggerFactory.getLogger(StatisticsController.class);
     private final StatisticsService service;
 

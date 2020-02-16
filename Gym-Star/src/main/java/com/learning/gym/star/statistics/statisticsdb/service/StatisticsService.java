@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service("statistics service")
-public class StatisticsService {
+public final class StatisticsService {
     private static final Logger LOGGER = LoggerFactory.getLogger(StatisticsService.class);
     private final StatisticsRepository repository;
 
@@ -20,7 +20,7 @@ public class StatisticsService {
     }
 
     public int createNewStatistics(){
-        StatisticsEntity stats = StatisticsEntity.builder()
+        var stats = StatisticsEntity.builder()
                 .cardioTrainingDB(new CardioTrainingEntity())
                 .powerTrainingDB(new PowerTrainingEntity())
                 .build();

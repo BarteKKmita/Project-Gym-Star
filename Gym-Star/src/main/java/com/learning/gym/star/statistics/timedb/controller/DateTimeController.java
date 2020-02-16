@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/datetime")
-public class DateTimeController {
+public final class DateTimeController {
     private static final Logger LOGGER = LoggerFactory.getLogger(DateTimeController.class);
     private final DateTimeService service;
 

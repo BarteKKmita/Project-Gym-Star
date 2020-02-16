@@ -12,7 +12,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Service("date and time service")
-public class DateTimeService {
+public final class DateTimeService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DateTimeService.class);
     private final DateTimeRepository repository;
 
@@ -22,7 +22,7 @@ public class DateTimeService {
 
     public void addTrainingDateAndTime(int statisticsId){
         LOGGER.debug("Attempting to save sportsman's training date and time by his statistics id: {}", statisticsId);
-        TrainingDateStatisticsEntity dateTimeStats = TrainingDateStatisticsEntity.builder()
+        var dateTimeStats = TrainingDateStatisticsEntity.builder()
                 .date(LocalDate.now())
                 .time(LocalTime.now())
                 .sportsmanStatsId(StatisticsEntity.builder().statisticsId(String.valueOf(statisticsId)).build())
