@@ -11,11 +11,11 @@ public interface PowerTrainingRepository extends JpaRepository<PowerTrainingEnti
 
     @Transactional
     @Modifying
-    @Query("UPDATE PowerTrainingDB p SET p.trainingCount=p.trainingCount+1 WHERE p.powerId = :id")
+    @Query("UPDATE PowerTrainingEntity p SET p.trainingCount=p.trainingCount+1 WHERE p.powerId = :id")
     void updateTrainingCounter(@Param("id") String id);
 
     @Transactional
     @Modifying
-    @Query("UPDATE PowerTrainingDB p SET p.trainingCount=0 WHERE p.powerId = :id")
+    @Query("UPDATE PowerTrainingEntity p SET p.trainingCount=0 WHERE p.powerId = :id")
     void resetPowerStatistics(@Param("id") String id);
 }
