@@ -30,8 +30,8 @@ public final class TrainerService {
 
     public List<TrainerDTO> getAllTrainers(){
         List<TrainerDTO> trainerList = new ArrayList<>();
-        repository.findAll().forEach(trainerDB -> {
-            var trainerDTO = serializer.getTrainerDTOFromTrainer(trainerDB);
+        repository.findAll().forEach(trainerEntity -> {
+            var trainerDTO = serializer.getTrainerDTOFromTrainer(trainerEntity);
             if (trainerDTO != null) {
                 trainerList.add(trainerDTO);
             }
