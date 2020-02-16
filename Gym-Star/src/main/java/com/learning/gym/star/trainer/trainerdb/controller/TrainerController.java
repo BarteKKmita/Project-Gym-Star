@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/trainer")
-public class TrainerController {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-    private TrainerService service;
+public final class TrainerController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TrainerController.class);
+    private final TrainerService service;
 
     public TrainerController(TrainerService service){
         this.service = service;
@@ -21,13 +21,13 @@ public class TrainerController {
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public void addNewTrainer(@RequestBody TrainerDTO trainer){
-        logger.info("Attempting to add new trainer to database. {}", this.getClass().getName());
+        LOGGER.info("Attempting to add new trainer to database. {}", this.getClass().getName());
         service.addTrainer(trainer);
     }
 
     @GetMapping("/all")
     public ResponseEntity getAllTrainers(){
-        logger.info("Attempting to get all trainers to database. {}", this.getClass().getName());
+        LOGGER.info("Attempting to get all trainers to database. {}", this.getClass().getName());
         return new ResponseEntity<>(service.getAllTrainers(), HttpStatus.OK);
     }
 
@@ -35,5 +35,4 @@ public class TrainerController {
     public ResponseEntity handleEmptyResult(){
         return new ResponseEntity<>("Entered not suitable trainer data", HttpStatus.BAD_REQUEST);
     }
-
 }

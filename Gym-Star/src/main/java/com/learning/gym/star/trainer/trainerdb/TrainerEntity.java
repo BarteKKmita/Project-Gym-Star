@@ -17,7 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "trainer")
 @NamedQuery(name = "setPersonalTrainer", query = "FROM TrainerDB t WHERE t.pesel=:pesel")
-public class TrainerDB implements Serializable {
+public class TrainerEntity implements Serializable {
 
     @Id
     @NotNull

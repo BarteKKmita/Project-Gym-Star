@@ -8,42 +8,44 @@ import org.springframework.stereotype.Component;
 
 @Component
 public final class TrainerSerializer {
-    private static ObjectMapper objectMapper = new ObjectMapper();
-    private static final Logger logger = LoggerFactory.getLogger(TrainerSerializer.class);
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final Logger LOGGER = LoggerFactory.getLogger(TrainerSerializer.class);
 
-    public TrainerDTO getTrainerDTOFromTrainer(TrainerDB trainer){
+    public TrainerDTO getTrainerDTOFromTrainer(TrainerEntity trainer){
         String trainerJson = "";
         try {
             trainerJson = objectMapper.writeValueAsString(trainer);
         } catch (JsonProcessingException e) {
-            logger.error("Serialization of Trainer failure.", e);
-            logger.debug("Trainer data. {}", trainer);
+            LOGGER.error("Serialization of Trainer failure.", e);
+            LOGGER.debug("Trainer data. {}", trainer);
         }
         TrainerDTO trainerDTO = null;
         try {
             trainerDTO = objectMapper.readValue(trainerJson, TrainerDTO.class);
         } catch (JsonProcessingException e) {
-            logger.error("Deserialization of Trainer failure.", e);
-            logger.debug("Trainer data. {}", trainer);
+            LOGGER.error("Deserialization of Trainer failure.", e);
+            LOGGER.debug("Trainer data. {}", trainer);
+            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         return trainerDTO;
     }
 
-    public TrainerDB getTrainerDBFromTrainerDTO(TrainerDTO trainer){
+    public TrainerEntity getTrainerFromTrainerDTO(TrainerDTO trainer){
         String trainerJson = "";
         try {
             trainerJson = objectMapper.writeValueAsString(trainer);
         } catch (JsonProcessingException e) {
-            logger.error("Serialization of TrainerDTO failure.", e);
-            logger.debug("TrainerDTO data. {}", trainer);
+            LOGGER.error("Serialization of TrainerDTO failure.", e);
+            LOGGER.debug("TrainerDTO data. {}", trainer);
         }
-        TrainerDB trainerDB = null;
+        TrainerEntity trainerEntity = null;
         try {
-            trainerDB = objectMapper.readValue(trainerJson, TrainerDB.class);
+            trainerEntity = objectMapper.readValue(trainerJson, TrainerEntity.class);
         } catch (JsonProcessingException e) {
-            logger.error("Deserialization of TrainerDTO failure.", e);
-            logger.debug("TrainerDTO data. {}", trainer);
+            LOGGER.error("Deserialization of TrainerDTO failure.", e);
+            LOGGER.debug("TrainerDTO data. {}", trainer);
         }
-        return trainerDB;
+        return trainerEntity;
     }
 }

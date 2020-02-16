@@ -1,15 +1,10 @@
 package com.learning.gym.star.trainer.trainerdb;
 
-
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-
-/*
-Validation will be added in the future.
- */
 
 @Builder
 @NoArgsConstructor

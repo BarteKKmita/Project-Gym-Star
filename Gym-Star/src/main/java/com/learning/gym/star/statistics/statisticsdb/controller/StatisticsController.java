@@ -11,9 +11,9 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/statistics")
-public class StatisticsController {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-    private StatisticsService service;
+public final class StatisticsController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(StatisticsController.class);
+    private final StatisticsService service;
 
     public StatisticsController(StatisticsService service){
         this.service = service;
@@ -21,24 +21,24 @@ public class StatisticsController {
 
     @GetMapping("/all")
     public ResponseEntity getAllStatistics(){
-        logger.info("Attempting to get all statistics training count");
+        LOGGER.info("Attempting to get all statistics training count");
         return new ResponseEntity<>(service.readAllStatistics(), HttpStatus.OK);
     }
 
     @GetMapping("{id}")
     public ResponseEntity getStatisticsById(@PathVariable("id") int statisticsId){
-        logger.info("Attempting to get statistics by id.");
-        return new ResponseEntity<>(service.readStatisticsById(statisticsId), HttpStatus.OK);
+        LOGGER.info("Attempting to get statistics by id.");
+        return new ResponseEntity<>(service.readStatisticsById(String.valueOf(statisticsId)), HttpStatus.OK);
     }
 
     @PostMapping("/create")
     public ResponseEntity createNewStatistics(){
-        logger.info("Attempting to get create new statistics.");
+        LOGGER.info("Attempting to get create new statistics.");
         return new ResponseEntity<>(service.createNewStatistics(), HttpStatus.CREATED);
     }
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity handleNoSuchRecordInDatabase(){
-        return new ResponseEntity<>("There is no such statistics in database.", HttpStatus.NOT_FOUND);
+    public ResponseEntity handleNoSuchRecordInDatabase(NoSuchElementException exception){
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 }

@@ -1,13 +1,13 @@
 package com.learning.gym.star.training.cardio.database;
 
-import com.learning.gym.star.training.cardio.CardioTrainingDB;
+import com.learning.gym.star.training.cardio.CardioTrainingEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface CardioTrainingJpaRepository extends JpaRepository<CardioTrainingDB, String> {
+public interface CardioTrainingJpaRepository extends JpaRepository<CardioTrainingEntity, String> {
 
     @Transactional
     @Modifying
