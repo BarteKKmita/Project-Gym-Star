@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
 @Service("CardioTrainingService")
 public final class CardioTrainingService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CardioTrainingService.class);
-    private CardioTrainingJpaRepository repository;
+    private final CardioTrainingJpaRepository repository;
 
     public CardioTrainingService(CardioTrainingJpaRepository repository){
         this.repository = repository;
