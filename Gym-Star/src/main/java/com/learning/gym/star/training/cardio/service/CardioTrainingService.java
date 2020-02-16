@@ -18,14 +18,14 @@ public final class CardioTrainingService {
     }
 
     public int getCardioTrainingCount(String cardioId){
-        LOGGER.debug("Attempting to get cardio training count for cardio id: {}", cardioId);
+        LOGGER.info("Attempting to get cardio training count for cardio id: {}", cardioId);
         CardioTrainingEntity training = repository.findById(cardioId)
                 .orElseThrow(() -> handleNoStatisticsFound(cardioId));
         return training.getTrainingCount();
     }
 
     public void doCardioTraining(String cardioId){
-        LOGGER.debug("Attempting to increment cardio training count for cardio id: {}", cardioId);
+        LOGGER.info("Attempting to increment cardio training count for cardio id: {}", cardioId);
         if (repository.existsById(cardioId)) {
             repository.updateTrainingCounter(cardioId);
         } else {
@@ -34,7 +34,7 @@ public final class CardioTrainingService {
     }
 
     public void resetCardioStatistics(String cardioId){
-        LOGGER.debug("Attempting to reset cardio training count for cardio id: {}", cardioId);
+        LOGGER.info("Attempting to reset cardio training count for cardio id: {}", cardioId);
         if (repository.existsById(cardioId)) {
             repository.resetCardioStatistics(cardioId);
         } else {
@@ -43,12 +43,12 @@ public final class CardioTrainingService {
     }
 
     public String createNewCardioStatistics(){
-        LOGGER.debug("Saving new cardio training");
+        LOGGER.info("Saving new cardio training");
         return repository.saveAndFlush(new CardioTrainingEntity()).getCardioId();
     }
 
     private NoSuchElementException handleNoStatisticsFound(String cardioId){
-        LOGGER.debug("There is no cardio statistics with id: {}", cardioId);
+        LOGGER.info("There is no cardio statistics with id: {}", cardioId);
         throw new NoSuchElementException("There is no cardio statistics with id: " + cardioId);
     }
 }
