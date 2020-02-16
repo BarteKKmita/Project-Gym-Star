@@ -16,7 +16,7 @@ import java.util.List;
 @Getter
 @Entity
 @Table(name = "trainers")
-public class TrainerDB implements Serializable {
+public class TrainerEntity implements Serializable {
 
     @Id
     @NotNull

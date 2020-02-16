@@ -11,7 +11,7 @@ public final class TrainerSerializer {
     private static ObjectMapper objectMapper = new ObjectMapper();
     private static final Logger logger = LoggerFactory.getLogger(TrainerSerializer.class);
 
-    public TrainerDTO getTrainerDTOFromTrainer(TrainerDB trainer){
+    public TrainerDTO getTrainerDTOFromTrainer(TrainerEntity trainer){
         String trainerJson = "";
         try {
             trainerJson = objectMapper.writeValueAsString(trainer);
@@ -29,7 +29,7 @@ public final class TrainerSerializer {
         return trainerDTO;
     }
 
-    public TrainerDB getTrainerDBFromTrainerDTO(TrainerDTO trainer){
+    public TrainerEntity getTrainerDBFromTrainerDTO(TrainerDTO trainer){
         String trainerJson = "";
         try {
             trainerJson = objectMapper.writeValueAsString(trainer);
@@ -37,13 +37,13 @@ public final class TrainerSerializer {
             logger.error("Serialization of TrainerDTO failure.", e);
             logger.debug("TrainerDTO data. {}", trainer);
         }
-        TrainerDB trainerDB = null;
+        TrainerEntity trainerEntity = null;
         try {
-            trainerDB = objectMapper.readValue(trainerJson, TrainerDB.class);
+            trainerEntity = objectMapper.readValue(trainerJson, TrainerEntity.class);
         } catch (JsonProcessingException e) {
             logger.error("Deserialization of TrainerDTO failure.", e);
             logger.debug("TrainerDTO data. {}", trainer);
         }
-        return trainerDB;
+        return trainerEntity;
     }
 }
