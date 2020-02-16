@@ -32,6 +32,7 @@ public final class DateTimeController {
         LOGGER.info("Attempting to get sportsman training date and time.");
         List<TrainingDateStatisticsEntity> trainingDateTimeStats = service.getSportsManDateAndTimeStatistics(String.valueOf(statisticsId));
         if (trainingDateTimeStats == null || trainingDateTimeStats.isEmpty()) {
+            LOGGER.info("There is no training date and time statistics for this sportsman statistics id: {}. Status 404 returned.", statisticsId);
             return new ResponseEntity<>("There is no training date and time statistics for this sportsman", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(trainingDateTimeStats, HttpStatus.OK);
