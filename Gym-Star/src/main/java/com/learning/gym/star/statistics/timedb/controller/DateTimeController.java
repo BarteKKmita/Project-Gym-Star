@@ -31,7 +31,7 @@ public class DateTimeController {
     public ResponseEntity getSportsmanDateAndTimeStats(@PathVariable("id") int statisticsId){
         LOGGER.info("Attempting to get sportsman training date and time.");
         List<TrainingDateStatisticsEntity> trainingDateTimeStats = service.getSportsManDateAndTimeStatistics(statisticsId);
-        if (trainingDateTimeStats.isEmpty()) {
+        if (trainingDateTimeStats == null || trainingDateTimeStats.isEmpty()) {
             return new ResponseEntity<>("There is no training date and time statistics for this sportsman", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(trainingDateTimeStats, HttpStatus.OK);
