@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
 @Service("PowerTrainingService")
 public final class PowerTrainingService {
     private static final Logger LOGGER = LoggerFactory.getLogger(PowerTrainingService.class);
-    private PowerTrainingRepository repository;
+    private final PowerTrainingRepository repository;
 
     public PowerTrainingService(PowerTrainingRepository repository){
         this.repository = repository;

@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
 @RequestMapping("api/power")
 public final class PowerTrainingController {
     private static final Logger LOGGER = LoggerFactory.getLogger(PowerTrainingController.class);
-    private PowerTrainingService service;
+    private final PowerTrainingService service;
 
     public PowerTrainingController(PowerTrainingService service){
         this.service = service;

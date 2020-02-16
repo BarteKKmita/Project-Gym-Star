@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
 @RequestMapping("/api/cardio")
 public final class CardioTrainingController {
     private static final Logger LOGGER = LoggerFactory.getLogger(CardioTrainingController.class);
-    private CardioTrainingService service;
+    private final CardioTrainingService service;
 
     public CardioTrainingController(CardioTrainingService service){
         this.service = service;
