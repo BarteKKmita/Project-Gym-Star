@@ -28,7 +28,7 @@ public final class StatisticsController {
     @GetMapping("{id}")
     public ResponseEntity getStatisticsById(@PathVariable("id") int statisticsId){
         LOGGER.info("Attempting to get statistics by id.");
-        return new ResponseEntity<>(service.readStatisticsById(statisticsId), HttpStatus.OK);
+        return new ResponseEntity<>(service.readStatisticsById(String.valueOf(statisticsId)), HttpStatus.OK);
     }
 
     @PostMapping("/create")

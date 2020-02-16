@@ -24,13 +24,13 @@ public final class DateTimeController {
     @ResponseStatus(HttpStatus.CREATED)
     public void saveTrainingDateAndTime(@PathVariable("id") int statisticsId){
         LOGGER.info("Attempting to save training date and time.");
-        service.addTrainingDateAndTime(statisticsId);
+        service.addTrainingDateAndTime(String.valueOf(statisticsId));
     }
 
     @GetMapping("/get/{id}")
     public ResponseEntity getSportsmanDateAndTimeStats(@PathVariable("id") int statisticsId){
         LOGGER.info("Attempting to get sportsman training date and time.");
-        List<TrainingDateStatisticsEntity> trainingDateTimeStats = service.getSportsManDateAndTimeStatistics(statisticsId);
+        List<TrainingDateStatisticsEntity> trainingDateTimeStats = service.getSportsManDateAndTimeStatistics(String.valueOf(statisticsId));
         if (trainingDateTimeStats == null || trainingDateTimeStats.isEmpty()) {
             return new ResponseEntity<>("There is no training date and time statistics for this sportsman", HttpStatus.NOT_FOUND);
         }

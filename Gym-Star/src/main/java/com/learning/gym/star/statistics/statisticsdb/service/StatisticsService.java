@@ -34,9 +34,9 @@ public final class StatisticsService {
         return repository.findAll();
     }
 
-    public StatisticsEntity readStatisticsById(int statisticsId){
+    public StatisticsEntity readStatisticsById(String statisticsId){
         LOGGER.debug("Attempting to get statistics by id: {}", statisticsId);
-        return repository.findById(String.valueOf(statisticsId)).orElseThrow(() -> {
+        return repository.findById(statisticsId).orElseThrow(() -> {
             LOGGER.debug("Failed to get statistics with id: {}", statisticsId);
             return new NoSuchElementException("There is no statistics for statistics id: " + statisticsId);
         });

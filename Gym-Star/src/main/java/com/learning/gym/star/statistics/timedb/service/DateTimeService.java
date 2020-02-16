@@ -22,18 +22,18 @@ public final class DateTimeService {
         this.repository = repository;
     }
 
-    public void addTrainingDateAndTime(int statisticsId){
+    public void addTrainingDateAndTime(String statisticsId){
         LOGGER.debug("Attempting to save sportsman's training date and time by his statistics id: {}", statisticsId);
         var dateTimeStats = TrainingDateStatisticsEntity.builder()
                 .date(LocalDate.now())
                 .time(LocalTime.now())
-                .sportsmanStatsId(StatisticsEntity.builder().statisticsId(String.valueOf(statisticsId)).build())
+                .sportsmanStatsId(StatisticsEntity.builder().statisticsId(statisticsId).build())
                 .build();
         repository.saveAndFlush(dateTimeStats);
     }
 
-    public List<TrainingDateStatisticsEntity> getSportsManDateAndTimeStatistics(int statisticsId){
+    public List<TrainingDateStatisticsEntity> getSportsManDateAndTimeStatistics(String statisticsId){
         LOGGER.debug("Attempting to get sportsman's training date and time by his statistics id: {}", statisticsId);
-        return repository.getSportsmanDateAndTimeStats(String.valueOf(statisticsId));
+        return repository.getSportsmanDateAndTimeStats(statisticsId);
     }
 }
