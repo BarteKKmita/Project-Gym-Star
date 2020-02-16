@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Getter
 @Entity
 @Table(name = "cardiotraining")
-public class CardioTrainingDB {
+public class CardioTrainingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
