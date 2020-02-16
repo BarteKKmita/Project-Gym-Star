@@ -2,15 +2,15 @@ package com.learning.gym.star.sportsmanbuilder.sportsmandb;
 
 
 import com.learning.gym.star.sportsmanbuilder.gender.GenderChoose;
-import com.learning.gym.star.statistics.statisticsdb.StatisticsDB;
-import com.learning.gym.star.trainer.trainerdb.TrainerDB;
+import com.learning.gym.star.statistics.statisticsdb.StatisticsEntity;
+import com.learning.gym.star.trainer.trainerdb.TrainerEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "sportsmen")
-public class SportsmanDB {
+public class SportsmanEntity {
 
     @Id
     @Column(name = "sportsman_pesel")
@@ -32,12 +32,12 @@ public class SportsmanDB {
     @ManyToOne()
     @JoinColumn(
             name = "trainer_pesel", referencedColumnName = "trainer_pesel")
-    private TrainerDB trainer;
+    private TrainerEntity trainer;
 
     @NotEmpty
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(
             name = "statistics_id", referencedColumnName = "statistics_id")
-    private StatisticsDB statistics;
+    private StatisticsEntity statistics;
 
 }

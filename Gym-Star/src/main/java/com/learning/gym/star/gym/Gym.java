@@ -1,7 +1,7 @@
 package com.learning.gym.star.gym;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.learning.gym.star.trainer.trainerdb.TrainerDB;
+import com.learning.gym.star.trainer.trainerdb.TrainerEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
@@ -42,7 +42,7 @@ public class Gym {
     private String buildingNumber;
 
     @ManyToMany(mappedBy = "gym")
-    private List<TrainerDB> trainers;
+    private List<TrainerEntity> trainers;
 
     //This field was created to simulate some property not passed to database for learning reason.
     @Transient
