@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Getter
 @Entity
 @Table(name = "powertraining")
-public class PowerTrainingDB {
+public class PowerTrainingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
