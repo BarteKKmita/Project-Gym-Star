@@ -1,7 +1,7 @@
 package com.learning.gym.star.statistics.timedb;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.learning.gym.star.statistics.statisticsdb.StatisticsDB;
+import com.learning.gym.star.statistics.statisticsdb.StatisticsEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,7 +17,7 @@ import java.time.LocalTime;
 @Getter
 @Entity
 @Table(name = "sportsmentrainingtimestatistics")
-public class TrainingDateStatisticsDB {
+public class TrainingDateStatisticsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,5 +36,5 @@ public class TrainingDateStatisticsDB {
     @ManyToOne()
     @JoinColumn(name = "sportsmanstats_id",
             referencedColumnName = "statistics_id")
-    private StatisticsDB sportsmanStatsId;
+    private StatisticsEntity sportsmanStatsId;
 }

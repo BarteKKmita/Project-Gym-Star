@@ -13,13 +13,13 @@ import javax.persistence.*;
 @Getter
 @Entity
 @Table(name = "cardiotraining")
-public class CardioTrainingDB {
+public class CardioTrainingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cardio_id")
     private String cardioId;
 
-    @Column(name = "training_count ")
+    @Column(name = "training_count")
     private int trainingCount;
 }
