@@ -18,14 +18,14 @@ public final class PowerTrainingService {
     }
 
     public int getPowerTrainingCount(String powerTrainingId){
-        LOGGER.debug("Attempting to get power training count for power id: {}", powerTrainingId);
+        LOGGER.info("Attempting to get power training count for power id: {}", powerTrainingId);
         PowerTrainingEntity powerTraining = repository.findById(powerTrainingId)
                 .orElseThrow(() -> handleNoStatisticsFound(powerTrainingId));
         return powerTraining.getTrainingCount();
     }
 
     public void doPowerTraining(String powerTrainingId){
-        LOGGER.debug("Attempting to increment power training count for power id: {}", powerTrainingId);
+        LOGGER.info("Attempting to increment power training count for power id: {}", powerTrainingId);
         if (repository.existsById(powerTrainingId)) {
             repository.updateTrainingCounter(powerTrainingId);
         } else {
@@ -34,7 +34,7 @@ public final class PowerTrainingService {
     }
 
     public void resetPowerStatistics(String powerTrainingId){
-        LOGGER.debug("Attempting to reset power training count for power id: {}", powerTrainingId);
+        LOGGER.info("Attempting to reset power training count for power id: {}", powerTrainingId);
         if (repository.existsById(powerTrainingId)) {
             repository.resetPowerStatistics(powerTrainingId);
         } else {
@@ -43,12 +43,12 @@ public final class PowerTrainingService {
     }
 
     public String createNewPowerStatistics(){
-        LOGGER.debug("Saving new power training");
+        LOGGER.info("Saving new power training");
         return repository.saveAndFlush(new PowerTrainingEntity()).getPowerId();
     }
 
     private NoSuchElementException handleNoStatisticsFound(String powerTrainingId){
-        LOGGER.debug("There is no power statistics with id: {}", powerTrainingId);
+        LOGGER.info("There is no power statistics with id: {}", powerTrainingId);
         throw new NoSuchElementException("There is no power statistics with id: " + powerTrainingId);
     }
 }
