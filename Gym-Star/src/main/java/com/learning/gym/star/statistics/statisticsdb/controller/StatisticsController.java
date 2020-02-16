@@ -38,7 +38,7 @@ public final class StatisticsController {
     }
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity handleNoSuchRecordInDatabase(){
-        return new ResponseEntity<>("There is no such statistics in database.", HttpStatus.NOT_FOUND);
+    public ResponseEntity handleNoSuchRecordInDatabase(NoSuchElementException exception){
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 }

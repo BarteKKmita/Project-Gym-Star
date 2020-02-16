@@ -7,9 +7,12 @@ import com.learning.gym.star.training.power.PowerTrainingEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
+@Transactional
 @Service("statistics service")
 public final class StatisticsService {
     private static final Logger LOGGER = LoggerFactory.getLogger(StatisticsService.class);
@@ -33,6 +36,9 @@ public final class StatisticsService {
 
     public StatisticsEntity readStatisticsById(int statisticsId){
         LOGGER.debug("Attempting to get statistics by id: {}", statisticsId);
-        return repository.findById(String.valueOf(statisticsId)).orElseThrow();
+        return repository.findById(String.valueOf(statisticsId)).orElseThrow(() -> {
+            LOGGER.debug("Failed to get statistics with id: {}", statisticsId);
+            return new NoSuchElementException("There is no statistics for statistics id: " + statisticsId);
+        });
     }
 }
