@@ -20,7 +20,7 @@ public final class DateTimeController {
         this.service = service;
     }
 
-    @PostMapping("/save/{id}")
+    @PostMapping("{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveTrainingDateAndTime(@PathVariable("id") int statisticsId){
         LOGGER.info("Attempting to save training date and time.");

@@ -39,7 +39,7 @@ public final class CardioTrainingController {
         service.resetCardioStatistics(String.valueOf(cardioId));
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity createNewCardioStatistics(){
         LOGGER.info("Attempting to create new cardio training");
         return new ResponseEntity<>("Your gym id nr : " + service.createNewCardioStatistics(), HttpStatus.CREATED);

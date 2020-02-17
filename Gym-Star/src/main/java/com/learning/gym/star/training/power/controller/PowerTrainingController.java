@@ -39,7 +39,7 @@ public final class PowerTrainingController {
         service.resetPowerStatistics(String.valueOf(powerId));
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity createNewStatistics(){
         LOGGER.info("Attempting to create new power training");
         return new ResponseEntity<>("Your gym id nr : " + service.createNewPowerStatistics(), HttpStatus.CREATED);

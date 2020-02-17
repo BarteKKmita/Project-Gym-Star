@@ -7,13 +7,11 @@ import com.learning.gym.star.training.power.PowerTrainingEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@Transactional
-@Service("statistics service")
+@Service("StatisticsService")
 public final class StatisticsService {
     private static final Logger LOGGER = LoggerFactory.getLogger(StatisticsService.class);
     private final StatisticsRepository repository;
@@ -24,8 +22,8 @@ public final class StatisticsService {
 
     public int createNewStatistics(){
         var stats = StatisticsEntity.builder()
-                .cardioTrainingDB(new CardioTrainingEntity())
-                .powerTrainingDB(new PowerTrainingEntity())
+                .cardioTrainingEntity(new CardioTrainingEntity())
+                .powerTrainingEntity(new PowerTrainingEntity())
                 .build();
         return Integer.parseInt(repository.saveAndFlush(stats).getStatisticsId());
     }
@@ -35,10 +33,10 @@ public final class StatisticsService {
     }
 
     public StatisticsEntity readStatisticsById(String statisticsId){
-        LOGGER.debug("Attempting to get statistics by id: {}", statisticsId);
+        LOGGER.info("Attempting to get statistics by id: {}", statisticsId);
         return repository.findById(statisticsId).orElseThrow(() -> {
-            LOGGER.debug("Failed to get statistics with id: {}", statisticsId);
-            return new NoSuchElementException("There is no statistics for statistics id: " + statisticsId);
+            LOGGER.info("Failed to get statistics with id: {}", statisticsId);
+            throw new NoSuchElementException("There is no statistics for statistics id: " + statisticsId);
         });
     }
 }
