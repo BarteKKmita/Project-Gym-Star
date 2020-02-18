@@ -31,7 +31,7 @@ public final class StatisticsController {
         return new ResponseEntity<>(service.readStatisticsById(String.valueOf(statisticsId)), HttpStatus.OK);
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity createNewStatistics(){
         LOGGER.info("Attempting to get create new statistics.");
         return new ResponseEntity<>(service.createNewStatistics(), HttpStatus.CREATED);

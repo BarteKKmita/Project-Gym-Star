@@ -20,14 +20,14 @@ public final class DateTimeController {
         this.service = service;
     }
 
-    @PostMapping("/save/{id}")
+    @PostMapping("{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveTrainingDateAndTime(@PathVariable("id") int statisticsId){
         LOGGER.info("Attempting to save training date and time.");
         service.addTrainingDateAndTime(String.valueOf(statisticsId));
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("{id}")
     public ResponseEntity getSportsmanDateAndTimeStats(@PathVariable("id") int statisticsId){
         LOGGER.info("Attempting to get sportsman training date and time.");
         List<TrainingDateStatisticsEntity> trainingDateTimeStats = service.getSportsManDateAndTimeStatistics(String.valueOf(statisticsId));

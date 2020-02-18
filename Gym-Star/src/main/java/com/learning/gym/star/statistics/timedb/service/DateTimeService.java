@@ -6,14 +6,12 @@ import com.learning.gym.star.statistics.timedb.database.DateTimeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-@Transactional
-@Service("date and time service")
+@Service("DateAndTimeService")
 public final class DateTimeService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DateTimeService.class);
     private final DateTimeRepository repository;
@@ -23,7 +21,7 @@ public final class DateTimeService {
     }
 
     public void addTrainingDateAndTime(String statisticsId){
-        LOGGER.debug("Attempting to save sportsman's training date and time by his statistics id: {}", statisticsId);
+        LOGGER.info("Attempting to save sportsman's training date and time by his statistics id: {}", statisticsId);
         var dateTimeStats = TrainingDateStatisticsEntity.builder()
                 .date(LocalDate.now())
                 .time(LocalTime.now())
@@ -33,7 +31,7 @@ public final class DateTimeService {
     }
 
     public List<TrainingDateStatisticsEntity> getSportsManDateAndTimeStatistics(String statisticsId){
-        LOGGER.debug("Attempting to get sportsman's training date and time by his statistics id: {}", statisticsId);
+        LOGGER.info("Attempting to get sportsman's training date and time by his statistics id: {}", statisticsId);
         return repository.getSportsmanDateAndTimeStats(statisticsId);
     }
 }

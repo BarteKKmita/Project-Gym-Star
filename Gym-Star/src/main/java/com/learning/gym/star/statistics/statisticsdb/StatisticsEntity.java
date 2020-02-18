@@ -1,6 +1,5 @@
 package com.learning.gym.star.statistics.statisticsdb;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.learning.gym.star.training.cardio.CardioTrainingEntity;
 import com.learning.gym.star.training.power.PowerTrainingEntity;
 import lombok.AllArgsConstructor;
@@ -25,10 +24,9 @@ public class StatisticsEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cardio_id")
-    @JsonManagedReference
-    private CardioTrainingEntity cardioTrainingDB;
+    private CardioTrainingEntity cardioTrainingEntity;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "power_id")
-    private PowerTrainingEntity powerTrainingDB;
+    private PowerTrainingEntity powerTrainingEntity;
 }
