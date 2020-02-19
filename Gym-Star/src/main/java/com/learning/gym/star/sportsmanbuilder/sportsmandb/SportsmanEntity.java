@@ -40,19 +40,21 @@ public class SportsmanEntity {
     private GenderChoose gender;
 
     @JsonIgnoreProperties()
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(
-            name = "trainer_pesel", referencedColumnName = "trainer_pesel")
+            name = "trainer_pesel",
+            referencedColumnName = "trainer_pesel")
     private TrainerEntity trainer;
 
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(
-            name = "statistics_id", referencedColumnName = "statistics_id")
+            name = "statistics_id",
+            referencedColumnName = "statistics_id")
     private StatisticsEntity statistics;
 
     @JsonIgnore
-    @OneToOne()
+    @OneToOne
     @JoinColumn(name = "gym_id")
     private Gym gym;
 }

@@ -1,6 +1,5 @@
 package com.learning.gym.star.statistics.statisticsdb;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.learning.gym.star.training.cardio.CardioTrainingEntity;
 import com.learning.gym.star.training.power.PowerTrainingEntity;
 import lombok.AllArgsConstructor;
@@ -9,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Builder
 @NoArgsConstructor
@@ -24,14 +22,11 @@ public class StatisticsEntity {
     @Column(name = "statistics_id")
     private String statisticsId;
 
-    @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cardio_id")
-    @JsonManagedReference
-    private CardioTrainingEntity cardioTraining;
+    private CardioTrainingEntity cardioTrainingEntity;
 
-    @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "power_id")
-    private PowerTrainingEntity powerTraining;
+    private PowerTrainingEntity powerTrainingEntity;
 }

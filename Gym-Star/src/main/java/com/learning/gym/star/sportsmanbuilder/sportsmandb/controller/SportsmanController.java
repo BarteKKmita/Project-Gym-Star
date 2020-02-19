@@ -21,16 +21,16 @@ public final class SportsmanController {
         this.service = service;
     }
 
-    @PostMapping("/add")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void addSportsman(@RequestBody SportsmanDTO sportsman){
         LOGGER.info("Attempting to add new sportsman.");
         service.addSportsman(sportsman);
     }
 
-    @GetMapping("/dateandtime")
+    @GetMapping("/datetime")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity getSportsmanDateAndTimeStats2(Long sportsmanPesel){
+    public ResponseEntity getSportsmanDateAndTimeStats(Long sportsmanPesel){
         LOGGER.info("Attempting to get sportsman date and time statistics.");
         return new ResponseEntity<>(service.getSportsmanStatistics(sportsmanPesel), HttpStatus.OK);
     }

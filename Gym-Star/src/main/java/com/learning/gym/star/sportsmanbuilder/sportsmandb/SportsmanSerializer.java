@@ -11,23 +11,23 @@ import org.springframework.stereotype.Component;
 
 @Component
 public final class SportsmanSerializer {
-    private static final Logger logger = LoggerFactory.getLogger(SportsmanSerializer.class);
-    private static ObjectMapper objectMapper = new ObjectMapper();
+    private static final Logger LOGGER = LoggerFactory.getLogger(SportsmanSerializer.class);
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public SportsmanDTO getSportsmanDTOFromSportsman(SportsmanEntity sportsman){
         String sportsmanJson = "";
         try {
             sportsmanJson = objectMapper.writeValueAsString(sportsman);
         } catch (JsonProcessingException e) {
-            logger.error("Serialization of Sportsman failure.", e);
-            logger.debug("Sportsman data. {}", sportsman);
+            LOGGER.error("Serialization of Sportsman failure.", e);
+            LOGGER.debug("Sportsman data. {}", sportsman);
         }
         SportsmanDTO sportsmanDTO = null;
         try {
             sportsmanDTO = objectMapper.readValue(sportsmanJson, SportsmanDTO.class);
         } catch (JsonProcessingException e) {
-            logger.error("Deserialization of Sportsman failure.", e);
-            logger.debug("Sportsman data. {}", sportsman);
+            LOGGER.error("Deserialization of Sportsman failure.", e);
+            LOGGER.debug("Sportsman data. {}", sportsman);
         }
         return sportsmanDTO;
     }

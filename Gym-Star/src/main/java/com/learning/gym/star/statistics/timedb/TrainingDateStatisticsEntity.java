@@ -37,7 +37,7 @@ public class TrainingDateStatisticsEntity {
     private LocalTime time;
 
     @JsonIgnore
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "sportsmanstats_id",
             referencedColumnName = "statistics_id")
     private StatisticsEntity sportsmanStatsId;

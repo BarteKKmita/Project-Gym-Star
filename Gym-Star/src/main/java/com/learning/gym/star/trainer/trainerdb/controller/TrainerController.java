@@ -18,21 +18,22 @@ public final class TrainerController {
         this.service = service;
     }
 
-    @PostMapping("/create")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void addNewTrainer(@RequestBody TrainerDTO trainer){
-        LOGGER.info("Attempting to add new trainer to database. {}", this.getClass().getName());
+        LOGGER.info("Attempting to add new trainer to database.");
         service.addTrainer(trainer);
     }
 
     @GetMapping("/all")
     public ResponseEntity getAllTrainers(){
-        LOGGER.info("Attempting to get all trainers to database. {}", this.getClass().getName());
+        LOGGER.info("Attempting to get all trainers to database.");
         return new ResponseEntity<>(service.getAllTrainers(), HttpStatus.OK);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity handleEmptyResult(){
+        LOGGER.info("Entered not suitable trainer data. Serialization of TrainerDTO to TrainerEntity failure. Status 400 returned.");
         return new ResponseEntity<>("Entered not suitable trainer data", HttpStatus.BAD_REQUEST);
     }
 }
