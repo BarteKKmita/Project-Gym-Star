@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Entity
-@Table(name = "trainers")
+@Table(name = "trainer")
 public class TrainerEntity implements Serializable {
 
     @Id
@@ -37,7 +37,7 @@ public class TrainerEntity implements Serializable {
 
     @Getter(AccessLevel.NONE)
     @JsonIgnore
-    @ManyToMany()
+    @ManyToMany
     @JoinTable(name = "trainersatgym",
             joinColumns = @JoinColumn(name = "trainer_pesel"),
             inverseJoinColumns = @JoinColumn(name = "gym_id"))

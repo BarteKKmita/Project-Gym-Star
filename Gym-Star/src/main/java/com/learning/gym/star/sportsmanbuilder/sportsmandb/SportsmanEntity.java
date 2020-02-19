@@ -29,15 +29,16 @@ public class SportsmanEntity {
     private GenderChoose gender;
 
     @NotEmpty
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(
-            name = "trainer_pesel", referencedColumnName = "trainer_pesel")
+            name = "trainer_pesel",
+            referencedColumnName = "trainer_pesel")
     private TrainerEntity trainer;
 
     @NotEmpty
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(
-            name = "statistics_id", referencedColumnName = "statistics_id")
+            name = "statistics_id",
+            referencedColumnName = "statistics_id")
     private StatisticsEntity statistics;
-
 }
