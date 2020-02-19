@@ -1,6 +1,7 @@
-package com.learning.gym.star.training;
+package com.learning.gym.star.training.power;
 
 import com.learning.gym.star.statistics.TrainingStatistics;
+import com.learning.gym.star.training.TrainingType;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode

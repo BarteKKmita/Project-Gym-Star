@@ -1,6 +1,6 @@
 package com.learning.gym.star.gym.database.jdbc;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,10 +9,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-@AllArgsConstructor
-class JdbcPropertiesReader {
+@RequiredArgsConstructor
+final class JdbcPropertiesReader {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final Logger LOGGER = LoggerFactory.getLogger(JdbcPropertiesReader.class);
     private final String pathToFile;
     private final static String URL = "spring.datasource.url";
     private final static String USERNAME = "spring.datasource.username";
@@ -41,7 +41,7 @@ class JdbcPropertiesReader {
             propertiesReader.load(input);
             readProperty = propertiesReader.getProperty(property);
         } catch (IOException ex) {
-            logger.error("File cannot be opened or not exists");
+            LOGGER.error("File cannot be opened or not exists");
             ex.printStackTrace();
             System.exit(1);
         }
