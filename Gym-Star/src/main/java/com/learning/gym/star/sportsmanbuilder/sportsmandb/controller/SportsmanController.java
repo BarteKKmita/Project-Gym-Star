@@ -63,12 +63,14 @@ public final class SportsmanController {
     }
 
     @ExceptionHandler(EntityExistsException.class)
-    public ResponseEntity handleExistingRecordInDatabase(){
-        return new ResponseEntity<>("Sportsman with given pesel number already exists.", HttpStatus.CONFLICT);
+    public ResponseEntity handleExistingRecordInDatabase(EntityExistsException exception){
+        LOGGER.info("Sportsman with specified pesel already exists. Status 409 returned.");
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity handleNoSuchRecordInDatabase(){
-        return new ResponseEntity<>("Sportsman with given pesel does not exists.", HttpStatus.NOT_FOUND);
+    public ResponseEntity handleNoSuchRecordInDatabase(NoSuchElementException exception){
+        LOGGER.info("Sportsman with given pesel not exists. Status 404 returned.");
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 }
