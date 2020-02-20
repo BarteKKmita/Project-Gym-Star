@@ -12,12 +12,12 @@ public final class TrainerSerializer {
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainerSerializer.class);
 
     public TrainerDTO getTrainerDTOFromTrainer(TrainerEntity trainer){
-        String trainerJson = serializeTrainerEntity(trainer);
+        var trainerJson = serializeTrainerEntity(trainer);
         return deserializeTrainerEntity(trainer, trainerJson);
     }
 
     public TrainerEntity getTrainerFromTrainerDTO(TrainerDTO trainer){
-        String trainerJson = serializeTrainerDTO(trainer);
+        var trainerJson = serializeTrainerDTO(trainer);
         return deserializeTrainerDTO(trainer, trainerJson);
     }
 
@@ -44,7 +44,7 @@ public final class TrainerSerializer {
     }
 
     private String serializeTrainerEntity(TrainerEntity trainer){
-        String trainerJson = "";
+        var trainerJson = "";
         try {
             trainerJson = objectMapper.writeValueAsString(trainer);
         } catch (JsonProcessingException e) {
@@ -55,7 +55,7 @@ public final class TrainerSerializer {
     }
 
     private String serializeTrainerDTO(TrainerDTO trainer){
-        String trainerJson = "";
+        var trainerJson = "";
         try {
             trainerJson = objectMapper.writeValueAsString(trainer);
         } catch (JsonProcessingException e) {
