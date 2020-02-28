@@ -2,7 +2,6 @@ package com.learning.gym.star.gym.controller;
 
 import lombok.*;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 
 @NoArgsConstructor
@@ -11,16 +10,19 @@ import javax.validation.constraints.NotEmpty;
 @ToString
 @Getter
 public class GymDTO {
-
+    @NotEmpty
     private String gymId;
+
     @NotEmpty
     private String gymName;
+
     @NotEmpty
     private String street;
+
     @NotEmpty
     private String city;
+
     @NotEmpty
-    @Valid
     private String buildingNumber;
 
     public String[] toStringArray(){

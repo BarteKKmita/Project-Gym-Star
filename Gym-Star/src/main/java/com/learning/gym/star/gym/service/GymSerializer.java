@@ -1,7 +1,5 @@
 package com.learning.gym.star.gym.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.learning.gym.star.gym.Gym;
 import com.learning.gym.star.gym.controller.GymDTO;
 import org.slf4j.Logger;
@@ -13,40 +11,28 @@ import java.util.List;
 
 @Component
 public final class GymSerializer {
-    private static ObjectMapper objectMapper = new ObjectMapper();
-    private static final Logger logger = LoggerFactory.getLogger(GymSerializer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GymSerializer.class);
 
     public Gym getGymFromGymGTO(GymDTO gymDTO){
-        String gymAsJson = "";
-        try {
-            gymAsJson = objectMapper.writeValueAsString(gymDTO);
-        } catch (JsonProcessingException e) {
-            logger.error("Serialization of gym failure.", e);
-        }
-        Gym databaseGym = null;
-        try {
-            databaseGym = objectMapper.readValue(gymAsJson, Gym.class);
-        } catch (JsonProcessingException e) {
-            logger.error("Deserialization of gym failure.", e);
-        }
-        return databaseGym;
+        LOGGER.info("Attempt to serialize GymDTO to GymEntity for gym ID: {}", gymDTO.getGymId());
+        return Gym.builder()
+                .gymId(gymDTO.getGymId())
+                .gymName(gymDTO.getGymName())
+                .street(gymDTO.getStreet())
+                .city(gymDTO.getCity())
+                .buildingNumber(gymDTO.getBuildingNumber())
+                .build();
     }
 
     public GymDTO getGymDTOFromGym(Gym databaseGym){
-        String gymAsJson = "";
-        try {
-            gymAsJson = objectMapper.writeValueAsString(databaseGym);
-
-        } catch (JsonProcessingException e) {
-            logger.error("Serialization of gym failure.", e);
-        }
-        GymDTO gymDTO = null;
-        try {
-            gymDTO = objectMapper.readValue(gymAsJson, GymDTO.class);
-        } catch (JsonProcessingException e) {
-            logger.error("Deserialization of gym failure.", e);
-        }
-        return gymDTO;
+        LOGGER.info("Attempt to serialize GymEntity to GymDTO for gym ID: {}", databaseGym.getGymId());
+        return GymDTO.builder()
+                .gymId(databaseGym.getGymId())
+                .gymName(databaseGym.getGymName())
+                .street(databaseGym.getStreet())
+                .city(databaseGym.getCity())
+                .buildingNumber(databaseGym.getBuildingNumber())
+                .build();
     }
 
     public GymDTO buildGymDTO(String[] gymAsStringArray){
@@ -71,6 +57,7 @@ public final class GymSerializer {
     }
 
     public List<GymDTO> buildGymDTOFromGymAsStringList(List<String> gymsFromDatabase){
+        LOGGER.info("Serializing list of gyms form database to GymDTO list");
         List<GymDTO> gymListForController = new ArrayList<>();
         gymsFromDatabase.forEach(gym -> gymListForController.add(buildGymDTO(gym.split(" "))));
         return gymListForController;
