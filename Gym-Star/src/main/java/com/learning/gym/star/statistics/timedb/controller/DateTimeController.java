@@ -27,7 +27,7 @@ public final class DateTimeController {
         service.addTrainingDateAndTime(String.valueOf(statisticsId));
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("{id}")
     public ResponseEntity getSportsmanDateAndTimeStats(@PathVariable("id") int statisticsId){
         LOGGER.info("Attempting to get sportsman training date and time.");
         List<TrainingDateStatisticsEntity> trainingDateTimeStats = service.getSportsManDateAndTimeStatistics(String.valueOf(statisticsId));

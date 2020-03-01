@@ -61,3 +61,20 @@ time TIME NOT NULL,
 sportsmanstats_id int NOT NULL,
 FOREIGN KEY (sportsmanstats_id) REFERENCES Statistics(statistics_id)
 );
+
+ALTER TABLE sportsmen DROP FOREIGN KEY  `sportsmen_ibfk_1`;
+
+ALTER TABLE Trainer MODIFY trainer_pesel BIGINT;
+
+ALTER TABLE sportsmen MODIFY trainer_pesel BIGINT;
+
+ALTER TABLE SportsMen
+ADD FOREIGN KEY (trainer_pesel) REFERENCES trainer(trainer_pesel);
+
+ALTER TABLE Trainer
+ADD COLUMN sportsman BIGINT;
+
+ALTER TABLE sportsmen MODFIY sportsman_pesel BIGINT;
+
+ALTER TABLE Trainer
+ADD FOREIGN KEY (sportsman) REFERENCES SportsMen(sportsman_pesel);

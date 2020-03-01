@@ -1,12 +1,12 @@
 package com.learning.gym.star.gym;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.annotations.ApiModelProperty;
+import com.learning.gym.star.trainer.trainerdb.TrainerEntity;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -39,11 +39,8 @@ public class Gym {
     @NotEmpty
     private String buildingNumber;
 
-    //This field was created to simulate some property not passed to database.
-    @Transient
-    @JsonIgnore
-    @ApiModelProperty(hidden = true)
-    private String auxiliary;
+    @ManyToMany(mappedBy = "gym")
+    private List<TrainerEntity> trainers;
 
     public String[] toStringArray(){
         return new String[]{gymId, gymName, street, city, buildingNumber};
