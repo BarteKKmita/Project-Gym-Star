@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/api/trainer")
 public final class TrainerController {
@@ -20,7 +22,7 @@ public final class TrainerController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void addNewTrainer(@RequestBody TrainerDTO trainer){
+    public void addNewTrainer(@RequestBody TrainerDTO trainer) throws IOException {
         LOGGER.info("Attempting to add new trainer to database.");
         service.addTrainer(trainer);
     }
@@ -31,9 +33,9 @@ public final class TrainerController {
         return new ResponseEntity<>(service.getAllTrainers(), HttpStatus.OK);
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity handleEmptyResult(){
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity handleSerializationFailure(IOException exception) {
         LOGGER.info("Entered not suitable trainer data. Serialization of TrainerDTO to TrainerEntity failure. Status 400 returned.");
-        return new ResponseEntity<>("Entered not suitable trainer data", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

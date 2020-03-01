@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public final class TrainerService {
         this.serializer = serializer;
     }
 
-    public void addTrainer(TrainerDTO trainer){
+    public void addTrainer(TrainerDTO trainer) throws IOException {
         LOGGER.debug("Adding trainer to database. {}", trainer);
         repository.saveAndFlush(serializer.getTrainerFromTrainerDTO(trainer));
     }
@@ -29,9 +30,11 @@ public final class TrainerService {
     public List<TrainerDTO> getAllTrainers(){
         List<TrainerDTO> trainerList = new ArrayList<>();
         repository.findAll().forEach(trainerEntity -> {
-            var trainerDTO = serializer.getTrainerDTOFromTrainer(trainerEntity);
-            if (trainerDTO != null) {
+            try {
+                var trainerDTO = serializer.getTrainerDTOFromTrainer(trainerEntity);
                 trainerList.add(trainerDTO);
+            } catch (IOException e) {
+                LOGGER.info(e.getMessage());
             }
         });
         return trainerList;
