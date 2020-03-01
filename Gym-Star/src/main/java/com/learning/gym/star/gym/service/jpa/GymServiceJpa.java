@@ -1,23 +1,22 @@
 package com.learning.gym.star.gym.service.jpa;
 
-import com.learning.gym.star.gym.Gym;
 import com.learning.gym.star.gym.controller.GymDTO;
 import com.learning.gym.star.gym.database.jpa.GymJpaRepository;
 import com.learning.gym.star.gym.service.GymSerializer;
-import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.IncorrectUpdateSemanticsDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service("GymServiceJpa")
-@NoArgsConstructor
-public class GymServiceJpa {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-    private GymJpaRepository gymRepository;
-    private GymSerializer gymSerializer;
+public final class GymServiceJpa {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GymServiceJpa.class);
+    private final GymJpaRepository gymRepository;
+    private final GymSerializer gymSerializer;
 
     @Autowired
     public GymServiceJpa(GymJpaRepository gymRepository, GymSerializer gymSerializer){
@@ -30,30 +29,36 @@ public class GymServiceJpa {
     }
 
     public GymDTO getGymById(int gymId){
-        logger.debug("Getting gym with id: {}. {}", gymId, this.getClass());
-        Gym databaseGym = gymRepository.findById(Integer.toString(gymId)).orElseThrow();
-        return gymSerializer.getGymDTOFromGym(databaseGym);
+        LOGGER.info("Getting gym with id: {}.", gymId);
+        var gymEntity = gymRepository.findById(Integer.toString(gymId))
+                .orElseThrow(() -> {
+                    LOGGER.info("Gym with id {} does not exists", gymId);
+                    throw new NoSuchElementException("Gym with id: " + gymId + " does not exists");
+                });
+        return gymSerializer.deserializeGym(gymEntity);
     }
 
-    public String addGym(GymDTO gym){
-        logger.debug("Adding gym: {}. {}", gym, this.getClass());
-        if (gym.getGymId() != null) {
+    public String addGym(GymDTO gymDTO){
+        if (gymDTO.getGymId() != null) {
             return "";
         }
-        return gymRepository.saveAndFlush(gymSerializer.getGymFromGymGTO(gym)).getGymId();
+        LOGGER.info("Adding gymDTO: {}.", gymDTO);
+        var gymEntity = gymSerializer.serializeGym(gymDTO);
+        return gymRepository.saveAndFlush(gymEntity).getGymId();
     }
 
     public void updateGym(GymDTO gymDTO){
-        logger.debug("Updating gym with gym id {}. {}", gymDTO.getGymId(), this.getClass());
         if (gymDTO.getGymId() == null) {
-            logger.error("Updating gym requires specifying id. {}", this.getClass());
-            throw new org.springframework.dao.IncorrectUpdateSemanticsDataAccessException("Gym id cannot be null");
+            LOGGER.error("Updating gym requires specifying id.");
+            throw new IncorrectUpdateSemanticsDataAccessException("Gym id cannot be null");
         }
-        gymRepository.saveAndFlush(gymSerializer.getGymFromGymGTO(gymDTO));
+        LOGGER.info("Updating gym with gym id {}.", gymDTO.getGymId());
+        var gymEntity = gymSerializer.serializeGym(gymDTO);
+        gymRepository.saveAndFlush(gymEntity);
     }
 
     public void deleteGymById(String gymId){
-        logger.debug("Deleting gym with id: {}. {}", gymId, this.getClass());
+        LOGGER.info("Deleting gym with id: {}.", gymId);
         gymRepository.deleteById(gymId);
     }
 }

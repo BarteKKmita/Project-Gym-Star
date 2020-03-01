@@ -7,9 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service("TrainerService")
 public final class TrainerService {
@@ -22,21 +21,14 @@ public final class TrainerService {
         this.serializer = serializer;
     }
 
-    public void addTrainer(TrainerDTO trainer) throws IOException{
+    public void addTrainer(TrainerDTO trainer) throws IllegalArgumentException{
         LOGGER.debug("Adding trainer to database. {}", trainer);
         repository.saveAndFlush(serializer.getTrainerFromTrainerDTO(trainer));
     }
 
-    public List<TrainerDTO> getAllTrainers(){
-        List<TrainerDTO> trainerList = new ArrayList<>();
-        repository.findAll().forEach(trainerEntity -> {
-            try {
-                var trainerDTO = serializer.getTrainerDTOFromTrainer(trainerEntity);
-                trainerList.add(trainerDTO);
-            } catch (IOException e) {
-                LOGGER.info(e.getMessage());
-            }
-        });
-        return trainerList;
+    public List<TrainerDTO> getAllTrainers() throws IllegalArgumentException{
+        return repository.findAll().stream()
+                .map(serializer::getTrainerDTOFromTrainer)
+                .collect(Collectors.toList());
     }
 }

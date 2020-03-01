@@ -20,7 +20,7 @@ public class GymControllerJpaSystemTest {
     private MockMvc mockMvc;
 
     @Test
-    public void shouldGetSecondGymFromRealMySQLDatabaseWhenGetGymWithId2() throws Exception{
+    public void shouldGetSecondGymFromRealMySQLDatabaseWhenGetGymWithId2() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/jpa/gym/{id}", "2")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())

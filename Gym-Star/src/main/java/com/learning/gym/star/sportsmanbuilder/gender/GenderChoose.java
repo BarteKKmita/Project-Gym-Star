@@ -2,7 +2,7 @@ package com.learning.gym.star.sportsmanbuilder.gender;
 
 public enum GenderChoose {
     M("Male"),
-    W("Female");
+    F("Female");
 
     private String displayGender;
 
