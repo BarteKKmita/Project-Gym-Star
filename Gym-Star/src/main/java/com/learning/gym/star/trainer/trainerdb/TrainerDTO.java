@@ -17,7 +17,7 @@ public class TrainerDTO implements Serializable {
 
     @PESEL(message = "Pesel must have 11 digits")
     @NotNull(message = "Please enter pesel number.")
-    private CharSequence pesel;
+    private String pesel;
 
     @Size(min = 2, message = "Name is to short")
     @NotEmpty(message = "Trainer has to have name")

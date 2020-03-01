@@ -22,7 +22,7 @@ public class TrainerEntity implements Serializable {
 
     @Id
     @Column(name = "trainer_pesel")
-    private Long pesel;
+    private String pesel;
 
     @NotEmpty
     @Column(name = "trainer_name")

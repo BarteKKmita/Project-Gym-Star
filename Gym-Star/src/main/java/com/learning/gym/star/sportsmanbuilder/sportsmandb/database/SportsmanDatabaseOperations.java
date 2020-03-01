@@ -30,7 +30,7 @@ public final class SportsmanDatabaseOperations {
         return sportsmanStatsProcedure.getResultList();
     }
 
-    public SportsmanEntity setTrainer(Long trainerPesel, SportsmanEntity sportsman){
+    public SportsmanEntity setTrainer(String trainerPesel, SportsmanEntity sportsman){
         var parameterName = "pesel";
         return sportsman.withTrainer(entityManager.createNamedQuery(PERSONAL_TRAINER_QUERY, TrainerEntity.class)
                 .setParameter(parameterName, trainerPesel).getSingleResult());

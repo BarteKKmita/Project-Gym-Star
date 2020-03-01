@@ -1,5 +1,6 @@
 package com.learning.gym.star.sportsmanbuilder.sportsmandb;
 
+import com.learning.gym.star.sportsmanbuilder.gender.GenderChoose;
 import com.learning.gym.star.sportsmanbuilder.gender.validation.GenderValidationCheck;
 import lombok.*;
 import org.hibernate.validator.constraints.pl.PESEL;
@@ -17,7 +18,7 @@ public class SportsmanDTO {
 
     @PESEL(message = "Pesel must have 11 digits")
     @NotNull(message = "Please enter pesel number.")
-    private CharSequence sportsmanPesel;
+    private String sportsmanPesel;
 
     @Size(min = 2, message = "Name is to short")
     @NotEmpty(message = "Sportsman has to have name")
@@ -27,7 +28,7 @@ public class SportsmanDTO {
     @NotEmpty(message = "Sportsman has to have surname")
     private String surname;
 
-    @GenderValidationCheck()
+    @GenderValidationCheck
     @NotNull(message = "Please specify sportsman gender")
-    private String gender;
+    private GenderChoose gender;
 }

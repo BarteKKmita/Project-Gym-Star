@@ -24,7 +24,7 @@ public class SportsmanEntity {
 
     @Id
     @Column(name = "sportsman_pesel")
-    private Long sportsmanPesel;
+    private String sportsmanPesel;
 
     @Column(name = "sportsman_name")
     @NotEmpty

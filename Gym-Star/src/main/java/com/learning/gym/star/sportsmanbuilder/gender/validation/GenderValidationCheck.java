@@ -1,6 +1,5 @@
 package com.learning.gym.star.sportsmanbuilder.gender.validation;
 
-
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.ElementType;
@@ -19,6 +18,4 @@ public @interface GenderValidationCheck {
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
-
 }
-

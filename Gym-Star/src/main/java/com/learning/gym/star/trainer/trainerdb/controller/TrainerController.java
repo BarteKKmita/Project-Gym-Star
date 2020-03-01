@@ -18,7 +18,7 @@ import java.util.Map;
 @Validated
 @RestController
 @RequestMapping("/api/trainer")
-public final class TrainerController {
+public class TrainerController {
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainerController.class);
     private final TrainerService service;
 

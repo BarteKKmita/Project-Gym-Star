@@ -32,8 +32,6 @@ public final class SportsmanSerializer {
                         .cardioTrainingEntity(new CardioTrainingEntity())
                         .powerTrainingEntity(new PowerTrainingEntity())
                         .build())
-                .gender(GenderChoose.valueOf(sportsman.getGender()))
-                .statistics(new StatisticsDB(null, new CardioTrainingDB(), new PowerTrainingDB()))
                 .build();
     }
 }
