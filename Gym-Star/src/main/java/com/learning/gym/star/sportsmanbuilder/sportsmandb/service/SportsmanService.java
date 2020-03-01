@@ -20,8 +20,8 @@ import java.util.NoSuchElementException;
 @Transactional
 @Service("SportsmanService")
 public class SportsmanService {
-    private static final SportsmanSerializer serializer = new SportsmanSerializer();
-    private static final TrainerSerializer trainerSerializer = new TrainerSerializer();
+    private static final SportsmanSerializer SPORTSMAN_SERIALIZER = new SportsmanSerializer();
+    private static final TrainerSerializer TRAINER_SERIALIZER = new TrainerSerializer();
     private static final Logger LOGGER = LoggerFactory.getLogger(SportsmanService.class);
     private final SportsmanRepository repository;
     private final SportsmanDatabaseOperations databaseOperations;
@@ -35,9 +35,9 @@ public class SportsmanService {
         LOGGER.info("Adding new sportsman with data {}.", sportsman);
         if (repository.findById(sportsman.getSportsmanPesel()).isPresent()) {
             LOGGER.info("Sportsman with specified pesel already exists.");
-            throw new EntityExistsException("Sportsman with specified pesel: " + sportsman.getSportsmanPesel() + "already exists.");
+            throw new EntityExistsException("Sportsman with specified pesel: " + sportsman.getSportsmanPesel() + " already exists.");
         } else {
-            repository.saveAndFlush(serializer.buildSportsmanFromSportsmanDTO(sportsman));
+            repository.saveAndFlush(SPORTSMAN_SERIALIZER.buildSportsmanFromSportsmanDTO(sportsman));
         }
     }
 
@@ -59,7 +59,7 @@ public class SportsmanService {
         LOGGER.info("Getting personal trainer data. Sportsman pesel: {}", sportsmanPesel);
         SportsmanEntity sportsman = repository.findById(sportsmanPesel)
                 .orElseThrow(() -> handleNonExistingSportsman(sportsmanPesel));
-        return trainerSerializer.getTrainerDTOFromTrainer(sportsman.getTrainer());
+        return TRAINER_SERIALIZER.getTrainerDTOFromTrainer(sportsman.getTrainer());
     }
 
     public void trainCardio(Long sportsmanPesel){

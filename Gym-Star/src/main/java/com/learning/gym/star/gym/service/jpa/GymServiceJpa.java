@@ -35,7 +35,7 @@ public final class GymServiceJpa {
                     LOGGER.info("Gym with id {} does not exists", gymId);
                     throw new NoSuchElementException("Gym with id: " + gymId + " does not exists");
                 });
-        return gymSerializer.getGymDTOFromGym(gymEntity);
+        return gymSerializer.deserializeGym(gymEntity);
     }
 
     public String addGym(GymDTO gymDTO){
@@ -43,7 +43,7 @@ public final class GymServiceJpa {
             return "";
         }
         LOGGER.info("Adding gymDTO: {}.", gymDTO);
-        var gymEntity = gymSerializer.getGymFromGymGTO(gymDTO);
+        var gymEntity = gymSerializer.serializeGym(gymDTO);
         return gymRepository.saveAndFlush(gymEntity).getGymId();
     }
 
@@ -53,7 +53,7 @@ public final class GymServiceJpa {
             throw new IncorrectUpdateSemanticsDataAccessException("Gym id cannot be null");
         }
         LOGGER.info("Updating gym with gym id {}.", gymDTO.getGymId());
-        var gymEntity = gymSerializer.getGymFromGymGTO(gymDTO);
+        var gymEntity = gymSerializer.serializeGym(gymDTO);
         gymRepository.saveAndFlush(gymEntity);
     }
 

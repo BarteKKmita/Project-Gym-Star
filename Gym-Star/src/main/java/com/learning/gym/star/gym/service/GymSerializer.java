@@ -13,8 +13,8 @@ import java.util.List;
 public final class GymSerializer {
     private static final Logger LOGGER = LoggerFactory.getLogger(GymSerializer.class);
 
-    public Gym getGymFromGymGTO(GymDTO gymDTO){
-        LOGGER.info("Attempt to serialize GymDTO to GymEntity for gym ID: {}", gymDTO.getGymId());
+    public Gym serializeGym(GymDTO gymDTO){
+        LOGGER.info("Attempting to serialize gym with ID: {}", gymDTO.getGymId());
         return Gym.builder()
                 .gymId(gymDTO.getGymId())
                 .gymName(gymDTO.getGymName())
@@ -24,14 +24,14 @@ public final class GymSerializer {
                 .build();
     }
 
-    public GymDTO getGymDTOFromGym(Gym databaseGym){
-        LOGGER.info("Attempt to serialize GymEntity to GymDTO for gym ID: {}", databaseGym.getGymId());
+    public GymDTO deserializeGym(Gym gymEntity){
+        LOGGER.info("Attempting to deserialize gym with ID: {}", gymEntity.getGymId());
         return GymDTO.builder()
-                .gymId(databaseGym.getGymId())
-                .gymName(databaseGym.getGymName())
-                .street(databaseGym.getStreet())
-                .city(databaseGym.getCity())
-                .buildingNumber(databaseGym.getBuildingNumber())
+                .gymId(gymEntity.getGymId())
+                .gymName(gymEntity.getGymName())
+                .street(gymEntity.getStreet())
+                .city(gymEntity.getCity())
+                .buildingNumber(gymEntity.getBuildingNumber())
                 .build();
     }
 
@@ -56,8 +56,9 @@ public final class GymSerializer {
         return gymListForController;
     }
 
+    @Deprecated
     public List<GymDTO> buildGymDTOFromGymAsStringList(List<String> gymsFromDatabase){
-        LOGGER.info("Serializing list of gyms form database to GymDTO list");
+        LOGGER.info("Serializing list of gyms form database to Gym list");
         List<GymDTO> gymListForController = new ArrayList<>();
         gymsFromDatabase.forEach(gym -> gymListForController.add(buildGymDTO(gym.split(" "))));
         return gymListForController;

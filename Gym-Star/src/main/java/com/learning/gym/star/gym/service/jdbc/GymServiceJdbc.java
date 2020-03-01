@@ -31,13 +31,13 @@ public final class GymServiceJdbc {
 
     public String addGym(GymDTO gym){
         LOGGER.info("Adding gym: {}.", gym);
-        var gymEntity = gymSerializer.getGymFromGymGTO(gym);
+        var gymEntity = gymSerializer.serializeGym(gym);
         return gymRepository.add(gymEntity);
     }
 
     public void updateGym(GymDTO gym, int gymId){
         LOGGER.info("Updating gym: {} with id: {}.", gym, gymId);
-        var gymEntity = gymSerializer.getGymFromGymGTO(gym);
+        var gymEntity = gymSerializer.serializeGym(gym);
         gymRepository.update(gymEntity, gymId);
     }
 
