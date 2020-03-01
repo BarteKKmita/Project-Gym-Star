@@ -62,8 +62,6 @@ sportsmanstats_id int NOT NULL,
 FOREIGN KEY (sportsmanstats_id) REFERENCES Statistics(statistics_id)
 );
 
-ALTER TABLE sportsmen DROP FOREIGN KEY  `sportsmen_ibfk_1`;
-
 ALTER TABLE Trainer MODIFY trainer_pesel BIGINT;
 
 ALTER TABLE sportsmen MODIFY trainer_pesel BIGINT;

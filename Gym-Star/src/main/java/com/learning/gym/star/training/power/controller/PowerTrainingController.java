@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
 
-@RestController()
+@RestController
 @RequestMapping("api/power")
-public class PowerTrainingController {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-    private PowerTrainingService service;
+public final class PowerTrainingController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PowerTrainingController.class);
+    private final PowerTrainingService service;
 
     public PowerTrainingController(PowerTrainingService service){
         this.service = service;
@@ -21,32 +21,32 @@ public class PowerTrainingController {
 
     @GetMapping("{id}")
     public ResponseEntity getPowerTrainingCount(@PathVariable("id") int powerId){
-        logger.info("Attempting to get power training count");
-        return new ResponseEntity<>(service.getPowerTrainingCount(powerId), HttpStatus.OK);
+        LOGGER.info("Attempting to get power training count");
+        return new ResponseEntity<>(service.getPowerTrainingCount(String.valueOf(powerId)), HttpStatus.OK);
     }
 
     @PutMapping("/train/{id}")
     @ResponseStatus(HttpStatus.OK)
     void doPowerTraining(@PathVariable("id") int powerId){
-        logger.info("Attempting to increment power training count");
-        service.doPowerTraining(powerId);
+        LOGGER.info("Attempting to increment power training count");
+        service.doPowerTraining(String.valueOf(powerId));
     }
 
     @PutMapping("/reset/{id}")
     @ResponseStatus(HttpStatus.OK)
     void resetPowerStatistics(@PathVariable("id") int powerId){
-        logger.info("Attempting to reset power training count");
-        service.resetPowerStatistics(powerId);
+        LOGGER.info("Attempting to reset power training count");
+        service.resetPowerStatistics(String.valueOf(powerId));
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity createNewStatistics(){
-        logger.info("Attempting to create new power training");
+        LOGGER.info("Attempting to create new power training");
         return new ResponseEntity<>("Your gym id nr : " + service.createNewPowerStatistics(), HttpStatus.CREATED);
     }
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity handleNoSuchRecordInDatabase(){
-        return new ResponseEntity<>("There is no such power statistics in database.", HttpStatus.NOT_FOUND);
+    public ResponseEntity handleNoSuchRecordInDatabase(NoSuchElementException exception){
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 }

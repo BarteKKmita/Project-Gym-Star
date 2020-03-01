@@ -1,9 +1,9 @@
 package com.learning.gym.star.gym.service.jdbc;
 
-import com.learning.gym.star.gym.Gym;
 import com.learning.gym.star.gym.controller.GymDTO;
 import com.learning.gym.star.gym.database.jdbc.GymRepository;
 import com.learning.gym.star.gym.service.GymSerializer;
+import com.learning.gym.star.gym.service.jpa.GymServiceJpa;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +13,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service("GymServiceJdbc")
-public class GymServiceJdbc {
+public final class GymServiceJdbc {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-    private GymRepository gymRepository;
-    private GymSerializer gymSerializer;
+    private static final Logger LOGGER = LoggerFactory.getLogger(GymServiceJpa.class);
+    private final GymRepository gymRepository;
+    private final GymSerializer gymSerializer;
 
     @Autowired
     public GymServiceJdbc(@Qualifier("gym database access") GymRepository gymRepository, GymSerializer gymSerializer){
@@ -30,33 +30,26 @@ public class GymServiceJdbc {
     }
 
     public String addGym(GymDTO gym){
-        logger.debug("Adding gym: {}. {}", gym, this.getClass());
-        Gym gymDB = gymSerializer.getGymFromGymGTO(gym);
-        if (gymDB == null) {
-            throw new IllegalArgumentException();
-        } else {
-            return gymRepository.add(gymDB);
-        }
+        LOGGER.info("Adding gym: {}.", gym);
+        var gymEntity = gymSerializer.serializeGym(gym);
+        return gymRepository.add(gymEntity);
     }
 
     public void updateGym(GymDTO gym, int gymId){
-        logger.debug("Updating gym: {} with id: {}. {}", gym, gymId, this.getClass());
-        Gym gymDB = gymSerializer.getGymFromGymGTO(gym);
-        if (gymDB == null) {
-            throw new IllegalArgumentException();
-        } else {
-            gymRepository.update(gymDB, gymId);
-        }
+        LOGGER.info("Updating gym: {} with id: {}.", gym, gymId);
+        var gymEntity = gymSerializer.serializeGym(gym);
+        gymRepository.update(gymEntity, gymId);
     }
 
     public GymDTO getGymById(int gymId){
-        logger.debug("Getting gym with id {}. {}", gymId, this.getClass());
+        LOGGER.info("Getting gym with id {}.", gymId);
         String[] gymAsStringArray = gymRepository.getGymDataById(gymId);
+        LOGGER.info("Serializing and returning gym received from database");
         return gymSerializer.buildGymDTO(gymAsStringArray);
     }
 
     public void deleteGymById(int gymId){
-        logger.debug("Updating gym with id: {}. {}", gymId, this.getClass());
+        LOGGER.info("Updating gym with id: {}.", gymId);
         gymRepository.delete(gymId);
     }
 }

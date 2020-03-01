@@ -24,6 +24,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CannotCreateTransactionException.class)
     public ResponseEntity handleConnectionOutage(){
-        return new ResponseEntity<>("Connection with database cannot be established. ", HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>("Connection with database cannot be established.", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

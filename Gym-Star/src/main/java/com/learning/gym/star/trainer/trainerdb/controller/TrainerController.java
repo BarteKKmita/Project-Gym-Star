@@ -18,30 +18,31 @@ import java.util.Map;
 @Validated
 @RestController
 @RequestMapping("/api/trainer")
-public class TrainerController {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-    private TrainerService service;
+public final class TrainerController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TrainerController.class);
+    private final TrainerService service;
 
     public TrainerController(TrainerService service){
         this.service = service;
     }
 
-    @PostMapping("/create")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void addNewTrainer(@Valid @RequestBody TrainerDTO trainer){
-        logger.info("Attempting to add new trainer to database. {}", this.getClass().getName());
+        LOGGER.info("Attempting to add new trainer to database.");
         service.addTrainer(trainer);
     }
 
     @GetMapping("/all")
     public ResponseEntity getAllTrainers(){
-        logger.info("Attempting to get all trainers to database. {}", this.getClass().getName());
+        LOGGER.info("Attempting to get all trainers to database.");
         return new ResponseEntity<>(service.getAllTrainers(), HttpStatus.OK);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity handleEmptyResult(){
-        return new ResponseEntity<>("Entered not suitable trainer data", HttpStatus.BAD_REQUEST);
+    public ResponseEntity handleSerializationFailure(IllegalArgumentException exception){
+        LOGGER.info("Entered not suitable trainer data. Serialization of TrainerDTO to TrainerEntity failure. Status 400 returned.");
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

@@ -16,8 +16,9 @@ import java.util.List;
 @Getter
 @Entity
 @Table(name = "trainer")
-@NamedQuery(name = "setPersonalTrainer", query = "FROM TrainerDB t WHERE t.pesel=:pesel")
-public class TrainerDB implements Serializable {
+@NamedQuery(name = "setPersonalTrainer",
+        query = "FROM TrainerEntity t WHERE t.pesel=:pesel")
+public class TrainerEntity implements Serializable {
 
     @Id
     @Column(name = "trainer_pesel")
@@ -37,7 +38,7 @@ public class TrainerDB implements Serializable {
 
     @Getter(AccessLevel.NONE)
     @JsonIgnore
-    @ManyToMany()
+    @ManyToMany
     @JoinTable(name = "trainersatgym",
             joinColumns = @JoinColumn(name = "trainer_pesel"),
             inverseJoinColumns = @JoinColumn(name = "gym_id"))

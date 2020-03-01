@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
 
-@RestController()
+@RestController
 @RequestMapping("/api/cardio")
-public class CardioTrainingController {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-    private CardioTrainingService service;
+public final class CardioTrainingController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CardioTrainingController.class);
+    private final CardioTrainingService service;
 
     public CardioTrainingController(CardioTrainingService service){
         this.service = service;
@@ -21,32 +21,32 @@ public class CardioTrainingController {
 
     @GetMapping("{id}")
     public ResponseEntity getCardioTrainingCount(@PathVariable("id") int cardioId){
-        logger.info("Attempting to get cardio training count");
-        return new ResponseEntity<>(service.getCardioTrainingCount(cardioId), HttpStatus.OK);
+        LOGGER.info("Attempting to get cardio training count");
+        return new ResponseEntity<>(service.getCardioTrainingCount(String.valueOf(cardioId)), HttpStatus.OK);
     }
 
     @PutMapping("/train/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void doCardioTraining(@PathVariable("id") int cardioId){
-        logger.info("Attempting to increment cardio training count");
-        service.doCardioTraining(cardioId);
+        LOGGER.info("Attempting to increment cardio training count");
+        service.doCardioTraining(String.valueOf(cardioId));
     }
 
     @PutMapping("/reset/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void resetCardioStatistics(@PathVariable("id") int cardioId){
-        logger.info("Attempting to reset cardio training count");
-        service.resetCardioStatistics(cardioId);
+        LOGGER.info("Attempting to reset cardio training count");
+        service.resetCardioStatistics(String.valueOf(cardioId));
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity createNewCardioStatistics(){
-        logger.info("Attempting to create new cardio training");
+        LOGGER.info("Attempting to create new cardio training");
         return new ResponseEntity<>("Your gym id nr : " + service.createNewCardioStatistics(), HttpStatus.CREATED);
     }
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity handleNoSuchRecordInDatabase(){
-        return new ResponseEntity<>("There is no such cardio statistics in database.", HttpStatus.NOT_FOUND);
+    public ResponseEntity handleNoSuchRecordInDatabase(NoSuchElementException exception){
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 }

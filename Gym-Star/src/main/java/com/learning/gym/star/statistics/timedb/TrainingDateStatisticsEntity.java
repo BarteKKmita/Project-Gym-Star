@@ -1,7 +1,7 @@
 package com.learning.gym.star.statistics.timedb;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.learning.gym.star.statistics.statisticsdb.StatisticsDB;
+import com.learning.gym.star.statistics.statisticsdb.StatisticsEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,9 +20,8 @@ import java.time.LocalTime;
 @NamedStoredProcedureQuery(
         name = "sportsmanStats",
         procedureName = "getsportsmanstats",
-        resultClasses = {TrainingDateStatisticsDB.class})
-
-public class TrainingDateStatisticsDB {
+        resultClasses = {TrainingDateStatisticsEntity.class})
+public class TrainingDateStatisticsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,8 +37,8 @@ public class TrainingDateStatisticsDB {
     private LocalTime time;
 
     @JsonIgnore
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "sportsmanstats_id",
             referencedColumnName = "statistics_id")
-    private StatisticsDB sportsmanStatsId;
+    private StatisticsEntity sportsmanStatsId;
 }

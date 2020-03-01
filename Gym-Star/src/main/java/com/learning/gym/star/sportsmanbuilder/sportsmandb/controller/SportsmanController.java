@@ -22,64 +22,66 @@ import java.util.NoSuchElementException;
 @Validated
 @RestController
 @RequestMapping("/api/sportsman")
-public class SportsmanController {
-    private SportsmanService service;
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+public final class SportsmanController {
+    private final SportsmanService service;
+    private static final Logger LOGGER = LoggerFactory.getLogger(SportsmanController.class);
 
     public SportsmanController(SportsmanService service){
         this.service = service;
     }
 
-    @PostMapping("/add")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void addSportsman(@Valid @RequestBody SportsmanDTO sportsman){
-        logger.info("Attempting to add new sportsman.");
+        LOGGER.info("Attempting to add new sportsman.");
         service.addSportsman(sportsman);
     }
 
-    @GetMapping("/{pesel}/dateandtime")
+    @GetMapping("/datetime")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity getSportsmanDateAndTimeStats(@PathVariable("pesel") @PESEL(message = "Pesel must have 11 digits") CharSequence sportsmanPesel){
-        logger.info("Attempting to get sportsman date and time statistics.");
+        LOGGER.info("Attempting to get sportsman date and time statistics.");
         return new ResponseEntity<>(service.getSportsmanStatistics(sportsmanPesel), HttpStatus.OK);
     }
 
-    @PutMapping("/{pesel}/gettrainer")
+    @PutMapping("/gettrainer")
     @ResponseStatus(HttpStatus.CREATED)
     public void chooseTrainer(@PESEL(message = "Pesel must have 11 digits") @PathVariable("pesel") CharSequence sportsmanPesel,
                               @PESEL(message = "Pesel must have 11 digits") @RequestBody CharSequence trainerPesel){
-        logger.info("Attempting to choose trainer.");
+        LOGGER.info("Attempting to choose trainer.");
         service.chooseTrainer(sportsmanPesel, trainerPesel);
     }
 
     @GetMapping("/mytrainer")
     public ResponseEntity getMyTrainer(@PESEL(message = "Pesel must have 11 digits") @RequestBody CharSequence sportsmanPesel){
-        logger.info("Attempting to display sportsman's.");
+        LOGGER.info("Attempting to display sportsman's.");
         return new ResponseEntity<>(service.getMyTrainerData(sportsmanPesel), HttpStatus.OK);
     }
 
     @PutMapping("/trainCardio")
     @ResponseStatus(HttpStatus.OK)
     public void trainCardio(@PESEL(message = "Pesel must have 11 digits") @RequestBody CharSequence sportsmanPesel){
-        logger.info("Attempting to do cardio training.");
+        LOGGER.info("Attempting to do cardio training.");
         service.trainCardio(sportsmanPesel);
     }
 
     @PutMapping("/trainPower")
     @ResponseStatus(HttpStatus.OK)
     public void trainPower(@PESEL(message = "Pesel must have 11 digits") @RequestBody CharSequence sportsmanPesel){
-        logger.info("Attempting to do power training.");
+        LOGGER.info("Attempting to do power training.");
         service.trainPower(sportsmanPesel);
     }
 
     @ExceptionHandler(EntityExistsException.class)
-    public ResponseEntity handleExistingRecordInDatabase(){
-        return new ResponseEntity<>("Sportsman with given pesel number already exists.", HttpStatus.CONFLICT);
+    public ResponseEntity handleExistingRecordInDatabase(EntityExistsException exception){
+        LOGGER.info("Sportsman with specified pesel already exists. Status 409 returned.");
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity handleNoSuchRecordInDatabase(){
-        return new ResponseEntity<>("Sportsman with given pesel does not exists.", HttpStatus.NOT_FOUND);
+    public ResponseEntity handleNoSuchRecordInDatabase(NoSuchElementException exception){
+        LOGGER.info("Sportsman with given pesel not exists. Status 404 returned.");
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

@@ -1,6 +1,5 @@
 package com.learning.gym.star.trainer.trainerdb;
 
-
 import lombok.*;
 import org.hibernate.validator.constraints.pl.PESEL;
 
@@ -8,10 +7,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-
-/*
-Validation will be added in the future.
- */
 
 @Builder
 @NoArgsConstructor
