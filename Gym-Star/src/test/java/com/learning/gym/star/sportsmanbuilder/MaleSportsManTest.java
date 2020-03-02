@@ -1,6 +1,6 @@
 package com.learning.gym.star.sportsmanbuilder;
 
-import com.learning.gym.star.sportsmanbuilder.gender.GenderChoose;
+import com.learning.gym.star.sportsmanbuilder.gender.GenderEnum;
 import com.learning.gym.star.sportsmanbuilder.userinput.UserInputForTests;
 import com.learning.gym.star.statistics.TrainingStatistics;
 import com.learning.gym.star.trainer.Trainer;
@@ -21,7 +21,7 @@ class MaleSportsManTest {
     @Test
     void shouldReturnChosenTrainer(){
         //Given
-        sportsMan = new ConcreteSportsMan("Name", "Surname", GenderChoose.M, mock(Trainer.class), mock(LinkedList.class), "data\\Test", mock(TrainingStatistics.class));
+        sportsMan = new ConcreteSportsMan("Name", "Surname", GenderEnum.M, mock(Trainer.class), mock(LinkedList.class), "data\\Test", mock(TrainingStatistics.class));
         String expectedName = "Mariusz";
         String expectedSurname = "Gawryś";
         MaleSportsMan maleSportsMan = new MaleSportsMan(sportsMan);
@@ -37,7 +37,7 @@ class MaleSportsManTest {
     void shouldReturnTrainingPlan(){
         //Given
         //Zostawienie mock trainer.class daje null point exception
-        sportsMan = new ConcreteSportsMan("Name", "Surname", GenderChoose.M, spy(Trainer.class), mock(LinkedList.class), "data\\Test", mock(TrainingStatistics.class));
+        sportsMan = new ConcreteSportsMan("Name", "Surname", GenderEnum.M, spy(Trainer.class), mock(LinkedList.class), "data\\Test", mock(TrainingStatistics.class));
         int trainingDays = 3;
         int expectedListSize = 3;
         MaleSportsMan maleSportsMan = new MaleSportsMan(sportsMan);

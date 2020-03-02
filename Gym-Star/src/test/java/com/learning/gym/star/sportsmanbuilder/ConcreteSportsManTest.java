@@ -1,6 +1,6 @@
 package com.learning.gym.star.sportsmanbuilder;
 
-import com.learning.gym.star.sportsmanbuilder.gender.GenderChoose;
+import com.learning.gym.star.sportsmanbuilder.gender.GenderEnum;
 import com.learning.gym.star.sportsmanbuilder.userinput.UserInputForTests;
 import com.learning.gym.star.statistics.TrainingStatistics;
 import com.learning.gym.star.trainer.Trainer;
@@ -32,7 +32,7 @@ public class ConcreteSportsManTest {
     @BeforeEach
     void setUp(){
         mockedListOfTraining = mock(LinkedList.class);
-        sportsMan = new ConcreteSportsMan("Bartek", "Surname", GenderChoose.M, trainer, mockedListOfTraining, "data\\Bartek", mock(TrainingStatistics.class));
+        sportsMan = new ConcreteSportsMan("Bartek", "Surname", GenderEnum.M, trainer, mockedListOfTraining, "data\\Bartek", mock(TrainingStatistics.class));
     }
 
     // W tym teście całkowicie trace kontrolę nad działaniem najmniejszego fragmentu kodu.
@@ -92,7 +92,7 @@ public class ConcreteSportsManTest {
     @Test
     void shouldPrintItsBadWhenCallingNullTrainingPlan(){
         //Given
-        sportsMan = new ConcreteSportsMan("Bartek", "Surname", GenderChoose.M, mock(Trainer.class), null, "data\\Bartek", mock(TrainingStatistics.class));
+        sportsMan = new ConcreteSportsMan("Bartek", "Surname", GenderEnum.M, mock(Trainer.class), null, "data\\Bartek", mock(TrainingStatistics.class));
         PrintStream out = mock(PrintStream.class);
         System.setOut(out);
         //When

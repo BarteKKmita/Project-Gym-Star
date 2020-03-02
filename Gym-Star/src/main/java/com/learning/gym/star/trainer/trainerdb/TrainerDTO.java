@@ -19,11 +19,11 @@ public class TrainerDTO implements Serializable {
     @NotNull(message = "Please enter pesel number.")
     private String pesel;
 
-    @Size(min = 2, message = "Name is to short")
+    @Size(min = 2, message = "Name is too short")
     @NotEmpty(message = "Trainer has to have name")
     private String name;
 
-    @Size(min = 2, message = "Surname is to short")
+    @Size(min = 2, message = "Surname is too short")
     @NotEmpty(message = "Trainer has to have surname")
     private String surname;
 
