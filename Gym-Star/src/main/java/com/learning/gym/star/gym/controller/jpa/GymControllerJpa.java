@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.FormatStyle;
-import java.util.NoSuchElementException;
 
 import static java.time.format.DateTimeFormatter.ofLocalizedDateTime;
 
@@ -92,12 +91,6 @@ public class GymControllerJpa {
     @ExceptionHandler(GenericJDBCException.class)
     public ResponseEntity handleWrongTypeInHttpMethod(){
         return new ResponseEntity<>("One of given parameter has a wrong type.", HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity handleNoSuchRecordInDatabase(NoSuchElementException exception){
-        LOGGER.info("Gym with given id does not exists. Status 404 returned.");
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     private MultiValueMap<String, String> getResponseDateAndTime(){

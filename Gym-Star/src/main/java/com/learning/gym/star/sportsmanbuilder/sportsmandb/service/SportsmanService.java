@@ -78,6 +78,6 @@ public class SportsmanService {
 
     private NoSuchElementException handleNonExistingSportsman(String sportsmanPesel){
         LOGGER.info("Sportsman with given pesel not exists.");
-        throw new NoSuchElementException("Sportsman with given pesel not exists." + sportsmanPesel);
+        throw new NoSuchElementException("Sportsman with given pesel " + sportsmanPesel + " not exists.");
     }
 }
