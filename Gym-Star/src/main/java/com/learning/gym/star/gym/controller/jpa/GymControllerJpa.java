@@ -13,9 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.FormatStyle;
-import java.util.NoSuchElementException;
 
 import static java.time.format.DateTimeFormatter.ofLocalizedDateTime;
 
@@ -30,7 +30,7 @@ public class GymControllerJpa {
     }
 
     @PostMapping
-    public ResponseEntity addGym(@RequestBody GymDTO gymDTO){
+    public ResponseEntity addGym(@Valid @RequestBody GymDTO gymDTO){
         LOGGER.info("Attempting to add gym to database.");
         String gymId = gymService.addGym(gymDTO);
         if (gymId.isEmpty()) {
@@ -59,16 +59,16 @@ public class GymControllerJpa {
 
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateGym(@RequestBody GymDTO gymDTO){
+    public void updateGym(@Valid @RequestBody GymDTO gymDTO){
         LOGGER.info("Attempting to update gym.");
         gymService.updateGym(gymDTO);
     }
 
     @DeleteMapping(path = "{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteGymById(@PathVariable("id") String gymId){
+    public void deleteGymById(@PathVariable("id") int gymId){
         LOGGER.info("Attempting to delete gym.");
-        gymService.deleteGymById(gymId);
+        gymService.deleteGymById(String.valueOf(gymId));
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
@@ -91,12 +91,6 @@ public class GymControllerJpa {
     @ExceptionHandler(GenericJDBCException.class)
     public ResponseEntity handleWrongTypeInHttpMethod(){
         return new ResponseEntity<>("One of given parameter has a wrong type.", HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity handleNoSuchRecordInDatabase(NoSuchElementException exception){
-        LOGGER.info("Gym with given id does not exists. Status 404 returned.");
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     private MultiValueMap<String, String> getResponseDateAndTime(){

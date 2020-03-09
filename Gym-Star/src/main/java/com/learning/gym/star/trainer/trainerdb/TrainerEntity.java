@@ -21,9 +21,8 @@ import java.util.List;
 public class TrainerEntity implements Serializable {
 
     @Id
-    @NotNull
     @Column(name = "trainer_pesel")
-    private Long pesel;
+    private String pesel;
 
     @NotEmpty
     @Column(name = "trainer_name")

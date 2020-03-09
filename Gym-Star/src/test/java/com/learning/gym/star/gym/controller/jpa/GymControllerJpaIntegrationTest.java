@@ -22,7 +22,7 @@ public class GymControllerJpaIntegrationTest {
     private MockMvc mockMvc;
 
     @Test
-    public void shouldGetFirstGymWhenGetGymWithId1() throws Exception {
+    public void shouldGetFirstGymWhenGetGymWithId1() throws Exception{
         mockMvc.perform(MockMvcRequestBuilders.get("/api/jpa/gym/{id}", "1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())

@@ -41,43 +41,43 @@ public class SportsmanService {
         }
     }
 
-    public List<TrainingDateStatisticsEntity> getSportsmanStatistics(Long sportsmanPesel){
+    public List<TrainingDateStatisticsEntity> getSportsmanStatistics(String sportsmanPesel){
         LOGGER.info("Getting sportsman statistics by sportsman pesel {}", sportsmanPesel);
         SportsmanEntity sportsman = repository.findById(sportsmanPesel)
                 .orElseThrow(() -> handleNonExistingSportsman(sportsmanPesel));
         return databaseOperations.getTrainingDateTimeStatistics(sportsman);
     }
 
-    public void chooseTrainer(Long sportsmanPesel, Long trainerPesel){
+    public void chooseTrainer(String sportsmanPesel, String trainerPesel){
         LOGGER.info("Choosing sportsman's trainer with sportsman pesel {} and trainer pesel {}.", sportsmanPesel, trainerPesel);
         SportsmanEntity sportsman = repository.findById(sportsmanPesel)
                 .orElseThrow(() -> handleNonExistingSportsman(sportsmanPesel));
         repository.saveAndFlush(databaseOperations.setTrainer(trainerPesel, sportsman));
     }
 
-    public TrainerDTO getMyTrainerData(Long sportsmanPesel){
+    public TrainerDTO getMyTrainerData(String sportsmanPesel){
         LOGGER.info("Getting personal trainer data. Sportsman pesel: {}", sportsmanPesel);
         SportsmanEntity sportsman = repository.findById(sportsmanPesel)
                 .orElseThrow(() -> handleNonExistingSportsman(sportsmanPesel));
         return TRAINER_SERIALIZER.getTrainerDTOFromTrainer(sportsman.getTrainer());
     }
 
-    public void trainCardio(Long sportsmanPesel){
+    public void trainCardio(String sportsmanPesel){
         LOGGER.info("Doing cardio training. Sportsman pesel: {}", sportsmanPesel);
         SportsmanEntity sportsman = repository.findById(sportsmanPesel)
                 .orElseThrow(() -> handleNonExistingSportsman(sportsmanPesel));
         databaseOperations.trainCardio(sportsman);
     }
 
-    public void trainPower(Long sportsmanPesel){
+    public void trainPower(String sportsmanPesel){
         LOGGER.info("Doing power training. Sportsman pesel: {}", sportsmanPesel);
         SportsmanEntity sportsman = repository.findById(sportsmanPesel)
                 .orElseThrow(() -> handleNonExistingSportsman(sportsmanPesel));
         databaseOperations.trainPower(sportsman);
     }
 
-    private NoSuchElementException handleNonExistingSportsman(Long sportsmanPesel){
+    private NoSuchElementException handleNonExistingSportsman(String sportsmanPesel){
         LOGGER.info("Sportsman with given pesel not exists.");
-        throw new NoSuchElementException("Sportsman with given pesel not exists." + sportsmanPesel);
+        throw new NoSuchElementException("Sportsman with given pesel " + sportsmanPesel + " not exists.");
     }
 }

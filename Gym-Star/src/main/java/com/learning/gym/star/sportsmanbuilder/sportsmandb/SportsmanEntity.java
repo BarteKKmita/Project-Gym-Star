@@ -3,7 +3,7 @@ package com.learning.gym.star.sportsmanbuilder.sportsmandb;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.learning.gym.star.gym.Gym;
-import com.learning.gym.star.sportsmanbuilder.gender.GenderChoose;
+import com.learning.gym.star.sportsmanbuilder.gender.GenderEnum;
 import com.learning.gym.star.statistics.statisticsdb.StatisticsEntity;
 import com.learning.gym.star.trainer.trainerdb.TrainerEntity;
 import lombok.*;
@@ -24,7 +24,7 @@ public class SportsmanEntity {
 
     @Id
     @Column(name = "sportsman_pesel")
-    private Long sportsmanPesel;
+    private String sportsmanPesel;
 
     @Column(name = "sportsman_name")
     @NotEmpty
@@ -37,7 +37,7 @@ public class SportsmanEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "gender")
     @NotNull
-    private GenderChoose gender;
+    private GenderEnum gender;
 
     @JsonIgnoreProperties()
     @ManyToOne

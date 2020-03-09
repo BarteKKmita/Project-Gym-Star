@@ -1,6 +1,6 @@
 package com.learning.gym.star.sportsmanbuilder;
 
-import com.learning.gym.star.sportsmanbuilder.gender.GenderChoose;
+import com.learning.gym.star.sportsmanbuilder.gender.GenderEnum;
 import com.learning.gym.star.sportsmanbuilder.userinput.UserText;
 
 public class MaleSportsMan extends SportsMan implements SportsManBuilder {
@@ -8,7 +8,7 @@ public class MaleSportsMan extends SportsMan implements SportsManBuilder {
 
     public MaleSportsMan ( String name, String surname ) {
         sportsMan = new ConcreteSportsMan(name, surname);
-        sportsMan = sportsMan.withGender(GenderChoose.M);
+        sportsMan = sportsMan.withGender(GenderEnum.M);
     }
 
     public MaleSportsMan ( ConcreteSportsMan sportsMan ) {

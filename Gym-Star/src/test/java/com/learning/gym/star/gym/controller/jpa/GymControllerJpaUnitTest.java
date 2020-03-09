@@ -34,7 +34,7 @@ class GymControllerJpaUnitTest {
     private GymServiceJpa gymService;
 
     @Test
-    public void shouldAddGym() {
+    public void shouldAddGym(){
         //Given
         String gymID = "1";
         String message = "Your gym id: 1";
@@ -49,7 +49,7 @@ class GymControllerJpaUnitTest {
     }
 
     @Test
-    public void shouldReturnConflictWhenAddingExistingGym() {
+    public void shouldReturnConflictWhenAddingExistingGym(){
         //Given
         String message = "Specified gym id already exists ";
         MockHttpServletRequest request = new MockHttpServletRequest();
@@ -63,7 +63,7 @@ class GymControllerJpaUnitTest {
     }
 
     @Test
-    public void shouldGetAllGyms() {
+    public void shouldGetAllGyms(){
         //Given
         int gymListSize = 1;
         MockHttpServletRequest request = new MockHttpServletRequest();
@@ -79,7 +79,7 @@ class GymControllerJpaUnitTest {
 
 
     @Test
-    public void shouldGetGymById() {
+    public void shouldGetGymById(){
         //Given
         int gymId = 1;
         MockHttpServletRequest request = new MockHttpServletRequest();
@@ -94,7 +94,7 @@ class GymControllerJpaUnitTest {
     }
 
     @Test
-    public void shouldReturnNotFoundStatusWhenGettingNotExistingGym() {
+    public void shouldReturnNotFoundStatusWhenGettingNotExistingGym(){
         //Given
         int gymId = 2;
         MockHttpServletRequest request = new MockHttpServletRequest();

@@ -11,17 +11,17 @@ public final class TrainerSerializer {
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainerSerializer.class);
 
-    public TrainerDTO getTrainerDTOFromTrainer(TrainerEntity trainer) throws IllegalArgumentException {
+    public TrainerDTO getTrainerDTOFromTrainer(TrainerEntity trainer) throws IllegalArgumentException{
         var trainerJson = serializeTrainerEntity(trainer);
         return deserializeTrainerEntity(trainer, trainerJson);
     }
 
-    public TrainerEntity getTrainerFromTrainerDTO(TrainerDTO trainer) throws IllegalArgumentException {
+    public TrainerEntity getTrainerFromTrainerDTO(TrainerDTO trainer) throws IllegalArgumentException{
         var trainerJson = serializeTrainerDTO(trainer);
         return deserializeTrainerDTO(trainer, trainerJson);
     }
 
-    private TrainerDTO deserializeTrainerEntity(TrainerEntity trainer, String trainerJson) throws IllegalArgumentException {
+    private TrainerDTO deserializeTrainerEntity(TrainerEntity trainer, String trainerJson) throws IllegalArgumentException{
         TrainerDTO trainerDTO;
         try {
             trainerDTO = objectMapper.readValue(trainerJson, TrainerDTO.class);
@@ -33,7 +33,7 @@ public final class TrainerSerializer {
         return trainerDTO;
     }
 
-    private TrainerEntity deserializeTrainerDTO(TrainerDTO trainer, String trainerJson) throws IllegalArgumentException {
+    private TrainerEntity deserializeTrainerDTO(TrainerDTO trainer, String trainerJson) throws IllegalArgumentException{
         TrainerEntity trainerEntity;
         try {
             trainerEntity = objectMapper.readValue(trainerJson, TrainerEntity.class);
@@ -45,7 +45,7 @@ public final class TrainerSerializer {
         return trainerEntity;
     }
 
-    private String serializeTrainerEntity(TrainerEntity trainer) throws IllegalArgumentException {
+    private String serializeTrainerEntity(TrainerEntity trainer) throws IllegalArgumentException{
         var trainerJson = "";
         try {
             trainerJson = objectMapper.writeValueAsString(trainer);
@@ -57,7 +57,7 @@ public final class TrainerSerializer {
         return trainerJson;
     }
 
-    private String serializeTrainerDTO(TrainerDTO trainer) throws IllegalArgumentException {
+    private String serializeTrainerDTO(TrainerDTO trainer) throws IllegalArgumentException{
         var trainerJson = "";
         try {
             trainerJson = objectMapper.writeValueAsString(trainer);

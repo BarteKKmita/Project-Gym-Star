@@ -1,12 +1,12 @@
 package com.learning.gym.star.sportsmanbuilder.gender;
 
-public enum GenderChoose {
+public enum GenderEnum {
     M("Male"),
     F("Female");
 
     private String displayGender;
 
-    GenderChoose ( String displayGender ) {
+    GenderEnum(String displayGender){
         this.displayGender = displayGender;
     }
 
