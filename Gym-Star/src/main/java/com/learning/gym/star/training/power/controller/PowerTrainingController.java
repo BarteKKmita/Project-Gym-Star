@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/power")
-public final class PowerTrainingController {
+public class PowerTrainingController {
     private static final Logger LOGGER = LoggerFactory.getLogger(PowerTrainingController.class);
     private final PowerTrainingService service;
 

@@ -39,7 +39,7 @@ public class PowerControllerIntegrationTestWithEmbeddedMySQL {
     }
 
     @Test
-    public void shouldReturnTrainingCountWhenCallingGetTrainingCount() throws Exception{
+    public void shouldReturnTrainingCount() throws Exception{
         //Given
         int powerId = 1;
         String expectedRequestBody = "5";

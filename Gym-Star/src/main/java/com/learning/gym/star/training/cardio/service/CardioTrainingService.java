@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.NoSuchElementException;
 
 @Service("CardioTrainingService")
-public final class CardioTrainingService {
+public class CardioTrainingService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CardioTrainingService.class);
     private final CardioTrainingJpaRepository repository;
 

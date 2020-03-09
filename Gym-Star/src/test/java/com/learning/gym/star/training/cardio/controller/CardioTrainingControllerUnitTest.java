@@ -2,6 +2,7 @@ package com.learning.gym.star.training.cardio.controller;
 
 
 import com.learning.gym.star.training.cardio.service.CardioTrainingService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,14 +26,18 @@ public class CardioTrainingControllerUnitTest {
     @Mock
     private CardioTrainingService service;
 
+    @BeforeEach
+    public void setUp(){
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+    }
+
     @Test
-    public void shouldReturnTrainingCountWhenCallingGetCardioTrainingCount(){
+    public void shouldReturnTrainingCount(){
         //Given
         int expectedTrainingCount = 1;
         int cardioId = 1;
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
-        when(service.getCardioTrainingCount(any(Integer.class))).thenReturn(expectedTrainingCount);
+        when(service.getCardioTrainingCount(any(String.class))).thenReturn(expectedTrainingCount);
         //When
         ResponseEntity responseEntity = controller.getCardioTrainingCount(cardioId);
         //Then
@@ -41,12 +46,10 @@ public class CardioTrainingControllerUnitTest {
     }
 
     @Test
-    public void shouldReturnResponseBodyWhenCreatingNewCardioStats(){
+    public void shouldReturnResponseBody(){
         //Given
         String cardioId = "1";
         String responseBody = "Your gym id nr : " + cardioId;
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
         doReturn(cardioId).when(service).createNewCardioStatistics();
         //When
         ResponseEntity responseEntity = controller.createNewCardioStatistics();

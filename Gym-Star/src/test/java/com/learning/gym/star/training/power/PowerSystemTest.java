@@ -22,13 +22,14 @@ public class PowerSystemTest {
     private MockMvc mockMvc;
 
     @Test
-    public void shouldReturn0TrainingCountAfterResettingTrainingCountStats() throws Exception{
+    public void shouldReturn0TrainingCount() throws Exception{
         //Given
         int powerId = 2;
         String expectedTrainingCount = "0";
         //When
         mockMvc.perform(put("/api/power/reset/" + powerId));
-        MockHttpServletResponse response = mockMvc.perform(get("/api/power/" + powerId)).andReturn().getResponse();
+        MockHttpServletResponse response = mockMvc.perform(get("/api/power/" + powerId))
+                .andReturn().getResponse();
         int outputStatus = response.getStatus();
         //Then
         assertEquals(HttpStatus.OK.value(), outputStatus);

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.NoSuchElementException;
 
 @Service("PowerTrainingService")
-public final class PowerTrainingService {
+public class PowerTrainingService {
     private static final Logger LOGGER = LoggerFactory.getLogger(PowerTrainingService.class);
     private final PowerTrainingRepository repository;
 

@@ -42,7 +42,7 @@ public class PowerControllerIntegrationTest {
     }
 
     @Test
-    public void shouldReturnStatusOKWhenUpdatingExistingPowerStats() throws Exception{
+    public void shouldReturnStatusOKUpdating() throws Exception{
         //Given
         int powerId = 1;
         //Then
@@ -51,17 +51,17 @@ public class PowerControllerIntegrationTest {
     }
 
     @Test
-    public void shouldReturnStatusNotFountWhenUpdatingNotExistingPowerStats() throws Exception{
+    public void shouldReturnStatusNotFound() throws Exception{
         //Given
-        int powerId = 1;
-        doThrow(new NoSuchElementException()).when(service).doPowerTraining(any(Integer.class));
+        String powerId = "1";
+        doThrow(new NoSuchElementException()).when(service).doPowerTraining(any(String.class));
         //Then
         mockMvc.perform(put("/api/power/train/" + powerId))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    public void shouldReturnStatusOKWhenResettingPowerStats() throws Exception{
+    public void shouldReturnStatusOKWhenResetting() throws Exception{
         //Given
         int powerId = 1;
         //Then
@@ -70,9 +70,9 @@ public class PowerControllerIntegrationTest {
     }
 
     @Test
-    public void shouldReturnStatusOKWhenCreatingNewPowerStats() throws Exception{
+    public void shouldReturnStatusOKWhenCreating() throws Exception{
         //Then
-        mockMvc.perform(post("/api/power/create/"))
+        mockMvc.perform(post("/api/power"))
                 .andExpect(status().isCreated());
     }
 }

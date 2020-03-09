@@ -40,7 +40,7 @@ public class ControllerIntegrationWithEmbeddedMySQLTest {
     }
 
     @Test
-    public void shouldIncrementTrainingCountWhenDoingCardioTraining() throws Exception{
+    public void shouldIncrementTrainingCount() throws Exception{
         //Given
         int cardioId = 1;
         String expectedRequestBody = "1";

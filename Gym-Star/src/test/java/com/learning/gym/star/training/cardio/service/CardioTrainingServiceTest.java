@@ -1,7 +1,8 @@
-package com.learning.gym.star.training.power.service;
+package com.learning.gym.star.training.cardio.service;
 
 
-import com.learning.gym.star.training.power.database.PowerTrainingRepository;
+import com.learning.gym.star.training.cardio.CardioTrainingEntity;
+import com.learning.gym.star.training.cardio.database.CardioTrainingJpaRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -12,40 +13,42 @@ import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class PowerTrainingServiceUnitTest {
+public class CardioTrainingServiceTest {
+    private CardioTrainingEntity testCardioTraining = mock(CardioTrainingEntity.class);
 
     @InjectMocks
-    private PowerTrainingService service;
+    private CardioTrainingService service;
 
     @Mock
-    private PowerTrainingRepository repository;
+    private CardioTrainingJpaRepository repository;
 
     @Test
     public void shouldThrowExceptionWhenGetting(){
         //Given
-        String powerId = "1";
+        String cardioId = "1";
         //Then
-        assertThrows(NoSuchElementException.class, () -> service.getPowerTrainingCount(powerId));
+        assertThrows(NoSuchElementException.class, () -> service.getCardioTrainingCount(cardioId));
     }
 
     @Test
     public void shouldThrowExceptionWhenUpdating(){
         //Given
-        String powerId = "1";
+        String cardioId = "1";
         when(repository.existsById(any(String.class))).thenReturn(false);
         //Then
-        assertThrows(NoSuchElementException.class, () -> service.doPowerTraining(powerId));
+        assertThrows(NoSuchElementException.class, () -> service.doCardioTraining(cardioId));
     }
 
     @Test
     public void shouldThrowExceptionWhenResetting(){
         //Given
-        String powerId = "1";
+        String cardioId = "1";
         when(repository.existsById(any(String.class))).thenReturn(false);
         //Then
-        assertThrows(NoSuchElementException.class, () -> service.resetPowerStatistics(powerId));
+        assertThrows(NoSuchElementException.class, () -> service.resetCardioStatistics(cardioId));
     }
 }

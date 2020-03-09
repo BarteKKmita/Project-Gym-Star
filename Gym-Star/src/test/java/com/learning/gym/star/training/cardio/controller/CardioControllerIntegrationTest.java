@@ -41,7 +41,7 @@ public class CardioControllerIntegrationTest {
     }
 
     @Test
-    public void shouldReturnStatusOKWhenUpdatingExistingCardioStats() throws Exception{
+    public void shouldReturnStatusOKWhenUpdating() throws Exception{
         //Given
         int cardioId = 1;
         //Then
@@ -50,17 +50,17 @@ public class CardioControllerIntegrationTest {
     }
 
     @Test
-    public void shouldReturnStatusNotFountWhenUpdatingNotExistingCardioStats() throws Exception{
+    public void shouldReturnStatusNotFound() throws Exception{
         //Given
         int cardioId = 1;
-        doThrow(new NoSuchElementException()).when(service).doCardioTraining(any(Integer.class));
+        doThrow(new NoSuchElementException()).when(service).doCardioTraining(any(String.class));
         //Then
         mockMvc.perform(put("/api/cardio/train/" + cardioId))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    public void shouldReturnStatusOKWhenResettingCardioStats() throws Exception{
+    public void shouldReturnStatusOKWhenResetting() throws Exception{
         //Given
         int cardioId = 1;
         //Then
@@ -69,9 +69,9 @@ public class CardioControllerIntegrationTest {
     }
 
     @Test
-    public void shouldReturnStatusOKWhenCreatingNewCardioStats() throws Exception{
+    public void shouldReturnStatusOKWhenCreating() throws Exception{
         //Then
-        mockMvc.perform(post("/api/cardio/create/"))
+        mockMvc.perform(post("/api/cardio"))
                 .andExpect(status().isCreated());
     }
 }

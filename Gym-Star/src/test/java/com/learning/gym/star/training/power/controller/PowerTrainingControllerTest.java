@@ -1,6 +1,7 @@
 package com.learning.gym.star.training.power.controller;
 
 import com.learning.gym.star.training.power.service.PowerTrainingService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,14 +25,18 @@ class PowerTrainingControllerTest {
     @Mock
     private PowerTrainingService service;
 
+    @BeforeEach
+    public void setUp(){
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+    }
+
     @Test
     void getPowerTrainingCount(){
         //Given
         int expectedTrainingCount = 1;
         int powerId = 1;
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
-        when(service.getPowerTrainingCount(any(Integer.class))).thenReturn(expectedTrainingCount);
+        when(service.getPowerTrainingCount(any(String.class))).thenReturn(expectedTrainingCount);
         //When
         ResponseEntity responseEntity = controller.getPowerTrainingCount(powerId);
         //Then
@@ -44,8 +49,6 @@ class PowerTrainingControllerTest {
         //Given
         String powerId = "1";
         String responseBody = "Your gym id nr : " + powerId;
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
         doReturn(powerId).when(service).createNewPowerStatistics();
         //When
         ResponseEntity responseEntity = controller.createNewStatistics();
