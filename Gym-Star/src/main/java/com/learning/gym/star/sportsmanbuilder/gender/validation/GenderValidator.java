@@ -1,18 +1,15 @@
 package com.learning.gym.star.sportsmanbuilder.gender.validation;
 
+import com.learning.gym.star.sportsmanbuilder.gender.GenderEnum;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.Arrays;
 
-public class GenderValidator implements ConstraintValidator<GenderValidationCheck, String> {
-    private static final String[] validGender = {"M", "F"};
+public class GenderValidator implements ConstraintValidator<GenderValidationCheck, GenderEnum> {
 
     @Override
-    public boolean isValid(String value, ConstraintValidatorContext context){
-        for(String gender : validGender) {
-            if (gender.equalsIgnoreCase(value)) {
-                return true;
-            }
-        }
-        return false;
+    public boolean isValid(GenderEnum value, ConstraintValidatorContext context){
+        return Arrays.asList(GenderEnum.values()).contains(value);
     }
 }

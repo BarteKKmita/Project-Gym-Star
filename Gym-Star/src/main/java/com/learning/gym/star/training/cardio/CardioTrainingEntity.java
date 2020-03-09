@@ -1,4 +1,4 @@
-package com.learning.gym.star.training.power;
+package com.learning.gym.star.training.cardio;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,14 +12,14 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Entity
-@Table(name = "powertraining")
-public class PowerTrainingDB {
+@Table(name = "cardiotraining")
+public class CardioTrainingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "power_id")
-    private String powerId;
+    @Column(name = "cardio_id")
+    private String cardioId;
 
-    @Column(name = "training_count ")
+    @Column(name = "training_count")
     private int trainingCount;
 }
