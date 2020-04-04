@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/cardio")
-public final class CardioTrainingController {
+public class CardioTrainingController {
     private static final Logger LOGGER = LoggerFactory.getLogger(CardioTrainingController.class);
     private final CardioTrainingService service;
 

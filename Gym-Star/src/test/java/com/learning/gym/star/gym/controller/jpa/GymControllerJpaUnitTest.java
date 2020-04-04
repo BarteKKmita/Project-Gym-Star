@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -51,7 +50,7 @@ class GymControllerJpaUnitTest {
     @Test
     public void shouldReturnConflictWhenAddingExistingGym(){
         //Given
-        String message = "Specified gym id already exists ";
+        String message = "Gym data was provided with gym id. It should be empty since app generates id automatically";
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
         when(gymService.addGym(any(GymDTO.class))).thenReturn("");
@@ -77,7 +76,6 @@ class GymControllerJpaUnitTest {
         assertEquals(gymListSize, gymList.size());
     }
 
-
     @Test
     public void shouldGetGymById(){
         //Given
@@ -91,20 +89,6 @@ class GymControllerJpaUnitTest {
         //Then
         assertEquals(HttpStatus.OK.value(), responseEntity.getStatusCodeValue());
         assertEquals(testGymDTOWithId, outputGym);
-    }
-
-    @Test
-    public void shouldReturnNotFoundStatusWhenGettingNotExistingGym(){
-        //Given
-        int gymId = 2;
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
-        when(gymService.getGymById(any(Integer.class))).thenReturn(null);
-        //When
-        ResponseEntity responseEntity = controller.getGymById(gymId);
-        //Then
-        assertEquals(HttpStatus.NOT_FOUND.value(), responseEntity.getStatusCodeValue());
-        assertTrue(responseEntity.getHeaders().isEmpty());
     }
 
     private List<GymDTO> getAllGymsDummy(){
