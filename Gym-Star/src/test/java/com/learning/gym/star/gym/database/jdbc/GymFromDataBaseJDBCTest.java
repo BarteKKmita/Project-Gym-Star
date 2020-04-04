@@ -2,8 +2,6 @@ package com.learning.gym.star.gym.database.jdbc;
 
 import com.learning.gym.star.gym.Gym;
 import com.wix.mysql.EmbeddedMysql;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -15,22 +13,12 @@ import static org.junit.jupiter.api.Assertions.assertNull;
  * By this I want to test connection with database only with usage of Java without any external framework (like Spring).
  */
 
-class GymFromDataBaseJDBCTest {
+public class GymFromDataBaseJDBCTest {
 
     private static EmbeddedMysql embeddedMysql;
-    private static JdbcPropertiesReader propertiesReader = new JdbcPropertiesReader("src/main/resources/application-test.properties");
+    private static JdbcPropertiesReader propertiesReader = new JdbcPropertiesReader("src/test/resources/application-test.properties");
     private JdbcConnector jdbcConnector = new JdbcConnector(propertiesReader);
     private GymFromDataBaseJDBC gymFromDataBaseJDBC = new GymFromDataBaseJDBC(jdbcConnector);
-
-    @BeforeAll
-    private static void setUp(){
-        TestSuite.setUpClass();
-    }
-
-    @AfterAll
-    private static void tearDown(){
-        TestSuite.tearDownClass();
-    }
 
     @Test
     void shouldGetAllGymData(){

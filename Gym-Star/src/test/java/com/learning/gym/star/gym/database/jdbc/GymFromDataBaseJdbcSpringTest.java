@@ -1,17 +1,18 @@
 package com.learning.gym.star.gym.database.jdbc;
 
 import com.learning.gym.star.gym.Gym;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.NonTransientDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -19,14 +20,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * This test case class can be only run by TestSuite class. In TestSuite class is included all needed configuration to
- * run it with spring and MySQL embedded database.
- */
-
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ActiveProfiles("test")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class GymFromDataBaseJdbcSpringTest {
 
     @Resource
@@ -36,7 +33,7 @@ public class GymFromDataBaseJdbcSpringTest {
     private static JdbcTemplate jdbcTemplate;
     private GymFromDataBaseJdbcSpring gymFromDataBaseJdbcSpring;
 
-    @Before
+    @BeforeAll
     public void setUpClass(){
         jdbcTemplate = new JdbcTemplate(dataSource);
         gymFromDataBaseJdbcSpring = new GymFromDataBaseJdbcSpring(jdbcTemplate, gymQueryParameters);
@@ -51,7 +48,7 @@ public class GymFromDataBaseJdbcSpringTest {
     @Test
     public void shouldGetAllGymData(){
         //Given
-        int expectedSize = 2;
+        int expectedSize = 3;
         //When
         int gymDataSize = gymFromDataBaseJdbcSpring.getGymData().size();
         //Then
@@ -80,9 +77,9 @@ public class GymFromDataBaseJdbcSpringTest {
     @Test
     public void shouldAddRecord(){
         //Given
-        int gymId = 6;
+        int gymId = 2;
         int expectedLength = 5;
-        Gym gym = Gym.builder().gymId("6")
+        Gym gym = Gym.builder().gymId("2")
                 .gymName("TestName")
                 .buildingNumber("60")
                 .street("Sezamkowa")
@@ -169,8 +166,8 @@ public class GymFromDataBaseJdbcSpringTest {
     @Test
     public void shouldRemoveRecord(){
         //Given
-        int gymIdToDelete = 2;
-        int expectedDataLength = 1;
+        int gymIdToDelete = 3;
+        int expectedDataLength = 3;
         //When
         gymFromDataBaseJdbcSpring.delete(gymIdToDelete);
         List<String> gymData = gymFromDataBaseJdbcSpring.getGymData();
@@ -181,9 +178,9 @@ public class GymFromDataBaseJdbcSpringTest {
     @Test
     public void shouldThrowExceptionWhenCallingNotExistingGymRecord(){
         //Given
-        int gym_id = 6;
+        int notExistingGymId = 20;
         //Then
-        assertThrows(EmptyResultDataAccessException.class, () -> gymFromDataBaseJdbcSpring.getGymDataById(gym_id));
+        assertThrows(EmptyResultDataAccessException.class, () -> gymFromDataBaseJdbcSpring.getGymDataById(notExistingGymId));
     }
 
     @Test
@@ -199,7 +196,7 @@ public class GymFromDataBaseJdbcSpringTest {
         assertThrows(DuplicateKeyException.class, () -> gymFromDataBaseJdbcSpring.add(testGym));
     }
 
-    @After
+    @AfterAll
     public void tearDown(){
         gymFromDataBaseJdbcSpring.delete(6);
         int gymId = 2;

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service("GymServiceJpa")
-public final class GymServiceJpa {
+public class GymServiceJpa {
     private static final Logger LOGGER = LoggerFactory.getLogger(GymServiceJpa.class);
     private final GymJpaRepository gymRepository;
     private final GymSerializer gymSerializer;
