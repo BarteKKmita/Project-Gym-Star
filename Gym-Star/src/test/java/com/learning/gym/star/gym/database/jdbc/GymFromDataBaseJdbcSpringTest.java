@@ -1,10 +1,8 @@
 package com.learning.gym.star.gym.database.jdbc;
 
+import com.learning.gym.star.EmbeddedMySqlProvider;
 import com.learning.gym.star.gym.Gym;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DuplicateKeyException;
@@ -23,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ActiveProfiles("test")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class GymFromDataBaseJdbcSpringTest {
 
     @Resource
@@ -34,6 +31,11 @@ public class GymFromDataBaseJdbcSpringTest {
     private GymFromDataBaseJdbcSpring gymFromDataBaseJdbcSpring;
 
     @BeforeAll
+    public static void setUp(){
+        EmbeddedMySqlProvider.setUpClass();
+    }
+
+    @BeforeEach
     public void setUpClass(){
         jdbcTemplate = new JdbcTemplate(dataSource);
         gymFromDataBaseJdbcSpring = new GymFromDataBaseJdbcSpring(jdbcTemplate, gymQueryParameters);
@@ -46,6 +48,7 @@ public class GymFromDataBaseJdbcSpringTest {
     }
 
     @Test
+    @Order(0)
     public void shouldGetAllGymData(){
         //Given
         int expectedSize = 3;
@@ -77,9 +80,9 @@ public class GymFromDataBaseJdbcSpringTest {
     @Test
     public void shouldAddRecord(){
         //Given
-        int gymId = 2;
+        int gymId = 3;
         int expectedLength = 5;
-        Gym gym = Gym.builder().gymId("2")
+        Gym gym = Gym.builder().gymId("3")
                 .gymName("TestName")
                 .buildingNumber("60")
                 .street("Sezamkowa")
@@ -166,8 +169,8 @@ public class GymFromDataBaseJdbcSpringTest {
     @Test
     public void shouldRemoveRecord(){
         //Given
-        int gymIdToDelete = 3;
-        int expectedDataLength = 3;
+        int gymIdToDelete = 4;
+        int expectedDataLength = 2;
         //When
         gymFromDataBaseJdbcSpring.delete(gymIdToDelete);
         List<String> gymData = gymFromDataBaseJdbcSpring.getGymData();
@@ -196,9 +199,10 @@ public class GymFromDataBaseJdbcSpringTest {
         assertThrows(DuplicateKeyException.class, () -> gymFromDataBaseJdbcSpring.add(testGym));
     }
 
-    @AfterAll
+    @AfterEach
     public void tearDown(){
         gymFromDataBaseJdbcSpring.delete(6);
+        gymFromDataBaseJdbcSpring.delete(3);
         int gymId = 2;
         String expectedGymName = "pierwsza";
         Gym gym = Gym.builder().gymId("2")
@@ -208,5 +212,10 @@ public class GymFromDataBaseJdbcSpringTest {
                 .city("TestCity")
                 .build();
         gymFromDataBaseJdbcSpring.update(gym, gymId);
+    }
+
+    @AfterAll
+    public static void tearDownClass(){
+        EmbeddedMySqlProvider.tearDownClass();
     }
 }

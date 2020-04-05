@@ -4,6 +4,7 @@ import com.learning.gym.star.EmbeddedMySqlProvider;
 import com.learning.gym.star.training.power.database.PowerTrainingRepository;
 import com.learning.gym.star.training.power.service.PowerTrainingService;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,16 @@ public class PowerControllerIntegrationWithEmbeddedMySQLTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @BeforeAll
+    public static void setUpClass(){
+        EmbeddedMySqlProvider.setUpClass();
+    }
+
+    @AfterAll
+    public static void tearDownClass(){
+        EmbeddedMySqlProvider.tearDownClass();
+    }
+
     @Test
     public void shouldControllerNotBeNullWhenAutowired(){
         assertNotNull(controllerJpa);
@@ -48,10 +59,5 @@ public class PowerControllerIntegrationWithEmbeddedMySQLTest {
         mockMvc.perform(get("/api/power/" + powerId))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(expectedRequestBody));
-    }
-
-    @AfterAll
-    public static void tearDownClass(){
-        EmbeddedMySqlProvider.tearDownClass();
     }
 }
