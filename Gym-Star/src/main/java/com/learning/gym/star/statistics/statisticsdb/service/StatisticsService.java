@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service("StatisticsService")
-public final class StatisticsService {
+public class StatisticsService {
     private static final Logger LOGGER = LoggerFactory.getLogger(StatisticsService.class);
     private final StatisticsRepository repository;
 

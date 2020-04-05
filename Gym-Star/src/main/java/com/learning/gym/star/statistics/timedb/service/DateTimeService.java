@@ -12,7 +12,8 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Service("DateAndTimeService")
-public final class DateTimeService {
+public
+class DateTimeService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DateTimeService.class);
     private final DateTimeRepository repository;
 

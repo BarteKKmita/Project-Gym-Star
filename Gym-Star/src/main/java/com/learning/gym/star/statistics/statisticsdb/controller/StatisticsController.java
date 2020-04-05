@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/statistics")
-public final class StatisticsController {
+public class StatisticsController {
     private static final Logger LOGGER = LoggerFactory.getLogger(StatisticsController.class);
-    private StatisticsService service;
+    private final StatisticsService service;
 
     public StatisticsController(StatisticsService service){
         this.service = service;
