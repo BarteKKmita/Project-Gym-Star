@@ -20,12 +20,12 @@ public class StatisticsService {
         this.repository = repository;
     }
 
-    public int createNewStatistics(){
+    public String createNewStatistics(){
         var stats = StatisticsEntity.builder()
                 .cardioTrainingEntity(new CardioTrainingEntity())
                 .powerTrainingEntity(new PowerTrainingEntity())
                 .build();
-        return Integer.parseInt(repository.saveAndFlush(stats).getStatisticsId());
+        return repository.saveAndFlush(stats).getStatisticsId();
     }
 
     public List<StatisticsEntity> readAllStatistics(){
