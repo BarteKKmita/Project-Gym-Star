@@ -98,7 +98,7 @@ DELIMITER ;
 insert into gym values ('1','pierwsza', 'sezamkowa','rudy', 102);
 insert into gym values ('2','druga', 'sezamkowa','kraków', 102);
 insert into gym values ('4','Gym', 'ToDelete','kraków', 200);
-insert into cardiotraining values (1,0);
+insert into cardiotraining values (1,2);
 insert into powertraining values (1,5);
 insert into Statistics values (1,1,1);
 insert into SportsMenTrainingTimeStatistics values (1,'2020-01-22','18:18:52',1);
