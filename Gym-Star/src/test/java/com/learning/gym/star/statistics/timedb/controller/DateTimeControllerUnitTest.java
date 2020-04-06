@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -42,16 +43,14 @@ class DateTimeControllerUnitTest {
     }
 
     @Test
-    void shouldReturnNotFound(){
+    void shouldReturnStatusOkWhenEmptyList(){
         //Given
-        var message = "There is no training date and time statistics for this sportsman";
         int notExistingSportsmanId = 5;
-        when(service.getSportsManDateAndTimeStatistics(any(String.class))).thenReturn(new ArrayList<>());
+        when(service.getSportsManDateAndTimeStatistics(any(String.class))).thenReturn(Collections.emptyList());
         //When
         ResponseEntity sportsmanDateAndTimeStats = controller.getSportsmanDateAndTimeStats(notExistingSportsmanId);
         //Then
-        assertEquals(HttpStatus.NOT_FOUND, sportsmanDateAndTimeStats.getStatusCode());
-        assertEquals(message, sportsmanDateAndTimeStats.getBody());
+        assertEquals(HttpStatus.OK, sportsmanDateAndTimeStats.getStatusCode());
     }
 
     private List<TrainingDateStatisticsEntity> getListDateAndTimeStats(int statisticsId){

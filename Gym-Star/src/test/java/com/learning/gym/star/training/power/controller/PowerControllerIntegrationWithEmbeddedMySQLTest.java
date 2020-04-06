@@ -1,8 +1,6 @@
 package com.learning.gym.star.training.power.controller;
 
 import com.learning.gym.star.EmbeddedMySqlProvider;
-import com.learning.gym.star.training.power.database.PowerTrainingRepository;
-import com.learning.gym.star.training.power.service.PowerTrainingService;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -25,12 +23,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 public class PowerControllerIntegrationWithEmbeddedMySQLTest {
     @Autowired
-    private PowerTrainingController controllerJpa;
-    @Autowired
-    private PowerTrainingService service;
-    @Autowired
-    private PowerTrainingRepository repository;
-    @Autowired
     private MockMvc mockMvc;
 
     @BeforeAll
@@ -45,9 +37,6 @@ public class PowerControllerIntegrationWithEmbeddedMySQLTest {
 
     @Test
     public void shouldControllerNotBeNullWhenAutowired(){
-        assertNotNull(controllerJpa);
-        assertNotNull(repository);
-        assertNotNull(service);
         assertNotNull(mockMvc);
     }
 

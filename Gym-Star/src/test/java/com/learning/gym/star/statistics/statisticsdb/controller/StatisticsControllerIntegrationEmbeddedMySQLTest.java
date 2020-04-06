@@ -1,8 +1,6 @@
 package com.learning.gym.star.statistics.statisticsdb.controller;
 
 import com.learning.gym.star.EmbeddedMySqlProvider;
-import com.learning.gym.star.statistics.statisticsdb.database.StatisticsRepository;
-import com.learning.gym.star.statistics.statisticsdb.service.StatisticsService;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -29,16 +27,6 @@ public class StatisticsControllerIntegrationEmbeddedMySQLTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private StatisticsController controller;
-
-    @Autowired
-    private StatisticsService service;
-
-    @Autowired
-    private StatisticsRepository repository;
-
-
     @BeforeAll
     public static void setUpClass(){
         EmbeddedMySqlProvider.setUpClass();
@@ -52,9 +40,6 @@ public class StatisticsControllerIntegrationEmbeddedMySQLTest {
     @Test
     public void shouldFieldsNotBeNull(){
         assertNotNull(mockMvc);
-        assertNotNull(controller);
-        assertNotNull(service);
-        assertNotNull(repository);
     }
 
     @Test

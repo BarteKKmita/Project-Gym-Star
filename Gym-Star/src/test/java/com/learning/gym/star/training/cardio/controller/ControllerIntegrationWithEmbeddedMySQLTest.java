@@ -2,8 +2,6 @@ package com.learning.gym.star.training.cardio.controller;
 
 
 import com.learning.gym.star.EmbeddedMySqlProvider;
-import com.learning.gym.star.training.cardio.database.CardioTrainingJpaRepository;
-import com.learning.gym.star.training.cardio.service.CardioTrainingService;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -27,12 +25,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @ActiveProfiles("test")
 public class ControllerIntegrationWithEmbeddedMySQLTest {
     @Autowired
-    private CardioTrainingController controllerJpa;
-    @Autowired
-    private CardioTrainingService service;
-    @Autowired
-    private CardioTrainingJpaRepository repository;
-    @Autowired
     private MockMvc mockMvc;
 
     @BeforeAll
@@ -47,9 +39,6 @@ public class ControllerIntegrationWithEmbeddedMySQLTest {
 
     @Test
     public void shouldControllerNotBeNullWhenAutowired(){
-        assertNotNull(controllerJpa);
-        assertNotNull(repository);
-        assertNotNull(service);
         assertNotNull(mockMvc);
     }
 
