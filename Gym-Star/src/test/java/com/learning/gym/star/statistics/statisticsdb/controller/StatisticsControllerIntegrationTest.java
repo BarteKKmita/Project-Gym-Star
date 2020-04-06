@@ -48,7 +48,7 @@ public class StatisticsControllerIntegrationTest {
     public void shouldReturnStatusNotFound() throws Exception{
         //Given
         when(service.readStatisticsById(any(String.class))).thenThrow(new NoSuchElementException());
-        //When
+        //Then
         mockMvc.perform(get("/api/statistics/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
@@ -57,9 +57,9 @@ public class StatisticsControllerIntegrationTest {
     @Test
     public void shouldReturnExceptionMessageInResponse() throws Exception{
         //Given
-        String message = "Test response message";
+        var message = "Test response message";
         when(service.readStatisticsById(any(String.class))).thenThrow(new NoSuchElementException("Test response message"));
-        //When
+        //Then
         mockMvc.perform(get("/api/statistics/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().string(message));

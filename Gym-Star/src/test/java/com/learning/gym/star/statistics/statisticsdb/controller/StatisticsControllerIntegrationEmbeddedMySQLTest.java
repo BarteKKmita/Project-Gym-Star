@@ -61,7 +61,7 @@ public class StatisticsControllerIntegrationEmbeddedMySQLTest {
     public void shouldAddStatsRecord() throws Exception{
         //Given
         var expectedStatsId = "2";
-        //When
+        //Then
         mockMvc.perform(post("/api/statistics")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().string(expectedStatsId));
@@ -71,7 +71,7 @@ public class StatisticsControllerIntegrationEmbeddedMySQLTest {
     public void shouldGetStatsRecord() throws Exception{
         //Given
         var existingStatsId = "1";
-        //When
+        //Then
         mockMvc.perform(get("/api/statistics/" + existingStatsId)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.statisticsId").value(1))
