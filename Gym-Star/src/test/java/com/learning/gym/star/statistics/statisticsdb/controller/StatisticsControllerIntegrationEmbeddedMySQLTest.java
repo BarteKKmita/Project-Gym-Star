@@ -61,7 +61,7 @@ public class StatisticsControllerIntegrationEmbeddedMySQLTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.statisticsId").value(1))
                 .andExpect(jsonPath("$.cardioTrainingEntity.cardioId").value(1))
-                .andExpect(jsonPath("$.cardioTrainingEntity.trainingCount").value(0))
+                .andExpect(jsonPath("$.cardioTrainingEntity.trainingCount").value(2))
                 .andExpect(jsonPath("$.powerTrainingEntity.powerId").value(1))
                 .andExpect(jsonPath("$.powerTrainingEntity.trainingCount").value(5));
     }

@@ -65,7 +65,6 @@ public class StatisticsControllerIntegrationTest {
                 .andExpect(content().string(message));
     }
 
-
     @Test
     public void shouldReturnEmptyListAndStatusOk() throws Exception{
         //Given

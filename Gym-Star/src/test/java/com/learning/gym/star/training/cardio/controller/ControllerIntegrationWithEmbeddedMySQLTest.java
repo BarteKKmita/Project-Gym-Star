@@ -46,7 +46,7 @@ public class ControllerIntegrationWithEmbeddedMySQLTest {
     public void shouldIncrementTrainingCount() throws Exception{
         //Given
         int cardioId = 1;
-        String expectedRequestBody = "1";
+        String expectedRequestBody = "3";
         //When
         mockMvc.perform(put("/api/cardio/train/" + cardioId));
         //Then

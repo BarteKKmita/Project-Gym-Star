@@ -86,11 +86,4 @@ class CardioTrainingJpaRepositoryTest {
         //Then
         assertTrue(isCardioStatsCreated);
     }
-
-    private CardioTrainingEntity getTestCardioEntity(String cardioId, int trainingCount){
-        return CardioTrainingEntity.builder()
-                .cardioId(cardioId)
-                .trainingCount(trainingCount)
-                .build();
-    }
 }
