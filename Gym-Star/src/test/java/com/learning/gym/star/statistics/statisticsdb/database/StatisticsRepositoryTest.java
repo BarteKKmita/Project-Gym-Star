@@ -1,10 +1,13 @@
 package com.learning.gym.star.statistics.statisticsdb.database;
 
+import com.learning.gym.star.EmbeddedMySqlProvider;
 import com.learning.gym.star.statistics.statisticsdb.StatisticsEntity;
 import com.learning.gym.star.training.cardio.CardioTrainingEntity;
 import com.learning.gym.star.training.cardio.database.CardioTrainingJpaRepository;
 import com.learning.gym.star.training.power.PowerTrainingEntity;
 import com.learning.gym.star.training.power.database.PowerTrainingRepository;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -23,13 +26,23 @@ class StatisticsRepositoryTest {
     @Autowired
     private CardioTrainingJpaRepository cardioTrainingRepository;
 
+    @BeforeAll
+    public static void setUpClass(){
+        EmbeddedMySqlProvider.setUpClass();
+    }
+
+    @AfterAll
+    public static void tearDownClass(){
+        EmbeddedMySqlProvider.tearDownClass();
+    }
+
     @Test
     public void shouldNotBeNull(){
         assertNotNull(statisticsRepository);
     }
 
     @Test
-    private void shouldGetStatisticsById(){
+    public void shouldGetStatisticsById(){
         //Given
         var statisticsId = "1";
         //when

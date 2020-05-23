@@ -36,7 +36,6 @@ class DateTimeRepositoryTest {
         EmbeddedMySqlProvider.tearDownClass();
     }
 
-
     @Test
     public void shouldNotBeNull(){
         assertNotNull(repository);

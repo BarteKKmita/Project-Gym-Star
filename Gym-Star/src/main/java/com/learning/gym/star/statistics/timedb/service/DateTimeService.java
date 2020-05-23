@@ -13,8 +13,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service("DateAndTimeService")
-public
-class DateTimeService {
+public class DateTimeService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DateTimeService.class);
     private final DateTimeRepository repository;
 
