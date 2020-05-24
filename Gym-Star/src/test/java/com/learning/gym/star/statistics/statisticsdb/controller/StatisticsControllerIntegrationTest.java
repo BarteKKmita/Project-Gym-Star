@@ -35,16 +35,6 @@ public class StatisticsControllerIntegrationTest {
     }
 
     @Test
-    public void shouldNotListenToOtherControllerEndpoint() throws Exception{
-        //Given
-        int cardioId = 1;
-        //Then
-        mockMvc.perform(get("/api/cardio/" + cardioId).
-                contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
-    }
-
-    @Test
     public void shouldReturnStatusNotFound() throws Exception{
         //Given
         when(service.readStatisticsById(any(String.class))).thenThrow(new NoSuchElementException());

@@ -32,8 +32,8 @@ public class DateTimeControllerIntegrationTest {
         int sportsmanStatsId = 1;
         when(service.getSportsManDateAndTimeStatistics(any(String.class))).thenReturn(Collections.emptyList());
         //Then
-        mockMvc.perform(post("/api/datetime/" + sportsmanStatsId))
-                .andExpect(status().isCreated());
+        mockMvc.perform(get("/api/datetime/" + sportsmanStatsId))
+                .andExpect(status().isOk());
     }
 
     @Test

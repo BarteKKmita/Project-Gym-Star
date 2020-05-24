@@ -39,6 +39,8 @@ class StatisticsRepositoryTest {
     @Test
     public void shouldNotBeNull(){
         assertNotNull(statisticsRepository);
+        assertNotNull(powerTrainingRepository);
+        assertNotNull(cardioTrainingRepository);
     }
 
     @Test

@@ -56,13 +56,17 @@ public class StatisticsControllerIntegrationEmbeddedMySQLTest {
     public void shouldGetStatsRecord() throws Exception{
         //Given
         var existingStatsId = "1";
+        var cardioId = 1;
+        var cardioTrainingCount = 2;
+        var powerId = 1;
+        var powerTrainingCount = 5;
         //Then
         mockMvc.perform(get("/api/statistics/" + existingStatsId)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.statisticsId").value(1))
-                .andExpect(jsonPath("$.cardioTrainingEntity.cardioId").value(1))
-                .andExpect(jsonPath("$.cardioTrainingEntity.trainingCount").value(2))
-                .andExpect(jsonPath("$.powerTrainingEntity.powerId").value(1))
-                .andExpect(jsonPath("$.powerTrainingEntity.trainingCount").value(5));
+                .andExpect(jsonPath("$.cardioTrainingEntity.cardioId").value(cardioId))
+                .andExpect(jsonPath("$.cardioTrainingEntity.trainingCount").value(cardioTrainingCount))
+                .andExpect(jsonPath("$.powerTrainingEntity.powerId").value(powerId))
+                .andExpect(jsonPath("$.powerTrainingEntity.trainingCount").value(powerTrainingCount));
     }
 }
