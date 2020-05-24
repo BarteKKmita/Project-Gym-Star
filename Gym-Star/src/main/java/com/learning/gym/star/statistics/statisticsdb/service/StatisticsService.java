@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service("StatisticsService")
-public final class StatisticsService {
+public class StatisticsService {
     private static final Logger LOGGER = LoggerFactory.getLogger(StatisticsService.class);
     private final StatisticsRepository repository;
 
@@ -20,12 +20,12 @@ public final class StatisticsService {
         this.repository = repository;
     }
 
-    public int createNewStatistics(){
+    public String createNewStatistics(){
         var stats = StatisticsEntity.builder()
                 .cardioTrainingEntity(new CardioTrainingEntity())
                 .powerTrainingEntity(new PowerTrainingEntity())
                 .build();
-        return Integer.parseInt(repository.saveAndFlush(stats).getStatisticsId());
+        return repository.saveAndFlush(stats).getStatisticsId();
     }
 
     public List<StatisticsEntity> readAllStatistics(){

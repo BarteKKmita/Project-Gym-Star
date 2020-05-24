@@ -1,6 +1,7 @@
 package com.learning.gym.star.gym.controller.jpa;
 
 import com.learning.gym.star.EmbeddedMySqlProvider;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,8 +25,13 @@ public class GymControllerJpaIntegrationTest {
     private MockMvc mockMvc;
 
     @BeforeAll
-    private static void setUp(){
+    private static void setUpClass(){
         EmbeddedMySqlProvider.setUpClass();
+    }
+
+    @AfterAll
+    private static void tearDownClass(){
+        EmbeddedMySqlProvider.tearDownClass();
     }
 
     @Test

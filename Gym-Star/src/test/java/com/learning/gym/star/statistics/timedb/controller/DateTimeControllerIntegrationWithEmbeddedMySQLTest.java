@@ -1,4 +1,4 @@
-package com.learning.gym.star.training.power.controller;
+package com.learning.gym.star.statistics.timedb.controller;
 
 import com.learning.gym.star.EmbeddedMySqlProvider;
 import org.junit.jupiter.api.AfterAll;
@@ -11,17 +11,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-public class PowerControllerIntegrationWithEmbeddedMySQLTest {
+public class DateTimeControllerIntegrationWithEmbeddedMySQLTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -41,12 +41,12 @@ public class PowerControllerIntegrationWithEmbeddedMySQLTest {
     }
 
     @Test
-    public void shouldReturnTrainingCount() throws Exception{
+    public void shouldReturnSportsmanDateTimeStats() throws Exception{
         //Given
-        int powerId = 1;
-        String expectedRequestBody = "5";
-        mockMvc.perform(get("/api/power/" + powerId))
+        int sportsmanStatsId = 1;
+        //Then
+        mockMvc.perform(get("/api/datetime/" + sportsmanStatsId))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(expectedRequestBody));
+                .andExpect(jsonPath("$.[0].statisticsId").value("1"));
     }
 }

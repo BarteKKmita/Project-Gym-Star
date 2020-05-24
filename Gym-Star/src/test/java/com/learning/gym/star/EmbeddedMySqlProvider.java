@@ -7,6 +7,7 @@ import com.wix.mysql.config.SchemaConfig;
 
 import java.time.ZoneId;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import static com.wix.mysql.ScriptResolver.classPathScript;
 import static com.wix.mysql.distribution.Version.v5_7_19;
@@ -34,6 +35,7 @@ public class EmbeddedMySqlProvider {
                 .withPort(3307)
                 .withTimeZone(TimeZone.getTimeZone(ZoneId.of("UTC")))
                 .withUser("test", "test")
+                .withTimeout(120, TimeUnit.SECONDS)
                 .build();
         SchemaConfig schemaConfig = SchemaConfig.aSchemaConfig("test_database")
                 .withScripts(classPathScript(("db/schema.sql")))

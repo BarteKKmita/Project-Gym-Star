@@ -1,23 +1,22 @@
-
-CREATE TABLE PowerTraining (
+CREATE TABLE powertraining (
 power_id INT PRIMARY KEY AUTO_INCREMENT,
 training_count INT DEFAULT 0
 );
 
-CREATE TABLE CardioTraining (
+CREATE TABLE cardiotraining (
 cardio_id INT PRIMARY KEY AUTO_INCREMENT,
 training_count INT DEFAULT 0
 );
 
-CREATE TABLE Statistics (
+CREATE TABLE statistics (
 statistics_id INT PRIMARY KEY AUTO_INCREMENT,
 power_id INT,
 cardio_id INT,
-FOREIGN KEY (power_id) REFERENCES PowerTraining(power_id),
-FOREIGN KEY (cardio_id) REFERENCES CardioTraining(cardio_id)
+FOREIGN KEY (power_id) REFERENCES powertraining(power_id),
+FOREIGN KEY (cardio_id) REFERENCES cardiotraining(cardio_id)
 );
 
-CREATE TABLE Gym (
+CREATE TABLE gym (
 gym_id INT PRIMARY KEY AUTO_INCREMENT,
 gym_name NVARCHAR(80) NOT NULL,
 street NVARCHAR (80) NOT NULL,
@@ -25,64 +24,53 @@ city NVARCHAR(30) NOT NULL,
 building_number INT NOT NULL
 );
 
-CREATE TABLE Trainer (
+CREATE TABLE trainer (
 trainer_pesel BIGINT PRIMARY KEY,
 trainer_name NVARCHAR(30) NOT NULL,
 trainer_surname NVARCHAR (80) NOT NULL,
-cost INT NOT NULL
+cost INT NOT NULL,
+gym_id INT,
+FOREIGN KEY (gym_id)  REFERENCES gym(gym_id)
 );
 
-CREATE TABLE SportsMen (
+CREATE TABLE sportsmen (
 sportsman_pesel BIGINT PRIMARY KEY,
 sportsman_name NVARCHAR(30) NOT NULL,
 sportsman_surname NVARCHAR (80) NOT NULL,
 gender ENUM ('F','M',"N/A") NOT NULL,
 trainer_pesel BIGINT,
 statistics_id INT,
-FOREIGN KEY (trainer_pesel)  REFERENCES Trainer(trainer_pesel),
-FOREIGN KEY (statistics_id) REFERENCES Statistics(statistics_id)
+gym_id INT,
+FOREIGN KEY (trainer_pesel)  REFERENCES trainer(trainer_pesel),
+FOREIGN KEY (gym_id)  REFERENCES gym(gym_id),
+FOREIGN KEY (statistics_id) REFERENCES statistics(statistics_id)
 );
 
-ALTER TABLE SportsMen
-ADD COLUMN gym_id INT;
-
-ALTER TABLE SportsMen
-ADD FOREIGN KEY (gym_id) REFERENCES Gym(gym_id);
-
-ALTER TABLE Trainer
-ADD COLUMN gym_id INT;
-
-ALTER TABLE Trainer
-ADD FOREIGN KEY (gym_id) REFERENCES Gym(gym_id);
-
-CREATE TABLE SportsMenTrainingTimeStatistics (
+CREATE TABLE sportsmentrainingtimestatistics (
 statistics_id INT PRIMARY KEY AUTO_INCREMENT,
 date DATE NOT NULL,
 time TIME NOT NULL,
 sportsmanstats_id int NOT NULL,
-FOREIGN KEY (sportsmanstats_id) REFERENCES Statistics(statistics_id)
+FOREIGN KEY (sportsmanstats_id) REFERENCES statistics(statistics_id)
 );
 
-ALTER TABLE SportsMen
-ADD FOREIGN KEY (trainer_pesel) REFERENCES trainer(trainer_pesel);
-
-ALTER TABLE Trainer
+ALTER TABLE trainer
 ADD COLUMN sportsman BIGINT;
 
-ALTER TABLE Trainer
-ADD FOREIGN KEY (sportsman) REFERENCES SportsMen(sportsman_pesel);
+ALTER TABLE trainer
+ADD FOREIGN KEY (sportsman) REFERENCES sportsmen(sportsman_pesel);
 
 CREATE TABLE trainersatgym (
 trainer_pesel BIGINT,
 gym_id INT,
 PRIMARY KEY(trainer_pesel, gym_id),
-FOREIGN KEY (trainer_pesel) REFERENCES trainer(trainer_pesel) ON DELETE CASCADE,
-FOREIGN KEY (gym_id) REFERENCES gym(gym_id) ON DELETE CASCADE);
+FOREIGN KEY (trainer_pesel) REFERENCES trainer(trainer_pesel),
+FOREIGN KEY (gym_id) REFERENCES gym(gym_id) );
 
 DELIMITER //
 CREATE PROCEDURE getsportsmanstats (sportsmanStatsId INT)
 BEGIN
-SELECT statistics_id, date, time FROM SportsMenTrainingTimeStatistics
+SELECT * FROM sportsmentrainingtimestatistics
 WHERE sportsmanstats_id=sportsmanStatsId;
 END //
 DELIMITER ;
@@ -90,12 +78,23 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE trainCardio (statsId INT, cardiosportsmanID INT)
 BEGIN
-UPDATE cardioTraining SET training_count=training_count+1 WHERE cardio_id = cardiosportsmanID;
-INSERT INTO SportsMenTrainingTimeStatistics VALUES(NULL,curdate(),curtime(), statsId);
+UPDATE cardiotraining SET training_count=training_count+1 WHERE cardio_id = cardiosportsmanID;
+INSERT INTO sportsmentrainingtimestatistics VALUES(NULL,curdate(),curtime(), statsId);
 END //
 DELIMITER ;
 
-INSERT INTO gym Values ('1','pierwsza', 'sezamkowa','rudy', 102);
-INSERT INTO gym Values ('2','druga', 'sezamkowa','kraków', 102);
-INSERT INTO cardiotraining values (1,0);
-INSERT INTO powertraining values (1,5);
+DELIMITER //
+CREATE PROCEDURE trainPower (statsId INT, powersportsmanID INT)
+BEGIN
+UPDATE powertraining SET training_count=training_count+1 WHERE power_id = powersportsmanID;
+INSERT INTO sportsmentrainingtimestatistics VALUES(NULL,curdate(),curtime(), statsId);
+END //
+DELIMITER ;
+
+insert into gym values ('1','pierwsza', 'sezamkowa','rudy', 102);
+insert into gym values ('2','druga', 'sezamkowa','kraków', 102);
+insert into gym values ('4','Gym', 'ToDelete','kraków', 200);
+insert into cardiotraining values (1,2);
+insert into powertraining values (1,5);
+insert into Statistics values (1,1,1);
+insert into SportsMenTrainingTimeStatistics values (1,'2020-01-22','18:18:52',1);

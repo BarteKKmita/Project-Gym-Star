@@ -11,7 +11,8 @@ import java.util.NoSuchElementException;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = PowerTrainingController.class)
@@ -21,25 +22,6 @@ public class PowerControllerIntegrationTest {
 
     @MockBean
     private PowerTrainingService service;
-
-    @Test
-    public void shouldListenToControllerEndpoint() throws Exception{
-        //Given
-        int powerId = 1;
-        //Then
-        mockMvc.perform(get("/api/power/" + powerId)
-                .contentType("application/json"))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void shouldNotListenToOtherControllersEndpoint() throws Exception{
-        //Given
-        int powerId = 1;
-        //Then
-        mockMvc.perform(get("/api/cardio/" + powerId))
-                .andExpect(status().isNotFound());
-    }
 
     @Test
     public void shouldReturnStatusOKUpdating() throws Exception{

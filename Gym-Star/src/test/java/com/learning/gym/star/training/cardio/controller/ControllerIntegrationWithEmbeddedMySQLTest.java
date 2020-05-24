@@ -1,8 +1,9 @@
 package com.learning.gym.star.training.cardio.controller;
 
 
-import com.learning.gym.star.training.cardio.database.CardioTrainingJpaRepository;
-import com.learning.gym.star.training.cardio.service.CardioTrainingService;
+import com.learning.gym.star.EmbeddedMySqlProvider;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,25 +18,27 @@ import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 public class ControllerIntegrationWithEmbeddedMySQLTest {
     @Autowired
-    private CardioTrainingController controllerJpa;
-    @Autowired
-    private CardioTrainingService service;
-    @Autowired
-    private CardioTrainingJpaRepository repository;
-    @Autowired
     private MockMvc mockMvc;
+
+    @BeforeAll
+    public static void setUpClass(){
+        EmbeddedMySqlProvider.setUpClass();
+    }
+
+    @AfterAll
+    public static void tearDownClass(){
+        EmbeddedMySqlProvider.tearDownClass();
+    }
 
     @Test
     public void shouldControllerNotBeNullWhenAutowired(){
-        assertNotNull(controllerJpa);
-        assertNotNull(repository);
-        assertNotNull(service);
         assertNotNull(mockMvc);
     }
 
@@ -43,7 +46,7 @@ public class ControllerIntegrationWithEmbeddedMySQLTest {
     public void shouldIncrementTrainingCount() throws Exception{
         //Given
         int cardioId = 1;
-        String expectedRequestBody = "1";
+        String expectedRequestBody = "3";
         //When
         mockMvc.perform(put("/api/cardio/train/" + cardioId));
         //Then
