@@ -97,4 +97,5 @@ INSERT INTO gym VALUES ('4','Gym', 'ToDelete','kraków', 200);
 INSERT INTO cardiotraining VALUES (1,2);
 INSERT INTO powertraining VALUES (1,5);
 INSERT INTO statistics VALUES (1,1,1);
-INSERT INTO SportsMenTrainingTimeStatistics VALUES (1,'2020-01-22','18:18:52',1);
+INSERT INTO sportsmentrainingtimestatistics VALUES (1,'2020-01-22','18:18:52',1);
+INSERT INTO trainer VALUES ('57122299175','John','Wick','30',NULL, NULL);
