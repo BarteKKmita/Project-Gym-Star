@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Getter
 public class TrainerDTO implements Serializable {
 
-    @PESEL(message = "Pesel must have 11 digits")
+    @PESEL(message = "Invalid Pesel number.")
     @NotNull(message = "Please enter pesel number.")
     private String pesel;
 

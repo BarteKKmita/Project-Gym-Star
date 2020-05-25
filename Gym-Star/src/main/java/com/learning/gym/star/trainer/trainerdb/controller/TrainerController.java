@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityExistsException;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,6 +44,13 @@ public class TrainerController {
     public ResponseEntity handleSerializationFailure(IllegalArgumentException exception){
         LOGGER.info("Entered not suitable trainer data. Serialization of TrainerDTO to TrainerEntity failure. Status 400 returned.");
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+
+    @ExceptionHandler(EntityExistsException.class)
+    public ResponseEntity handleTrainerPeselConflict(EntityExistsException exception){
+        LOGGER.info("Entered pesel number that already exists. Status 409 returned.");
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
