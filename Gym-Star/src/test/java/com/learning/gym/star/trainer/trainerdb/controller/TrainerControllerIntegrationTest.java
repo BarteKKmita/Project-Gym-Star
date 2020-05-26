@@ -63,7 +63,8 @@ class TrainerControllerIntegrationTest {
     public void shouldReturnMessageWhenNoSurname() throws Exception{
         //Given
         var expectedMessage = "Trainer has to have surname";
-        var testTrainer = addTrainerCost(addTrainerName(addTrainerPesel(new JSONObject()))).toString();
+        var testTrainer = addTrainerCost(addTrainerName(addTrainerPesel(new JSONObject())))
+                .toString();
         //Then
         MvcResult mvcResult = mockMvc.perform(post(URL)
                 .contentType(APPLICATION_JSON_VALUE)
@@ -121,7 +122,7 @@ class TrainerControllerIntegrationTest {
     }
 
     @Test
-    public void shouldReturnConflict() throws Exception{
+    public void shouldReturnStatusConflict() throws Exception{
         //Given
         var testTrainer = getValidTrainer();
         doThrow(EntityExistsException.class).when(service).addTrainer(any(TrainerDTO.class));
@@ -142,12 +143,13 @@ class TrainerControllerIntegrationTest {
     }
 
     private JSONObject addTrainerName(JSONObject trainer) throws JSONException{
-        return trainer.put("name", "Test");
+        return trainer.put("name", "Joe");
     }
 
     private JSONObject addTrainerSurname(JSONObject trainer) throws JSONException{
-        return trainer.put("surname", "name");
+        return trainer.put("surname", "Ordinary");
     }
+
 
     private JSONObject addTrainerCost(JSONObject trainer) throws JSONException{
         var moneyAmount = 30;

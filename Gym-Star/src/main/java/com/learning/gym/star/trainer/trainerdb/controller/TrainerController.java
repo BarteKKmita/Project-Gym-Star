@@ -46,10 +46,9 @@ public class TrainerController {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-
     @ExceptionHandler(EntityExistsException.class)
     public ResponseEntity handleTrainerPeselConflict(EntityExistsException exception){
-        LOGGER.info("Entered pesel number that already exists. Status 409 returned.");
+        LOGGER.info("Entered pesel number already exists. Status 409 returned.");
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
     }
 

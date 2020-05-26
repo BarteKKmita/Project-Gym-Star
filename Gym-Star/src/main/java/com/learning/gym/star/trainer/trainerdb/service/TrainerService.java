@@ -29,7 +29,7 @@ public class TrainerService {
         if (repository.existsById(trainerEntity.getPesel())) {
             throw new EntityExistsException("Trainer with specified pesel number already exists");
         }
-        repository.saveAndFlush(serializer.getTrainerFromTrainerDTO(trainer));
+        repository.saveAndFlush(trainerEntity);
     }
 
     public List<TrainerDTO> getAllTrainers() throws IllegalArgumentException{

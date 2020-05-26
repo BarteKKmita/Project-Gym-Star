@@ -38,7 +38,7 @@ class TrainerRepositoryTest {
     }
 
     @Test
-    public void shouldNotBeNull(){
+    public void shouldNotBeNullWhenAutowired(){
         assertNotNull(repository);
     }
 
@@ -57,8 +57,8 @@ class TrainerRepositoryTest {
         //Given
         TrainerEntity trainer = TrainerEntity.builder()
                 .cost(30)
-                .name("Trainer")
-                .surname("Test")
+                .name("Joe")
+                .surname("Ordinary")
                 .pesel("68072378517")
                 .build();
         var expectedNumberOfTrainers = repository.findAll().size() + 1;
@@ -67,5 +67,4 @@ class TrainerRepositoryTest {
         //Then
         assertEquals(expectedNumberOfTrainers, repository.findAll().size());
     }
-
 }
