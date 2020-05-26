@@ -1,5 +1,4 @@
-package com.learning.gym.star.training.cardio.controller;
-
+package com.learning.gym.star.trainer.trainerdb.controller;
 
 import com.learning.gym.star.EmbeddedMySqlProvider;
 import org.junit.jupiter.api.AfterAll;
@@ -13,18 +12,15 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@AutoConfigureMockMvc
 @ActiveProfiles("test")
-public class ControllerIntegrationWithEmbeddedMySQLTest {
+@AutoConfigureMockMvc
+public class TrainerControllerWithEmbeddedMySQLTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -44,15 +40,14 @@ public class ControllerIntegrationWithEmbeddedMySQLTest {
     }
 
     @Test
-    public void shouldIncrementTrainingCount() throws Exception{
+    public void shouldGetAllTrainers() throws Exception{
         //Given
-        int cardioId = 1;
-        String expectedRequestBody = "3";
+        var url = "/api/trainer/all";
+        var firstTrainerPesel = "57122299175";
+        var secondTrainerPesel = "82062972549";
         //When
-        mockMvc.perform(put("/api/cardio/train/" + cardioId));
-        //Then
-        mockMvc.perform(get("/api/cardio/" + cardioId))
-                .andExpect(status().isOk())
-                .andExpect(content().string(expectedRequestBody));
+        mockMvc.perform(get(url))
+                .andExpect(jsonPath("$.[0].pesel").value(firstTrainerPesel))
+                .andExpect(jsonPath("$.[1].pesel").value(secondTrainerPesel));
     }
 }
