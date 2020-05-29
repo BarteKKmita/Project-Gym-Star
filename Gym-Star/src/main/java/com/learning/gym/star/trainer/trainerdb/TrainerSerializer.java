@@ -2,6 +2,7 @@ package com.learning.gym.star.trainer.trainerdb;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -11,12 +12,12 @@ public final class TrainerSerializer {
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainerSerializer.class);
 
-    public TrainerDTO getTrainerDTOFromTrainer(TrainerEntity trainer) throws IllegalArgumentException{
+    public TrainerDTO getTrainerDTOFromTrainer(@NonNull TrainerEntity trainer) throws IllegalArgumentException{
         var trainerJson = serializeTrainerEntity(trainer);
         return deserializeTrainerEntity(trainer, trainerJson);
     }
 
-    public TrainerEntity getTrainerFromTrainerDTO(TrainerDTO trainer) throws IllegalArgumentException{
+    public TrainerEntity getTrainerFromTrainerDTO(@NonNull TrainerDTO trainer) throws IllegalArgumentException{
         var trainerJson = serializeTrainerDTO(trainer);
         return deserializeTrainerDTO(trainer, trainerJson);
     }
