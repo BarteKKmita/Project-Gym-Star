@@ -28,15 +28,18 @@ public class SportsmanEntity {
 
     @Column(name = "sportsman_name")
     @NotEmpty
+    @NonNull
     private String name;
 
     @Column(name = "sportsman_surname")
     @NotEmpty
+    @NonNull
     private String surname;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "gender")
     @NotNull
+    @NonNull
     private GenderEnum gender;
 
     @JsonIgnoreProperties()
