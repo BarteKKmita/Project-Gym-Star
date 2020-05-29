@@ -13,6 +13,7 @@ import javax.persistence.EntityExistsException;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import static com.learning.gym.star.sportsmanbuilder.gender.GenderEnum.M;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -31,6 +32,9 @@ class SportsmanServiceUnitTest {
         //Given
         SportsmanDTO testSportsman = SportsmanDTO.builder()
                 .sportsmanPesel("1")
+                .name("Joe")
+                .surname("Ordinary")
+                .gender(M)
                 .build();
         doReturn(Optional.of(mock(SportsmanEntity.class))).when(repository).findById(any(String.class));
         //Then
