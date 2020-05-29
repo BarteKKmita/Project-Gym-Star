@@ -16,19 +16,23 @@ import javax.validation.constraints.Size;
 @Getter
 public class SportsmanDTO {
 
-    @PESEL(message = "Pesel must have 11 digits")
+    @PESEL(message = "Pesel must have proper number of digits and has to be valid")
     @NotNull(message = "Please enter pesel number.")
+    @NonNull
     private String sportsmanPesel;
 
     @Size(min = 2, message = "Name is too short")
     @NotEmpty(message = "Sportsman has to have name")
+    @NonNull
     private String name;
 
     @Size(min = 2, message = "Surname is too short")
     @NotEmpty(message = "Sportsman has to have surname")
+    @NonNull
     private String surname;
 
     @GenderValidationCheck
     @NotNull(message = "Please specify sportsman gender")
+    @NonNull
     private GenderEnum gender;
 }

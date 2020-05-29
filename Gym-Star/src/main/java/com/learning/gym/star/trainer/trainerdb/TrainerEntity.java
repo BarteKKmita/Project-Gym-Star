@@ -22,18 +22,22 @@ public class TrainerEntity implements Serializable {
 
     @Id
     @Column(name = "trainer_pesel")
+    @NonNull
     private String pesel;
 
     @NotEmpty
     @Column(name = "trainer_name")
+    @NonNull
     private String name;
 
     @NotEmpty
     @Column(name = "trainer_surname")
+    @NonNull
     private String surname;
 
     @NotNull
     @Column(name = "cost")
+    @NonNull
     private Integer cost;
 
     @Getter(AccessLevel.NONE)

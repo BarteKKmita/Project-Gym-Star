@@ -20,6 +20,7 @@ import javax.validation.Valid;
 public class SportsmanController {
     private final SportsmanService service;
     private static final Logger LOGGER = LoggerFactory.getLogger(SportsmanController.class);
+    private static final String WRONG_PESEL_MESSAGE = "Pesel must have proper number of digits and has to be valid";
 
     public SportsmanController(SportsmanService service){
         this.service = service;
@@ -35,22 +36,22 @@ public class SportsmanController {
     @GetMapping("/{pesel}/date-time-stats")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity getSportsmanDateAndTimeStats(@PathVariable("pesel")
-                                                       @PESEL(message = "Pesel must have 11 digits") String sportsmanPesel){
+                                                       @PESEL(message = WRONG_PESEL_MESSAGE) String sportsmanPesel){
         LOGGER.info("Attempting to get sportsman date and time statistics.");
         return new ResponseEntity<>(service.getSportsmanStatistics(sportsmanPesel), HttpStatus.OK);
     }
 
     @PutMapping("/{pesel}/trainer")
     @ResponseStatus(HttpStatus.CREATED)
-    public void chooseTrainer(@PESEL(message = "Pesel must have 11 digits") @PathVariable("pesel") String sportsmanPesel,
-                              @PESEL(message = "Pesel must have 11 digits") @RequestBody String trainerPesel){
+    public void chooseTrainer(@PESEL(message = WRONG_PESEL_MESSAGE) @PathVariable("pesel") String sportsmanPesel,
+                              @PESEL(message = WRONG_PESEL_MESSAGE) @RequestBody String trainerPesel){
         LOGGER.info("Attempting to choose trainer.");
         service.chooseTrainer(sportsmanPesel, trainerPesel);
     }
 
     @GetMapping("/{pesel}/trainer")
     public ResponseEntity getMyTrainer(@PathVariable("pesel")
-                                       @PESEL(message = "Pesel must have 11 digits") String sportsmanPesel){
+                                       @PESEL(message = WRONG_PESEL_MESSAGE) String sportsmanPesel){
         LOGGER.info("Attempting to display sportsman's.");
         return new ResponseEntity<>(service.getMyTrainerData(sportsmanPesel), HttpStatus.OK);
     }
@@ -58,7 +59,7 @@ public class SportsmanController {
     @PutMapping("/{pesel}/cardio/train")
     @ResponseStatus(HttpStatus.OK)
     public void trainCardio(@PathVariable("pesel")
-                            @PESEL(message = "Pesel must have 11 digits") String sportsmanPesel){
+                            @PESEL(message = WRONG_PESEL_MESSAGE) String sportsmanPesel){
         LOGGER.info("Attempting to do cardio training.");
         service.trainCardio(sportsmanPesel);
     }
@@ -66,7 +67,7 @@ public class SportsmanController {
     @PutMapping("/{pesel}/power/train")
     @ResponseStatus(HttpStatus.OK)
     public void trainPower(@PathVariable("pesel")
-                           @PESEL(message = "Pesel must have 11 digits") String sportsmanPesel){
+                           @PESEL(message = WRONG_PESEL_MESSAGE) String sportsmanPesel){
         LOGGER.info("Attempting to do power training.");
         service.trainPower(sportsmanPesel);
     }

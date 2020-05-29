@@ -100,3 +100,5 @@ INSERT INTO statistics VALUES (1,1,1);
 INSERT INTO sportsmentrainingtimestatistics VALUES (1,'2020-01-22','18:18:52',1);
 INSERT INTO trainer VALUES ('57122299175','John','Wick','30',NULL, NULL);
 INSERT INTO trainer VALUES ('82062972549','Arnold','WillBeBack','30',NULL, NULL);
+INSERT INTO sportsmen VALUES ('97112848572','Frank','Underwood','M','57122299175', 1,1);
+INSERT INTO sportsmen VALUES ('98080489747','Doug','Douglas','M',NULL, NULL,NULL);

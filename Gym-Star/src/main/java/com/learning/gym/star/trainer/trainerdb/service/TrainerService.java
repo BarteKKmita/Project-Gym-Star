@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service("TrainerService")
@@ -34,6 +35,7 @@ public class TrainerService {
 
     public List<TrainerDTO> getAllTrainers() throws IllegalArgumentException{
         return repository.findAll().stream()
+                .filter(Objects::nonNull)
                 .map(serializer::getTrainerDTOFromTrainer)
                 .collect(Collectors.toList());
     }
