@@ -13,7 +13,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface GenderValidationCheck {
 
-    String message() default "{Inserted wrong gender character. Gender can be M, F.}";
+    String message() default "Inserted wrong gender character. Gender can be M or F.";
 
     Class<?>[] groups() default {};
 
