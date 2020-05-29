@@ -87,7 +87,7 @@ class SportsmanControllerIntegrationTest {
     @Test
     public void shouldReturnMessageWhenEmptyGender() throws Exception{
         //Given
-        var message = "Inserted wrong gender character. Gender can be M or F.";
+        var message = "Please specify sportsman gender";
         var sportsman = getSportsmanSurname(getSportsmanPesel(getSportsmanName(new JSONObject())))
                 .toString();
         //Then
@@ -166,20 +166,23 @@ class SportsmanControllerIntegrationTest {
         //Given
         var message = "Pesel must have proper number of digits and has to be valid";
         var sportsmanPesel = "123456789";
+        var url = URL + sportsmanPesel + "/date-time-stats";
         //Then
-        MvcResult mvcResult = mockMvc.perform(get(URL + sportsmanPesel + "/date-time-stats"))
+        MvcResult mvcResult = mockMvc.perform(get(url))
                 .andExpect(status().isBadRequest())
                 .andReturn();
         assertTrue(mvcResult.getResponse().getContentAsString().contains(message));
     }
 
+    @Test
     public void shouldReturnMessageWhenWrongPeselInRequestBody() throws Exception{
         //Given
-        var message = "Pesel must have 11 digits and has to be valid";
+        var message = "Pesel must have proper number of digits and has to be valid";
         var sportsmanPesel = "67092924133";
-        var trainerPesel = "123456789";
+        var trainerPesel = "1234589";
+        var url = URL + sportsmanPesel + "/trainer";
         //Then
-        MvcResult mvcResult = mockMvc.perform(get(URL + sportsmanPesel + "/trainer")
+        MvcResult mvcResult = mockMvc.perform(put(url)
                 .contentType(APPLICATION_JSON_VALUE)
                 .content(trainerPesel))
                 .andExpect(status().isBadRequest())
@@ -187,22 +190,26 @@ class SportsmanControllerIntegrationTest {
         assertTrue(mvcResult.getResponse().getContentAsString().contains(message));
     }
 
+    @Test
     public void shouldReturnStatusCreatedWhenChoosingTrainer() throws Exception{
         //Given
         var sportsmanPesel = "93062687511";
         var trainerPesel = "63073086337";
+        var url = URL + sportsmanPesel + "/trainer";
         //Then
-        mockMvc.perform(put(URL + sportsmanPesel + "/trainer")
+        mockMvc.perform(put(url)
                 .contentType(APPLICATION_JSON_VALUE)
                 .content(trainerPesel))
                 .andExpect(status().isCreated());
     }
 
+    @Test
     public void shouldReturnStatusOKWhenTrainingCardio() throws Exception{
         //Given
         var sportsmanPesel = "93062687511";
+        var url = URL + sportsmanPesel + "/cardio/train";
         //Then
-        mockMvc.perform(put(URL + sportsmanPesel + "/trainer"))
+        mockMvc.perform(put(url))
                 .andExpect(status().isOk());
     }
 

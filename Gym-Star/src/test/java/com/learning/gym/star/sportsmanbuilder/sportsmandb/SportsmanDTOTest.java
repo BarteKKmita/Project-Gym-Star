@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class SportsmanDTOTest {
 
     @Test
-    public void shouldThrowWhenSportsmanDTOFNameIsNull(){
+    public void shouldThrowWhenSportsmanDTONameIsNull(){
         //Then
         assertThrows(NullPointerException.class, () -> SportsmanDTO.builder()
                 .sportsmanPesel("95031868345")
@@ -30,6 +30,16 @@ class SportsmanDTOTest {
         assertThrows(NullPointerException.class, () -> SportsmanDTO.builder()
                 .name("Joe")
                 .surname("Ordinary")
+                .build());
+    }
+    
+    @Test
+    public void shouldThrowWhenSportsmanDTOCostIsNull(){
+        //Then
+        assertThrows(NullPointerException.class, () -> SportsmanDTO.builder()
+                .name("Joe")
+                .surname("Ordinary")
+                .sportsmanPesel("95031868345")
                 .build());
     }
 }

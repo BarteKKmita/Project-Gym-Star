@@ -28,7 +28,7 @@ class SportsmanSerializerTest {
     }
 
     @Test
-    public void shouldThrowWhenSerializingNullSportsmanDTO(){
+    public void shouldThrowWhenSportsmanDTOIsNull(){
         //Given
         SportsmanDTO sportsmanDTO = null;
         //Then
@@ -43,6 +43,10 @@ class SportsmanSerializerTest {
         SportsmanDTO sportsmanDTO = serializer.getSportsmanDTOFromSportsman(sportsmanEntity);
         //Then
         assertNotNull(sportsmanDTO);
+        assertEquals(sportsmanEntity.getName(), sportsmanDTO.getName());
+        assertEquals(sportsmanEntity.getSurname(), sportsmanDTO.getSurname());
+        assertEquals(sportsmanEntity.getGender(), sportsmanDTO.getGender());
+        assertEquals(sportsmanEntity.getSportsmanPesel(), sportsmanDTO.getSportsmanPesel());
     }
 
     @Test

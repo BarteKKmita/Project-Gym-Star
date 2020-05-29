@@ -2,6 +2,7 @@ package com.learning.gym.star.sportsmanbuilder.sportsmandb.controller;
 
 import com.learning.gym.star.EmbeddedMySqlProvider;
 import com.learning.gym.star.sportsmanbuilder.sportsmandb.database.SportsmanRepository;
+import com.learning.gym.star.training.cardio.database.CardioTrainingJpaRepository;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -33,6 +34,9 @@ class SportsmanControllerWithEmbeddedMySQLTest {
     @Autowired
     private SportsmanRepository repository;
 
+    @Autowired
+    private CardioTrainingJpaRepository cardioRepository;
+
     private static final String URL = "/api/sportsman/";
 
     @BeforeAll
@@ -53,7 +57,9 @@ class SportsmanControllerWithEmbeddedMySQLTest {
     @Test
     public void shouldGetAllStats() throws Exception{
         //Given
-        MvcResult mvcResult = mockMvc.perform(get(URL + "97112848572/date-time-stats"))
+        var sportsmanPesel = "97112848572";
+        var url = URL + sportsmanPesel + "/date-time-stats";
+        MvcResult mvcResult = mockMvc.perform(get(url))
                 .andExpect(status().isOk())
                 .andReturn();
         //Then
@@ -79,19 +85,35 @@ class SportsmanControllerWithEmbeddedMySQLTest {
     public void shouldCardioTrainingCountIncrease() throws Exception{
         //Given
         var sportsmanPesel = "97112848572";
+        var sportsmanEntity = repository.findById(sportsmanPesel).get();
+        int expectedTrainingCount = sportsmanEntity.getStatistics().getCardioTrainingEntity().getTrainingCount() + 1;
         var url = URL + sportsmanPesel + "/cardio/train";
-        //Then
+        //When
         mockMvc.perform(put(url))
                 .andExpect(status().isOk());
+        int actualTrainingCount = repository.findById(sportsmanPesel).get()
+                .getStatistics()
+                .getCardioTrainingEntity()
+                .getTrainingCount();
+        //Then
+        assertEquals(expectedTrainingCount, actualTrainingCount);
     }
 
     @Test
     public void shouldPowerTrainingCountIncrease() throws Exception{
         //Given
         var sportsmanPesel = "97112848572";
+        var sportsmanEntity = repository.findById(sportsmanPesel).get();
+        int expectedTrainingCount = sportsmanEntity.getStatistics().getPowerTrainingEntity().getTrainingCount() + 1;
         var url = URL + sportsmanPesel + "/power/train";
-        //Then
+        //When
         mockMvc.perform(put(url))
                 .andExpect(status().isOk());
+        int actualTrainingCount = repository.findById(sportsmanPesel).get()
+                .getStatistics()
+                .getPowerTrainingEntity()
+                .getTrainingCount();
+        //Then
+        assertEquals(expectedTrainingCount, actualTrainingCount);
     }
 }

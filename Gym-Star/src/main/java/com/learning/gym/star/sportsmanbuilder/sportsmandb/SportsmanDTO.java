@@ -18,6 +18,7 @@ public class SportsmanDTO {
 
     @PESEL(message = "Pesel must have proper number of digits and has to be valid")
     @NotNull(message = "Please enter pesel number.")
+    @NonNull
     private String sportsmanPesel;
 
     @Size(min = 2, message = "Name is too short")

@@ -2,8 +2,7 @@ package com.learning.gym.star.trainer.trainerdb;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class TrainerSerializerTest {
 
@@ -17,7 +16,12 @@ class TrainerSerializerTest {
         TrainerDTO trainer = serializer.getTrainerDTOFromTrainer(trainerEntity);
         //Then
         assertNotNull(trainer);
+        assertEquals(trainerEntity.getName(), trainer.getName());
+        assertEquals(trainerEntity.getSurname(), trainer.getSurname());
+        assertEquals(trainerEntity.getPesel(), trainer.getPesel());
+        assertEquals(trainerEntity.getCost(), trainer.getCost());
     }
+
 
     @Test
     public void shouldThrowWhenTrainerEntityIsNull(){
@@ -35,6 +39,11 @@ class TrainerSerializerTest {
         TrainerEntity trainer = serializer.getTrainerFromTrainerDTO(trainerDTO);
         //Then
         assertNotNull(trainer);
+        assertNotNull(trainer);
+        assertEquals(trainerDTO.getName(), trainer.getName());
+        assertEquals(trainerDTO.getSurname(), trainer.getSurname());
+        assertEquals(trainerDTO.getPesel(), trainer.getPesel());
+        assertEquals(trainerDTO.getCost(), trainer.getCost());
     }
 
     @Test

@@ -30,12 +30,7 @@ class SportsmanServiceUnitTest {
     @Test
     public void shouldThrowWhenSportsmanExists(){
         //Given
-        SportsmanDTO testSportsman = SportsmanDTO.builder()
-                .sportsmanPesel("1")
-                .name("Joe")
-                .surname("Ordinary")
-                .gender(M)
-                .build();
+        SportsmanDTO testSportsman = getSportsman();
         doReturn(Optional.of(mock(SportsmanEntity.class))).when(repository).findById(any(String.class));
         //Then
         assertThrows(EntityExistsException.class, () -> service.addSportsman(testSportsman));
@@ -48,5 +43,14 @@ class SportsmanServiceUnitTest {
         when(repository.findById(any(String.class))).thenReturn(Optional.empty());
         //Then
         assertThrows(NoSuchElementException.class, () -> service.getSportsmanStatistics(pesel));
+    }
+
+    private SportsmanDTO getSportsman(){
+        return SportsmanDTO.builder()
+                .sportsmanPesel("1")
+                .name("Joe")
+                .surname("Ordinary")
+                .gender(M)
+                .build();
     }
 }

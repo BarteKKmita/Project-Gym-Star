@@ -24,6 +24,7 @@ public class SportsmanEntity {
 
     @Id
     @Column(name = "sportsman_pesel")
+    @NonNull
     private String sportsmanPesel;
 
     @Column(name = "sportsman_name")

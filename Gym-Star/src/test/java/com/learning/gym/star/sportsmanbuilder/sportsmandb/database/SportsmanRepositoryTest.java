@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ActiveProfiles("test")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class SportsmanRepositoryTest {
+
     @Autowired
     private DataSource dataSource;
 

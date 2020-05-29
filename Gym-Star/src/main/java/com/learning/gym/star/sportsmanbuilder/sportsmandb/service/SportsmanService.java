@@ -61,7 +61,7 @@ public class SportsmanService {
         SportsmanEntity sportsman = repository.findById(sportsmanPesel)
                 .orElseThrow(() -> handleNonExistingSportsman(sportsmanPesel));
         return TRAINER_SERIALIZER.getTrainerDTOFromTrainer(Optional.ofNullable(sportsman.getTrainer())
-                .orElseThrow(() -> new NoSuchElementException("You don't have trainer Yet")));
+                .orElseThrow(() -> new NoSuchElementException("You don't have trainer yet.")));
     }
 
     public void trainCardio(String sportsmanPesel){
