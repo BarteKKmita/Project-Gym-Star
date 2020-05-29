@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityExistsException;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Transactional
 @Service("SportsmanService")
@@ -59,7 +60,8 @@ public class SportsmanService {
         LOGGER.info("Getting personal trainer data. Sportsman pesel: {}", sportsmanPesel);
         SportsmanEntity sportsman = repository.findById(sportsmanPesel)
                 .orElseThrow(() -> handleNonExistingSportsman(sportsmanPesel));
-        return TRAINER_SERIALIZER.getTrainerDTOFromTrainer(sportsman.getTrainer());
+        return TRAINER_SERIALIZER.getTrainerDTOFromTrainer(Optional.ofNullable(sportsman.getTrainer())
+                .orElseThrow(() -> new NoSuchElementException("You don't have trainer Yet")));
     }
 
     public void trainCardio(String sportsmanPesel){
