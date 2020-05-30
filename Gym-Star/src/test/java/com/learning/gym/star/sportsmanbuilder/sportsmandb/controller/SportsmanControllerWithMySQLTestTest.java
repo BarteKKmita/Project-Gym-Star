@@ -1,18 +1,10 @@
 package com.learning.gym.star.sportsmanbuilder.sportsmandb.controller;
 
-import com.learning.gym.star.EmbeddedMySqlProvider;
+import com.learning.gym.star.ControllerWithMySQLTestContextSpecification;
 import com.learning.gym.star.sportsmanbuilder.sportsmandb.database.SportsmanRepository;
 import com.learning.gym.star.training.cardio.database.CardioTrainingJpaRepository;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,15 +13,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
-@ActiveProfiles("test")
-@AutoConfigureMockMvc
-class SportsmanControllerWithEmbeddedMySQLTest {
-
-    @Autowired
-    private MockMvc mockMvc;
+class SportsmanControllerWithMySQLTestTest extends ControllerWithMySQLTestContextSpecification {
 
     @Autowired
     private SportsmanRepository repository;
@@ -38,16 +22,6 @@ class SportsmanControllerWithEmbeddedMySQLTest {
     private CardioTrainingJpaRepository cardioRepository;
 
     private static final String URL = "/api/sportsman/";
-
-    @BeforeAll
-    public static void setUpClass(){
-        EmbeddedMySqlProvider.setUpClass();
-    }
-
-    @AfterAll
-    public static void tearDownClass(){
-        EmbeddedMySqlProvider.tearDownClass();
-    }
 
     @Test
     public void shouldNotBeNullWhenAutowired(){

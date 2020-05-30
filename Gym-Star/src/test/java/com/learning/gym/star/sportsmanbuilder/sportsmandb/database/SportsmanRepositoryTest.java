@@ -1,46 +1,24 @@
 package com.learning.gym.star.sportsmanbuilder.sportsmandb.database;
 
-import com.learning.gym.star.EmbeddedMySqlProvider;
+import com.learning.gym.star.TestRepositoryContextSpecification;
 import com.learning.gym.star.sportsmanbuilder.sportsmandb.SportsmanEntity;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.ActiveProfiles;
 
-import javax.sql.DataSource;
 import java.util.Optional;
 
 import static com.learning.gym.star.sportsmanbuilder.gender.GenderEnum.F;
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
-@ActiveProfiles("test")
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class SportsmanRepositoryTest {
 
-    @Autowired
-    private DataSource dataSource;
+class SportsmanRepositoryTest extends TestRepositoryContextSpecification {
 
     @Autowired
     private SportsmanRepository repository;
 
-    @BeforeAll
-    public static void setUpClass(){
-        EmbeddedMySqlProvider.setUpClass();
-    }
-
-    @AfterAll
-    public static void tearDownClass(){
-        EmbeddedMySqlProvider.tearDownClass();
-    }
-
     @Test
     public void shouldNotBeNullWhenAutowired(){
         assertNotNull(repository);
-        assertNotNull(dataSource);
     }
 
     @Test
