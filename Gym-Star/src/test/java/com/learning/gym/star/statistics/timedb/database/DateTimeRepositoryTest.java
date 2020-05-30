@@ -1,15 +1,10 @@
 package com.learning.gym.star.statistics.timedb.database;
 
-import com.learning.gym.star.EmbeddedMySqlProvider;
+import com.learning.gym.star.TestRepositoryContextSpecification;
 import com.learning.gym.star.statistics.statisticsdb.StatisticsEntity;
 import com.learning.gym.star.statistics.timedb.TrainingDateStatisticsEntity;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -18,23 +13,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@DataJpaTest
-@ActiveProfiles("test")
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class DateTimeRepositoryTest {
+class DateTimeRepositoryTest extends TestRepositoryContextSpecification {
 
     @Autowired
     private DateTimeRepository repository;
-
-    @BeforeAll
-    public static void setUpClass(){
-        EmbeddedMySqlProvider.setUpClass();
-    }
-
-    @AfterAll
-    public static void tearDownClass(){
-        EmbeddedMySqlProvider.tearDownClass();
-    }
 
     @Test
     public void shouldNotBeNull(){

@@ -1,43 +1,20 @@
 package com.learning.gym.star.training.power.database;
 
-import com.learning.gym.star.EmbeddedMySqlProvider;
+import com.learning.gym.star.TestRepositoryContextSpecification;
 import com.learning.gym.star.training.power.PowerTrainingEntity;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.ActiveProfiles;
-
-import javax.sql.DataSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
-@ActiveProfiles("test")
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class PowerTrainingJpaRepositoryTest {
-    @Autowired
-    private DataSource dataSource;
+public class PowerTrainingJpaRepositoryTest extends TestRepositoryContextSpecification {
 
     @Autowired
     private PowerTrainingRepository repository;
 
-    @BeforeAll
-    public static void setUpClass(){
-        EmbeddedMySqlProvider.setUpClass();
-    }
-
-    @AfterAll
-    public static void tearDownClass(){
-        EmbeddedMySqlProvider.tearDownClass();
-    }
-
     @Test
     public void shouldNotBeNull(){
         assertNotNull(repository);
-        assertNotNull(dataSource);
     }
 
     @Test

@@ -10,7 +10,7 @@ import javax.validation.constraints.NotEmpty;
 @ToString
 @Getter
 public class GymDTO {
-    @NotEmpty
+
     private String gymId;
 
     @NotEmpty

@@ -17,6 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = PowerTrainingController.class)
 public class PowerControllerIntegrationTest {
+
     @Autowired
     private MockMvc mockMvc;
 

@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityExistsException;
+import javax.persistence.NoResultException;
 import javax.validation.Valid;
 
 @Validated
@@ -84,4 +85,12 @@ public class SportsmanController {
         return new ResponseEntity<>("Entered invalid gender: " + exception.getValue() + ". Valid gender is M or F.",
                 HttpStatus.NOT_ACCEPTABLE);
     }
+
+    @ExceptionHandler(NoResultException.class)
+    public ResponseEntity handleChoosingNotExistingTrainer(NoResultException exception){
+        LOGGER.info("There is no trainer with specified pesel.");
+        return new ResponseEntity<>("There is no trainer with specified pesel.",
+                HttpStatus.NOT_FOUND);
+    }
 }
+
