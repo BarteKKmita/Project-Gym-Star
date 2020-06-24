@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-@RequestMapping("api/jdbc/gym")
-@RestController
+@Deprecated
 public class GymControllerJdbc {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private final GymServiceJdbc gymService;
