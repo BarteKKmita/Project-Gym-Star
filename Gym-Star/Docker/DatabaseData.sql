@@ -24,7 +24,7 @@ gym_id INT PRIMARY KEY AUTO_INCREMENT,
 gym_name NVARCHAR(80) NOT NULL,
 street NVARCHAR (80) NOT NULL,
 city NVARCHAR(30) NOT NULL,
-building_number INT NOT NULL
+building_number VARCHAR (10) NOT NULL
 );
 
 CREATE TABLE trainer (
