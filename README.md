@@ -21,7 +21,7 @@ How to run project:
  `
  .\gradlew run`
  
- 4. Go to your browser and launch swagger page:
+ 4. Go to your browser and launch swagger page :
  
  http://localhost:8080/swagger-ui.html#/
  
